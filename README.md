@@ -25,3 +25,16 @@ Setting up Irrlicht
   <repo>/Release if it is build in release mode.
 
 - EffectsEverywhere project is now able to run!
+
+Working on the project
+----------------------
+
+**Adding a new feature?**
+
+- Create a new branch
+- Build your feature
+- Is everything working in both DEBUG and RELEASE?
+- Create a merge request and assign at least one person
+- This person checks the code and if it runs right
+- If so this person accepts the merge request
+- Feature done
