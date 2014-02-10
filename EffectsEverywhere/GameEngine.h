@@ -4,23 +4,32 @@
 #include <irrlicht.h>
 
 using namespace irr;
+using namespace core;
+using namespace scene;
 using namespace video;
+using namespace io;
+using namespace gui;
 
 class BackgroundFader;
 
 class GameEngine
 {
 public:
-	GameEngine(void);
-	GameEngine(IrrlichtDevice*, IVideoDriver*);
-	void update (void);
+	GameEngine();
+	bool init(int width = 800, int height = 600, int colordepth = 16, bool fullscreen = false, 
+		bool stencilbuffer = false, bool vsyncenabled = false); 
+	void run();
 	~GameEngine(void);
 
 	float startTime;
 	float totalTime;
 	float lastFrameTime;
 	float deltaTime;
-private:
+
+private:	
+	void update (void);
+	void draw (void);
+
 	IrrlichtDevice* device;
 	IVideoDriver* driver;
 	SColor backgroundColor;

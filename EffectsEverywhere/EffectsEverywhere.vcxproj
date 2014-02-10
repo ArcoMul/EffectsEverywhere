@@ -65,12 +65,18 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="BackgroundFader.cpp" />
+    <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="main.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Irrlicht\source\Irrlicht\Irrlicht10.0.vcxproj">
       <Project>{e08e042a-6c45-411b-92be-3cc31331019f}</Project>
     </ProjectReference>
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="BackgroundFader.h" />
+    <ClInclude Include="GameEngine.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
