@@ -42,7 +42,7 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 void GameEngine::start()
 {
 	// The the mesh from the system
-	IMesh* mesh = smgr->getMesh("Media/robot.obj");
+	IMesh* mesh = smgr->getMesh("../Media/robot.obj");
 
 	// Add a new Irrlicht Node with the loaded mesh as mesh
 	IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);
