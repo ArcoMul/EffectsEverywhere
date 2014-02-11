@@ -18,6 +18,7 @@ public:
 	GameEngine();
 	bool init(int width = 800, int height = 600, int colordepth = 16, bool fullscreen = false, 
 		bool stencilbuffer = false, bool vsyncenabled = false); 
+	void start();
 	void run();
 	~GameEngine(void);
 
@@ -32,6 +33,8 @@ private:
 
 	IrrlichtDevice* device;
 	IVideoDriver* driver;
+	ISceneManager* smgr;
+
 	SColor backgroundColor;
 	BackgroundFader* backgroundFader;
 };

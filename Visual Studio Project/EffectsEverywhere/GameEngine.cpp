@@ -26,7 +26,10 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 
 	//Get the video driver from the device
 	driver = device->getVideoDriver();
+	smgr = device->getSceneManager();
 
+	// Temporary function to load some objects
+	start();
 
 	if(!driver)
 	{
@@ -34,6 +37,23 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	}
 
 	return true;
+}
+
+void GameEngine::start()
+{
+	// The the mesh from the system
+	IMesh* mesh = smgr->getMesh("Media/robot.obj");
+
+	// Add a new Irrlicht Node with the loaded mesh as mesh
+	IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);
+
+	// Make sure the node is loaded and set what kind of matarial it is
+	if (node) {
+		node->setMaterialFlag(EMF_LIGHTING, false);
+	}
+
+	// Add the camera node to the scene
+	smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 }
 
 void GameEngine::run()
@@ -45,26 +65,27 @@ void GameEngine::run()
 		this->totalTime = device->getTimer()->getTime() - this->startTime;
 
 		update();
+
+		//Begin drawing the scene, by deleting the Z buffer and clear the frame
+		driver->beginScene(true, true, backgroundFader->getColor());
+
 		draw();
 		
+		//End drawing the scene
+		driver->endScene();
+
 		this->lastFrameTime = device->getTimer()->getTime();
 	}
 }
 
 void GameEngine::update (void)
 {
-	
+	backgroundFader->fade();
 }
 
 void GameEngine::draw (void)
 {
-	backgroundFader->fade();
-
-	//Begin drawing the scene, by deleting the Z buffer and clear the frame
-	driver->beginScene(true, true, backgroundFader->getColor());
-
-	//End drawing the scene
-	driver->endScene();
+	smgr->drawAll();
 }
 
 GameEngine::~GameEngine(void)
