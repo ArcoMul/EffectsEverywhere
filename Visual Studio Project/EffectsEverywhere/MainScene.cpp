@@ -12,7 +12,7 @@ MainScene::MainScene(GameEngine* engine) :
 void MainScene::start(void)
 {
 	// The the mesh from the system
-	IMesh* mesh = _engine->smgr->getMesh("../Media/robot.obj");
+	IMesh* mesh = _engine->smgr->getMesh("../../Media/robot.obj");
 
 	// Add a new Irrlicht Node with the loaded mesh as mesh
 	IMeshSceneNode* node = _engine->smgr->addMeshSceneNode(mesh);
