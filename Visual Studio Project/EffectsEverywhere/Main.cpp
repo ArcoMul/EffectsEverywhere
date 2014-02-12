@@ -1,14 +1,21 @@
 #include "GameEngine.h"
+#include "MainScene.h"
 
 int main()
 {
-	//Create scene
+	// Create the engine
 	GameEngine* engine = new GameEngine();
+
+	// Start the engine
 	engine->init();
 
+	// Set the initial scene
+	engine->setScene (new MainScene(engine));
+
+	// Start running the engine
 	engine->run();
 
-	//Delete the engine
+	// Delete the engine
 	delete engine;
 
 	return 0;

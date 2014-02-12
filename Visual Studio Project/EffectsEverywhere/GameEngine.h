@@ -11,6 +11,7 @@ using namespace io;
 using namespace gui;
 
 class BackgroundFader;
+class GameScene;
 
 class GameEngine
 {
@@ -18,8 +19,8 @@ public:
 	GameEngine();
 	bool init(int width = 800, int height = 600, int colordepth = 16, bool fullscreen = false, 
 		bool stencilbuffer = false, bool vsyncenabled = false); 
-	void start();
 	void run();
+	void setScene (GameScene* scene);
 	~GameEngine(void);
 
 	float startTime;
@@ -27,16 +28,18 @@ public:
 	float lastFrameTime;
 	float deltaTime;
 
+	ISceneManager* smgr;
+
+	SColor backgroundColor;
+
 private:	
 	void update (void);
 	void draw (void);
 
 	IrrlichtDevice* device;
 	IVideoDriver* driver;
-	ISceneManager* smgr;
 
-	SColor backgroundColor;
-	BackgroundFader* backgroundFader;
+	GameScene* activeScene;
 };
 
 #endif

@@ -10,7 +10,6 @@ BackgroundFader::BackgroundFader(GameEngine* engine) :
 
 void BackgroundFader::fade ()
 {
-	/*
 	if (static_cast<int>(floor(_engine->totalTime)) % 100 == 0) {
 		int newColor = color.getRed() + fadeDirection;
 		color.setRed (newColor);
@@ -20,7 +19,6 @@ void BackgroundFader::fade ()
 			fadeDirection *= -1;
 		}
 	}
-	*/
 }
 
 SColor BackgroundFader::getColor ()

@@ -1,5 +1,6 @@
 #include <math.h>
 #include "GameEngine.h"
+#include "GameScene.h"
 #include "BackgroundFader.h"
 
 GameEngine::GameEngine()
@@ -8,7 +9,6 @@ GameEngine::GameEngine()
 	this->driver = nullptr;
 	this->backgroundColor = SColor(255, 0, 0, 0);
 	this->startTime = 0;
-	this->backgroundFader = new BackgroundFader(this);
 }
 
 bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bool stencilbuffer, bool vsyncenabled)
@@ -22,14 +22,13 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	{
 		return false;
 	}
+
+	// Get the start time of the engine
 	this->startTime = device->getTimer()->getTime();
 
 	//Get the video driver from the device
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
-
-	// Temporary function to load some objects
-	start();
 
 	if(!driver)
 	{
@@ -37,23 +36,6 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	}
 
 	return true;
-}
-
-void GameEngine::start()
-{
-	// The the mesh from the system
-	IMesh* mesh = smgr->getMesh("../Media/robot.obj");
-
-	// Add a new Irrlicht Node with the loaded mesh as mesh
-	IMeshSceneNode* node = smgr->addMeshSceneNode(mesh);
-
-	// Make sure the node is loaded and set what kind of matarial it is
-	if (node) {
-		node->setMaterialFlag(EMF_LIGHTING, false);
-	}
-
-	// Add the camera node to the scene
-	smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
 }
 
 void GameEngine::run()
@@ -64,32 +46,45 @@ void GameEngine::run()
 		this->deltaTime = device->getTimer()->getTime() - this->lastFrameTime;
 		this->totalTime = device->getTimer()->getTime() - this->startTime;
 
+		// Call all the update functions
 		update();
 
-		//Begin drawing the scene, by deleting the Z buffer and clear the frame
-		driver->beginScene(true, true, backgroundFader->getColor());
+		// Begin drawing the scene, by deleting the Z buffer and clear the frame
+		driver->beginScene(true, true, backgroundColor);
 
+		// Draw everything
 		draw();
 		
-		//End drawing the scene
+		// End drawing the scene
 		driver->endScene();
 
+		// Keep track of the time when leaving this frame, for use in the next frame
 		this->lastFrameTime = device->getTimer()->getTime();
 	}
 }
 
 void GameEngine::update (void)
 {
-	backgroundFader->fade();
+	// Call the update function of the current scene
+	activeScene->update();
 }
 
 void GameEngine::draw (void)
 {
+	// Draw all objects in the Irrlicht Scene Manager
 	smgr->drawAll();
+}
+
+void GameEngine::setScene (GameScene* scene)
+{
+	// Keep track of the active scene
+	activeScene = scene;
+
+	// Initialize the new scene
+	activeScene->start ();
 }
 
 GameEngine::~GameEngine(void)
 {
 	delete device;
-	delete backgroundFader;
 }

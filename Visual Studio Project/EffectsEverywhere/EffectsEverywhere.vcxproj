@@ -67,7 +67,9 @@
   <ItemGroup>
     <ClCompile Include="BackgroundFader.cpp" />
     <ClCompile Include="GameEngine.cpp" />
+    <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="MainScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Irrlicht\source\Irrlicht\Irrlicht10.0.vcxproj">
@@ -77,6 +79,8 @@
   <ItemGroup>
     <ClInclude Include="BackgroundFader.h" />
     <ClInclude Include="GameEngine.h" />
+    <ClInclude Include="GameScene.h" />
+    <ClInclude Include="MainScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -2,8 +2,14 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="BackgroundFader.cpp" />
-    <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="GameEngine.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="GameScene.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
+    <ClCompile Include="MainScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackgroundFader.h">
@@ -12,10 +18,19 @@
     <ClInclude Include="GameEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GameScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="MainScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{cd88c6eb-906e-4ed5-968c-a4c81aa19df1}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="core">
+      <UniqueIdentifier>{fa5adca0-6b05-484a-8df1-0999482d120a}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>
