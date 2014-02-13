@@ -10,8 +10,8 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-class BackgroundFader;
 class GameScene;
+class InputReceiver;
 
 class GameEngine
 {
@@ -28,8 +28,13 @@ public:
 	float lastFrameTime;
 	float deltaTime;
 
+	// Scene manager, keeps track of all nodes in the scene, I think (Arco)
 	ISceneManager* smgr;
 
+	// Controls input event receiver
+	InputReceiver* inputReceiver;
+
+	// Background color of the scene
 	SColor backgroundColor;
 
 private:	
@@ -39,6 +44,7 @@ private:
 	IrrlichtDevice* device;
 	IVideoDriver* driver;
 
+	// Which scene we will call the update function of
 	GameScene* activeScene;
 };
 

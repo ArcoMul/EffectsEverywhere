@@ -1,6 +1,8 @@
 #include <math.h>
+
 #include "GameEngine.h"
 #include "GameScene.h"
+#include "InputReceiver.h"
 #include "BackgroundFader.h"
 
 GameEngine::GameEngine()
@@ -13,11 +15,14 @@ GameEngine::GameEngine()
 
 bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bool stencilbuffer, bool vsyncenabled)
 {
-	//Create a device
-	device = createDevice(video::EDT_DIRECT3D9, dimension2d<u32>(width, height), colordepth, 
-										  fullscreen, false, vsyncenabled, 0);
+	// Create the input event receiver
+	inputReceiver = new InputReceiver;
 	
-	//Return if there is no device after the create function
+	// Create a device
+	device = createDevice(video::EDT_DIRECT3D9, dimension2d<u32>(width, height),
+		colordepth, fullscreen, false, vsyncenabled, inputReceiver);
+
+	// Return if there is no device after the create function
 	if (!device)
 	{
 		return false;
@@ -26,7 +31,7 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	// Get the start time of the engine
 	this->startTime = device->getTimer()->getTime();
 
-	//Get the video driver from the device
+	// Get the video driver from the device
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
 
@@ -40,7 +45,7 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 
 void GameEngine::run()
 {
-	//Game/Render loop
+	// Game/Render loop
 	while(device->run())
 	{
 		this->deltaTime = device->getTimer()->getTime() - this->lastFrameTime;

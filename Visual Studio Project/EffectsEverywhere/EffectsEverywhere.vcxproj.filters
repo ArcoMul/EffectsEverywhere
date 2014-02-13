@@ -10,6 +10,9 @@
       <Filter>core</Filter>
     </ClCompile>
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="InputReceiver.cpp">
+      <Filter>core</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="BackgroundFader.h">
@@ -22,6 +25,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="MainScene.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputReceiver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

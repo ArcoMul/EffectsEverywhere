@@ -13,5 +13,7 @@ public:
 
 	GameEngine* _engine;
 	BackgroundFader* backgroundFader;
+private:
+	IMeshSceneNode* robot;
 };
 

@@ -68,6 +68,7 @@
     <ClCompile Include="BackgroundFader.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameScene.cpp" />
+    <ClCompile Include="InputReceiver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
   </ItemGroup>
@@ -80,6 +81,7 @@
     <ClInclude Include="BackgroundFader.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameScene.h" />
+    <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="MainScene.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
