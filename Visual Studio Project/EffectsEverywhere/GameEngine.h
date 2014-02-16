@@ -27,6 +27,7 @@ public:
 	float totalTime;
 	float lastFrameTime;
 	float deltaTime;
+	
 
 	// Scene manager, keeps track of all nodes in the scene, I think (Arco)
 	ISceneManager* smgr;

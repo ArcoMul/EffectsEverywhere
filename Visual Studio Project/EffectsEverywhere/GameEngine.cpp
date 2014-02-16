@@ -34,7 +34,7 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	// Get the video driver from the device
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
-
+	
 	if(!driver)
 	{
 		return false;
@@ -88,6 +88,13 @@ void GameEngine::setScene (GameScene* scene)
 	// Initialize the new scene
 	activeScene->start ();
 }
+
+/*bool GameEngine::setMouse (bool mouse)
+{
+	// setMouse on/off
+	device->getCursorControl()->setVisible(mouse);
+}
+*/
 
 GameEngine::~GameEngine(void)
 {
