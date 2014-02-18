@@ -24,6 +24,7 @@ scene::ISceneCollisionManager* collMan;
 
 MainScene::MainScene(GameEngine* engine) :
 	_engine(engine)
+	
 {
 	this->backgroundFader = new BackgroundFader(engine);
 }
@@ -42,13 +43,32 @@ void MainScene::start(void)
 	//Add a node and set it to null
 	scene::IMeshSceneNode* cube = 0;
 
-	// Make sure the nodes are loaded and set what kind of matarial it is
-	if (robot) {
+
+	// Make sure the node is loaded and 
+	if (robot)
+	{
+		// Set what kind of matarial it is
+
 		robot->setMaterialFlag(EMF_LIGHTING, false);
+
+		// Set start position (on top of floor)
+		robot->setPosition(core::vector3df(0, 7.2, 0));
 	}
 
+	// Add floor to scene
+	IMesh* floorMesh = _engine->smgr->getMesh("../../Media/floor.obj");
+	IMeshSceneNode* floor = _engine->smgr->addMeshSceneNode(floorMesh);
+	if (floor) {
+		floor->setMaterialFlag(EMF_LIGHTING, false);
+	}
+
+	
+	
 	// Add the camera node to the scene
-	//_engine->smgr->addCameraSceneNode(0, vector3df(10, 30, -50),vector3df(0, 5, 0));
+
+	_engine->smgr->addCameraSceneNode(0, vector3df(10, 30, -50),vector3df(0, 5, 0));
+
+
 
 	//The cube mesh is pickable, but doesn't get highlighted.
 	if(meshCube){
@@ -82,6 +102,12 @@ void MainScene::start(void)
 	collMan = _engine->smgr->getSceneCollisionManager();
 	int lastFPS = -1;
 
+
+	camera = _engine->smgr->addCameraSceneNode();
+	camera->setPosition(vector3df(0, 30, 40));
+	camera->setRotation(vector3df(0, 180, 0));
+	robot->addChild(camera);
+ 
 }
 
 void MainScene::update(void)
@@ -91,13 +117,14 @@ void MainScene::update(void)
 
 	// Get the rotation of the robot
 	core::vector3df rot = robot->getRotation();
+	
+	// Set camera position update
+	camera->setTarget(pos);
 
 	// Get the transformations done on this robot
 	core::matrix4 mat = robot->getAbsoluteTransformation();
 
 	//Set camera to robot
-	camera->setPosition(vector3df(pos.X, pos.Y+30, pos.Z + 40));
-	//camera->setPosition(pos);
 	camera->setTarget(pos);
 
 	// When the W key is down
