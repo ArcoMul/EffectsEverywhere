@@ -89,13 +89,6 @@ void GameEngine::setScene (GameScene* scene)
 	activeScene->start ();
 }
 
-/*bool GameEngine::setMouse (bool mouse)
-{
-	// setMouse on/off
-	device->getCursorControl()->setVisible(mouse);
-}
-*/
-
 GameEngine::~GameEngine(void)
 {
 	delete device;
