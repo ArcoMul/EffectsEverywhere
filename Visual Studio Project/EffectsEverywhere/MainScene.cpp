@@ -6,6 +6,7 @@
 
 MainScene::MainScene(GameEngine* engine) :
 	_engine(engine)
+	
 {
 	this->backgroundFader = new BackgroundFader(engine);
 }
@@ -35,8 +36,13 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
+	
+	
 	// Add the camera node to the scene
-	_engine->smgr->addCameraSceneNode(0, vector3df(0, 30, -40), vector3df(0, 5, 0));
+	camera = _engine->smgr->addCameraSceneNode();
+	camera->setPosition(vector3df(0, 30, 40));
+	camera->setRotation(vector3df(0, 180, 0));
+	robot->addChild(camera);
 }
 
 void MainScene::update(void)
@@ -46,6 +52,9 @@ void MainScene::update(void)
 
 	// Get the rotation of the robot
 	core::vector3df rot = robot->getRotation();
+	
+	// Set camera position update
+	camera->setTarget(pos);
 
 	// Get the transformations done on this robot
 	core::matrix4 mat = robot->getAbsoluteTransformation();

@@ -34,7 +34,7 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	// Get the video driver from the device
 	driver = device->getVideoDriver();
 	smgr = device->getSceneManager();
-
+	
 	if(!driver)
 	{
 		return false;
