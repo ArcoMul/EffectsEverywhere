@@ -97,6 +97,7 @@ void MainScene::update(void)
 
 	//Set camera to robot
 	camera->setPosition(vector3df(pos.X, pos.Y+30, pos.Z + 40));
+	//camera->setPosition(pos);
 	camera->setTarget(pos);
 
 	// When the W key is down
@@ -135,7 +136,7 @@ void MainScene::update(void)
 	// Always check if there is collision
 	core::line3d<f32> ray;
 	ray.start = camera->getPosition();
-	ray.end = ray.start + (camera->getTarget() - ray.start).normalize() * 7000.0f;
+	ray.end = ray.start + (camera->getTarget() - ray.start).normalize() * 1000.0f;
 
 	// Tracks the current intersection point with the level or mesh
 	core::vector3df intersection;
