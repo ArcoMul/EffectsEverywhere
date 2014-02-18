@@ -18,9 +18,21 @@ void MainScene::start(void)
 	// Add a new Irrlicht Node with the loaded mesh as mesh
 	robot = _engine->smgr->addMeshSceneNode(mesh);
 
-	// Make sure the node is loaded and set what kind of matarial it is
-	if (robot) {
+	// Make sure the node is loaded and 
+	if (robot)
+	{
+		// Set what kind of matarial it is
 		robot->setMaterialFlag(EMF_LIGHTING, false);
+
+		// Set start position (on top of floor)
+		robot->setPosition(core::vector3df(0, 7.2, 0));
+	}
+
+	// Add floor to scene
+	IMesh* floorMesh = _engine->smgr->getMesh("../../Media/floor.obj");
+	IMeshSceneNode* floor = _engine->smgr->addMeshSceneNode(floorMesh);
+	if (floor) {
+		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
 	// Add the camera node to the scene
