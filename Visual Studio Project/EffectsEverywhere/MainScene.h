@@ -15,5 +15,7 @@ public:
 	BackgroundFader* backgroundFader;
 private:
 	IMeshSceneNode* robot;
+private:
+	IMeshSceneNode* cube;
 };
 
