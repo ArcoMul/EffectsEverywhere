@@ -16,5 +16,14 @@ public:
 	BackgroundFader* backgroundFader;
 private:
 	IMeshSceneNode* robot;
+
+	// Array with bullets
+	IMeshSceneNode* bullets[10];
+
+	// Add which place in the bullets array to add the new bullet
+	int bulletIndex;
+
+	// Counter to keep track of the shoot cooldown
+	float shootCooldown;
 };
 

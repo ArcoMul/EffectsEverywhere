@@ -8,7 +8,15 @@ MainScene::MainScene(GameEngine* engine) :
 	_engine(engine)
 	
 {
-	this->backgroundFader = new BackgroundFader(engine);
+	backgroundFader = new BackgroundFader(engine);
+
+	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
+	for (int i = 0; i < 10; i++) {
+		bullets[i] = NULL;
+	}
+
+	// Active bullet index starts at zero
+	bulletIndex = 0;
 }
 
 void MainScene::start(void)
@@ -36,8 +44,6 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
-	
-	
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));
@@ -102,6 +108,58 @@ void MainScene::update(void)
 	// Set the newly calculated position and rotation
 	robot->setPosition(pos);
 	robot->setRotation(rot);
+
+	// Reduce the cooldown of shooting
+	if (shootCooldown > 0) {
+		shootCooldown -= _engine->deltaTime;
+	}
+
+	// When the spacebar is pressed and the cooldown is low engouh, shoot!
+	if (_engine->inputReceiver->IsKeyDown(irr::KEY_SPACE) && shootCooldown <= 0) {
+
+		// Reset the cooldown
+		shootCooldown = 250;
+
+		// Create the bullet mesh
+		IMesh* bulletMesh = _engine->smgr->getMesh("../../Media/bullet.obj");
+		IMeshSceneNode* bullet = _engine->smgr->addMeshSceneNode(bulletMesh);
+
+		if (bullet) {
+
+			// Give the bullet mesh the right material and position
+			bullet->setMaterialFlag(EMF_LIGHTING, false);
+			bullet->setPosition(robot->getPosition());
+
+			// If there is already a bullet in the bullet array on this position, remove that bullet
+			if (bullets[bulletIndex] != NULL) {
+			 	bullets[bulletIndex]->remove();
+				bullets[bulletIndex] = NULL;
+			}
+
+			// Add the bullet to the bullet array on the active index
+			bullets[bulletIndex] = bullet;
+
+			// Add one to the active bullet index or reset it to zero
+			if (bulletIndex < 9) {
+				bulletIndex++;
+			} else {
+				bulletIndex = 0;
+			}
+		}
+	}
+
+	// Update all the bullets
+	for (int i = 0; i < 10; i++) {
+		if (bullets[i] == NULL) continue;
+
+		// Get the current position and rotation and calculate based on that the new position
+		core::vector3df pos = bullets[i]->getPosition();
+		core::matrix4 mat = bullets[i]->getAbsoluteTransformation();
+		pos += core::vector3df(mat[2] * .5 * _engine->deltaTime,
+			0,
+			mat[0] * -.5 * _engine->deltaTime);
+		bullets[i]->setPosition(pos);
+	}
 
 	// Calculate the new colors for the background fader
 	backgroundFader->fade();
