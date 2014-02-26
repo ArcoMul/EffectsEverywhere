@@ -99,6 +99,13 @@ void MainScene::update(void)
 			mat[2] * -speed * _engine->deltaTime);
 	}
 
+	else if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_E))
+		rot.Y += .4 * _engine->deltaTime;
+
+	else if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_Q))
+		rot.Y -= .4 * _engine->deltaTime;
+
+
 	// Set the newly calculated position and rotation
 	robot->setPosition(pos);
 	robot->setRotation(rot);

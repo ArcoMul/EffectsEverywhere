@@ -5,6 +5,9 @@ using namespace irr;
 class InputReceiver : public IEventReceiver
 {
 public:
+	 
+	
+
 	InputReceiver(void);
 
 	// Called by Irrlicht when a key event happens
@@ -12,6 +15,10 @@ public:
 
 	// To check if a key is down
 	virtual bool IsKeyDown(EKEY_CODE keyCode) const;
+
+	
+        
+ 
 
 	~InputReceiver(void);
 private:
