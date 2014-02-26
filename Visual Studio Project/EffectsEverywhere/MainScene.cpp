@@ -129,6 +129,7 @@ void MainScene::update(void)
 			// Give the bullet mesh the right material and position
 			bullet->setMaterialFlag(EMF_LIGHTING, false);
 			bullet->setPosition(robot->getPosition());
+			bullet->setRotation(robot->getRotation());
 
 			// If there is already a bullet in the bullet array on this position, remove that bullet
 			if (bullets[bulletIndex] != NULL) {
