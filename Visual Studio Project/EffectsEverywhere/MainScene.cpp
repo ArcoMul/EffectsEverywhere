@@ -173,30 +173,8 @@ void MainScene::update(void)
 	// Calculate the new colors for the background fader
 	backgroundFader->fade();
 
-	// Set the background fader color to the engine background color
-	_engine->backgroundColor = backgroundFader->getColor();
 
-	// Always check if there is collision
-	core::line3d<f32> ray;
-	ray.start = camera->getPosition();
-	ray.end = ray.start + (camera->getTarget() - ray.start).normalize() * 1000.0f;
 
-	// Tracks the current intersection point with the level or mesh
-	core::vector3df intersection;
-
-	// Used to show which triangle has been hit
-	core::triangle3df hitTriangle;
-
-	// This call is nessecary to do the triangle collision on every node
-	// that has a triangle selector. It will find the nearest collision point and returns the scene node
-	// containing that point.
-	scene::ISceneNode * selectedSceneNode =
-		collMan->getSceneNodeAndCollisionPointFromRay(
-			ray,
-			intersection,
-			hitTriangle,
-			IDFlag_IsPickable,
-			0);
 }
 
 MainScene::~MainScene(void)
