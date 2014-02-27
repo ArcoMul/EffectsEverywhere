@@ -122,44 +122,55 @@ void MainScene::update(void)
 
 		// Create the bullet mesh
 		IMesh* bulletMesh = _engine->smgr->getMesh("../../Media/bullet.obj");
-		IMeshSceneNode* bullet = _engine->smgr->addMeshSceneNode(bulletMesh);
+		IMeshSceneNode* bulletNode = _engine->smgr->addMeshSceneNode(bulletMesh);
 
-		if (bullet) {
+		// Put the mesh in a bullet class together with the time the bullet was created
+		Bullet* bullet = new Bullet(bulletNode, _engine->totalTime);
 
-			// Give the bullet mesh the right material and position
-			bullet->setMaterialFlag(EMF_LIGHTING, false);
-			bullet->setPosition(robot->getPosition());
-			bullet->setRotation(robot->getRotation());
+		// Give the bullet mesh the right material and position
+		bullet->node->setMaterialFlag(EMF_LIGHTING, false);
+		bullet->node->setPosition(robot->getPosition());
+		bullet->node->setRotation(robot->getRotation());
 
-			// If there is already a bullet in the bullet array on this position, remove that bullet
-			if (bullets[bulletIndex] != NULL) {
-			 	bullets[bulletIndex]->remove();
-				bullets[bulletIndex] = NULL;
-			}
+		// If there is already a bullet in the bullet array on this position, remove that bullet
+		if (bullets[bulletIndex] != NULL) {
+			bullets[bulletIndex]->node->remove();
+			delete bullets[bulletIndex];
+			bullets[bulletIndex] = NULL;
+		}
 
-			// Add the bullet to the bullet array on the active index
-			bullets[bulletIndex] = bullet;
+		// Add the bullet to the bullet array on the active index
+		bullets[bulletIndex] = bullet;
 
-			// Add one to the active bullet index or reset it to zero
-			if (bulletIndex < 9) {
-				bulletIndex++;
-			} else {
-				bulletIndex = 0;
-			}
+		// Add one to the active bullet index or reset it to zero
+		if (bulletIndex < 9) {
+			bulletIndex++;
+		} else {
+			bulletIndex = 0;
 		}
 	}
 
 	// Update all the bullets
-	for (int i = 0; i < 10; i++) {
+	for (int i = 0; i < 10; i++)
+	{
 		if (bullets[i] == NULL) continue;
 
+		// Remove the bullet if it is alive for 500 miliseconds
+		if (_engine->totalTime - bullets[i]->aliveSince > 500)
+		{
+			bullets[i]->node->remove();
+			delete bullets[i];
+			bullets[i] = NULL;
+			continue;
+		}
+
 		// Get the current position and rotation and calculate based on that the new position
-		core::vector3df pos = bullets[i]->getPosition();
-		core::matrix4 mat = bullets[i]->getAbsoluteTransformation();
+		core::vector3df pos = bullets[i]->node->getPosition();
+		core::matrix4 mat = bullets[i]->node->getAbsoluteTransformation();
 		pos += core::vector3df(mat[2] * .5 * _engine->deltaTime,
 			0,
 			mat[0] * -.5 * _engine->deltaTime);
-		bullets[i]->setPosition(pos);
+		bullets[i]->node->setPosition(pos);
 	}
 
 	// Calculate the new colors for the background fader

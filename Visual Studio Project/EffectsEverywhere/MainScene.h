@@ -1,5 +1,6 @@
 #include "GameEngine.h"
 #include "GameScene.h"
+#include "Bullet.h"
 
 class BackgroundFader;
 
@@ -18,7 +19,7 @@ private:
 	IMeshSceneNode* robot;
 
 	// Array with bullets
-	IMeshSceneNode* bullets[10];
+	Bullet* bullets[10];
 
 	// Add which place in the bullets array to add the new bullet
 	int bulletIndex;
