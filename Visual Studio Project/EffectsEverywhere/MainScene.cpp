@@ -44,7 +44,7 @@ void MainScene::start(void)
 	em->drop();
 
 	if(ps){
-		ps->setPosition(vector3df(-70, 0, 40));
+		ps->setPosition(vector3df(-20, 0, -40));
 		ps->setScale(vector3df(2,2,2));
 		ps->setMaterialFlag(EMF_LIGHTING, false);
 		ps->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
@@ -57,6 +57,7 @@ void MainScene::start(void)
 	camera->setPosition(vector3df(0, 30, 40));
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->addChild(camera);
+	robot->addChild(ps);
 
 }
 
