@@ -100,10 +100,6 @@ void MainScene::start(void)
 		anim->drop();
 	}
 
-	//collMan = _engine->smgr->getSceneCollisionManager();
-	//int lastFPS = -1;
-
-
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));
 	camera->setRotation(vector3df(0, 180, 0));
