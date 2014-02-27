@@ -93,15 +93,15 @@ void MainScene::start(void)
 	
 	if(selector) {
 		scene::ISceneNodeAnimator* anim = _engine->smgr->createCollisionResponseAnimator(
-			selector, camera, core::vector3df(30, 50, 30),
-			core::vector3df(0, 0, 0), core::vector3df(0, 30, 0));
+			selector, camera, core::vector3df(7, 7, 7),
+			core::vector3df(0, 0, 0), core::vector3df(0, 0, 1));
 		selector->drop();
-		camera->addAnimator(anim);
+		robot->addAnimator(anim);
 		anim->drop();
 	}
 
-	collMan = _engine->smgr->getSceneCollisionManager();
-	int lastFPS = -1;
+	//collMan = _engine->smgr->getSceneCollisionManager();
+	//int lastFPS = -1;
 
 
 	camera = _engine->smgr->addCameraSceneNode();
@@ -172,8 +172,6 @@ void MainScene::update(void)
 
 	// Calculate the new colors for the background fader
 	backgroundFader->fade();
-
-
 
 }
 
