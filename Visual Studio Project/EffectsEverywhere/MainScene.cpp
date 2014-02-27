@@ -36,13 +36,28 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
-	
+	IParticleSystemSceneNode* ps = _engine->smgr->addParticleSystemSceneNode(false);
+	IParticleEmitter* em = ps->createBoxEmitter(aabbox3df(-5, 0, -5, 5, 1, 5 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
+		SColor(0,255,255,255),800,1000,0,dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.0f));
+
+	ps->setEmitter(em);
+	em->drop();
+
+	if(ps){
+		ps->setPosition(vector3df(-70, 0, 40));
+		ps->setScale(vector3df(2,2,2));
+		ps->setMaterialFlag(EMF_LIGHTING, false);
+		ps->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
+		ps->setMaterialTexture(0, _engine->driver->getTexture("../../Media/fireball.bmp"));
+		ps->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
+	}
 	
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->addChild(camera);
+
 }
 
 void MainScene::update(void)
