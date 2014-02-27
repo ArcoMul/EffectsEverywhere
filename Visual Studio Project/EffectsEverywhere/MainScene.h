@@ -18,5 +18,6 @@ private:
 	IMeshSceneNode* robot;
 private:
 	IMeshSceneNode* cube;
+	scene::ISceneNodeAnimatorCollisionResponse* collision;
 };
 
