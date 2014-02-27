@@ -80,8 +80,9 @@ void MainScene::start(void)
 
 	if(cube){
 		selector = _engine->smgr->createOctreeTriangleSelector(
-			cube->getMesh(), cube, 128);
+			cube->getMesh(), cube, 12);
 		cube->setTriangleSelector(selector);
+		cube->setPosition(core::vector3df(0, 10, -55));
 	}
 
 	//Set a jump of 3 units per second, which gives a fairly realistic jump
@@ -124,31 +125,46 @@ void MainScene::update(void)
 	// Get the transformations done on this robot
 	core::matrix4 mat = robot->getAbsoluteTransformation();
 
-	//Set camera to robot
-	camera->setTarget(pos);
+	// Movement speed
+	float speed = .1;
+
+	// WARNING HACKY: When both a front/back key and a right/left key is pressed reduce the speed,
+	// so that it doesn't move twice as fast when going in a diagonal line
+	if ((_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_S))
+		&& (_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_A) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_D)))
+		speed *= 0.667; // 0.667 is sort of the factor of the distance you move when you go in a 45 degree angle
+
 
 	// When the W key is down
 	if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W))
 	{
 		// Multiply the already done transformations of the robot with the speed and deltaTime
-		pos += core::vector3df(mat[2] * .1 * _engine->deltaTime,
+		pos += core::vector3df(mat[2] * speed * _engine->deltaTime,
 			0,
-			mat[0] * -.1 * _engine->deltaTime);
+			mat[0] * -speed * _engine->deltaTime);
 	}
-	// When the S key is down
+	// When the S key is down go back
 	else if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_S))
 	{
-		// Same as above, but with inverse Z speed
-		pos += core::vector3df(mat[2] * .1 * _engine->deltaTime,
+		pos += core::vector3df(mat[2] * -speed * _engine->deltaTime,
 			0,
-			mat[0] * .1 * _engine->deltaTime);
+			mat[0] * speed * _engine->deltaTime);
 	}
-
-	// Rotate on the Y angle when the A or D key is down
+	
+	// When the A key is down go right
 	if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_A))
-		rot.Y -= .4 * _engine->deltaTime;
+	{
+		pos += core::vector3df(mat[0] * speed * _engine->deltaTime,
+			0,
+			mat[2] * speed * _engine->deltaTime);
+	}
+	// When the D key is down go left
 	else if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_D))
-		rot.Y += .4 * _engine->deltaTime;
+	{
+		pos += core::vector3df(mat[0] * -speed * _engine->deltaTime,
+			0,
+			mat[2] * -speed * _engine->deltaTime);
+	}
 
 	// Set the newly calculated position and rotation
 	robot->setPosition(pos);
