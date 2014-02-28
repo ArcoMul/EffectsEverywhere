@@ -19,9 +19,6 @@ enum
 	IDFlagIsHighlightable = 1 << 1
 };
 
-scene::ICameraSceneNode* camera;
-scene::ISceneCollisionManager* collMan;
-
 MainScene::MainScene(GameEngine* engine) :
 	_engine(engine)
 	
@@ -34,15 +31,12 @@ void MainScene::start(void)
 	// The the mesh from the system
 	IMesh* mesh = _engine->smgr->getMesh("../../Media/robot.obj");
 
-	//Load a cube into the world
-	scene::IAnimatedMesh* meshCube = _engine->smgr->getMesh("../../Media/Wall.obj");
+	//Load 2 enemies into the world
+	IAnimatedMesh* meshEnemy1 = _engine->smgr->getMesh("../../Media/Wall.obj");
+	IAnimatedMesh* meshEnemy2 = _engine->smgr->getMesh("../../Media/Wall.obj");
 
 	// Add a new Irrlicht Node with the loaded mesh as mesh
 	robot = _engine->smgr->addMeshSceneNode(mesh);
-	
-	//Add a node and set it to null
-	scene::IMeshSceneNode* cube = 0;
-
 
 	// Make sure the node is loaded and 
 	if (robot)
@@ -62,47 +56,64 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
-	
-	
-	// Add the camera node to the scene
-
-	_engine->smgr->addCameraSceneNode(0, vector3df(10, 30, -50),vector3df(0, 5, 0));
-
-
-
 	//The cube mesh is pickable, but doesn't get highlighted.
-	if(meshCube){
-		cube = _engine->smgr->addOctreeSceneNode(meshCube, 0, IDFlag_IsPickable);
+	if (meshEnemy1){
+		enemy1 = _engine->smgr->addOctreeSceneNode(meshEnemy1, 0, IDFlag_IsPickable);
+	}
+
+	// The enemy2 is pickable, but doesn't get highlighted.
+	if (meshEnemy2) {
+		enemy2 = _engine->smgr->addOctreeSceneNode(meshEnemy2, 0, IDFlag_IsPickable);
 	}
 
 	//Creating a triangle selector
-	scene::ITriangleSelector* selector = 0;
+	if (enemy1){
+		selectorEnemy1 = _engine->smgr->createOctreeTriangleSelector(
+			enemy1->getMesh(), enemy1, 12);
+		enemy1->setTriangleSelector(selectorEnemy1);
+		enemy1->setPosition(core::vector3df(0, 10, -55));
+	}
 
-	if(cube){
-		selector = _engine->smgr->createOctreeTriangleSelector(
-			cube->getMesh(), cube, 12);
-		cube->setTriangleSelector(selector);
-		cube->setPosition(core::vector3df(0, 10, -55));
+	//Creating a second triangle selector, this time for the second enemy.
+	if (enemy2) {
+		selectorEnemy2 = _engine->smgr->createOctreeTriangleSelector(
+			enemy2->getMesh(), enemy2, 12);
+		enemy2->setTriangleSelector(selectorEnemy2);
+		enemy2->setPosition(core::vector3df(30, 10, -55));
 	}
 
 	//Set a jump of 3 units per second, which gives a fairly realistic jump
 	// when used with the gravity of (0, -10, 0) in the collision response animator.
 	camera = _engine->smgr->addCameraSceneNodeFPS(0, 100.0f, .3f, ID_IsNotPickable, 0, 0, true, 3.f);
-	//camera->setPosition(core::vector3df(0, 30, 20));
-	//camera->setTarget(core::vector3df(0, 0, 0));
-	
-	if(selector) {
+
+	//Check for collision and give an animator to the robot when it collides with something
+	if(selectorEnemy1) {
 
 		collision = _engine->smgr->createCollisionResponseAnimator(
-			selector, camera, core::vector3df(7, 7, 7),
+			selectorEnemy1, camera, core::vector3df(7, 7, 7),
 			core::vector3df(0, 0, 0), core::vector3df(0, 0, 1));
 
 		scene::ISceneNodeAnimator* anim = (scene::ISceneNodeAnimator*) collision;
-		selector->drop();
+		selectorEnemy1->drop();
 		robot->addAnimator(anim);
 		anim->drop();
 	}
 
+	//Collision check for enemy2.
+		if(selectorEnemy2) {
+
+		collision2 = _engine->smgr->createCollisionResponseAnimator(
+			selectorEnemy2, camera, core::vector3df(7, 7, 7),
+			core::vector3df(0, 0, 0), core::vector3df(0, 0, 1));
+
+		scene::ISceneNodeAnimator* anim2 = (scene::ISceneNodeAnimator*) collision2;
+		selectorEnemy2->drop();
+		robot->addAnimator(anim2);
+		anim2->drop();
+	}
+
+	// Set the camera position and rotation plus
+	// the camera follows the robot.
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));
 	camera->setRotation(vector3df(0, 180, 0));
@@ -175,6 +186,10 @@ void MainScene::update(void)
 	// Ouput collision when there is collision in the last frame
 	if (collision->collisionOccurred()) {
 		std::cout << "Collision!" << std::endl;
+	}
+
+	if (collision2->collisionOccurred()) {
+		std::cout << "Collision with enemy2!!" << std::endl;
 	}
 }
 

@@ -17,7 +17,16 @@ public:
 private:
 	IMeshSceneNode* robot;
 private:
-	IMeshSceneNode* cube;
-	scene::ISceneNodeAnimatorCollisionResponse* collision;
+	IMeshSceneNode* enemy1;
+	IMeshSceneNode* enemy2;
+
+	ISceneNodeAnimatorCollisionResponse* collision;
+	ISceneNodeAnimatorCollisionResponse* collision2;
+
+	ITriangleSelector* selectorEnemy1;
+	ITriangleSelector* selectorEnemy2;
+
+	
+	
 };
 
