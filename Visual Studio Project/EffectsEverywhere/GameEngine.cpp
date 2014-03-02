@@ -72,6 +72,12 @@ void GameEngine::update (void)
 {
 	// Call the update function of the current scene
 	activeScene->update();
+
+	// Calculate delta mouse based on the previous mouse position and the current one
+	deltaMouse = prevMouse - inputReceiver->cursor;
+
+	// Save the current mouse position for the next frame
+	prevMouse = inputReceiver->cursor;
 }
 
 void GameEngine::draw (void)

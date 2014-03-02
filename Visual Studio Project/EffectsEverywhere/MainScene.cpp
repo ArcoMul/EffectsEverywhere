@@ -36,10 +36,6 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
-	
-	
-	
-
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));
@@ -101,38 +97,13 @@ void MainScene::update(void)
 			mat[2] * -speed * _engine->deltaTime);
 	}
 
-	/*
-	else if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_E))
-		rot.Y += .4 * _engine->deltaTime;
+	// Add deltaMouse, the change of mouse position, to the rotation of the robot
+	std::cout << "DeltaMouse " << _engine->deltaMouse.X << " " << _engine->deltaMouse.Y << std::endl;
+    rot.Y += -.4 * _engine->deltaMouse.X;
 
-	else if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_Q))
-		rot.Y -= .4 * _engine->deltaTime;
-	*/
-	
 	// Set the newly calculated position and rotation
 	robot->setPosition(pos);
-	//robot->setRotation(rot);
-
-	// Create a ray through the mouse cursor.
-      core::line3df ray = _engine->smgr->getSceneCollisionManager()->getRayFromScreenCoordinates(core::vector2di(_engine->inputReceiver->cursor.Y, _engine->inputReceiver->cursor.X), camera);
-
-      // And intersect the ray with a plane around the node facing towards the camera.
-      core::plane3df plane2(rot, core::vector3df(0, 0, -1));
-      core::vector3df mousePosition;
-
-      if(plane2.getIntersectionWithLine(ray.start, ray.getVector(), mousePosition))
-      {
-         // We now have a mouse position in 3d space; point cube towards it.
-         robot->setRotation(core::vector3df(0 , mousePosition.Y* -1.0f,0));
-			 
-	  } 
-      
-
-	
-
-
-	
-	
+	robot->setRotation(rot);
 
 	// Calculate the new colors for the background fader
 	backgroundFader->fade();
@@ -140,8 +111,6 @@ void MainScene::update(void)
 	// Set the background fader color to the engine background color
 	_engine->backgroundColor = backgroundFader->getColor();
 }
-
-
 
 
 MainScene::~MainScene(void)
