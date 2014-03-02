@@ -14,6 +14,7 @@ public:
 	GameEngine* _engine;
 	ICameraSceneNode* camera;
 	BackgroundFader* backgroundFader;
+	
 private:
 	IMeshSceneNode* robot;
 };
