@@ -36,13 +36,18 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
+	//creating a particlesystemscenenode which basicly is a particle
 	IParticleSystemSceneNode* ps = _engine->smgr->addParticleSystemSceneNode(false);
+	
+	//creating an emitter so u actually emit the particle from somewhere so it will be visual( in this case it's a box )
 	IParticleEmitter* em = ps->createBoxEmitter(aabbox3df(-5, 0, -5, 5, 1, 5 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
 		SColor(0,255,255,255),800,1000,0,dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.0f));
 
+	//add the emitter to the particle and drop to prevent memory leakage
 	ps->setEmitter(em);
 	em->drop();
 
+	//check if the particlesystemscenenode is created correctly
 	if(ps){
 		ps->setPosition(vector3df(-20, 0, -40));
 		ps->setScale(vector3df(2,2,2));
@@ -51,7 +56,19 @@ void MainScene::start(void)
 		ps->setMaterialTexture(0, _engine->driver->getTexture("../../Media/fireball.bmp"));
 		ps->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 	}
-	
+
+	// create a hilleplanemesh to simulate height so we can create waves for the water particle
+	 IMesh* watermesh = _engine->smgr->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(20,20),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
+	 ISceneNode* waternode = _engine->smgr->addWaterSurfaceSceneNode(_engine->smgr->getMesh("watermesh"),3.0f,300.0f,30.0f);
+
+	 if(waternode){
+		 waternode->setPosition(vector3df(0,3,0));
+		 waternode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/stones.jpg"));
+		 waternode->setMaterialTexture(1, _engine->driver->getTexture("../../Media/water.jpg"));
+		 waternode->setMaterialType(EMT_REFLECTION_2_LAYER);
+		 waternode->setMaterialFlag(EMF_FOG_ENABLE,true);
+	 }
+
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));
