@@ -43,13 +43,19 @@ void MainScene::start(void)
 	IParticleEmitter* em = ps->createBoxEmitter(aabbox3df(-5, 0, -5, 5, 1, 5 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
 		SColor(0,255,255,255),800,1000,0,dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.0f));
 
+	// adding a particle affector which causes the particles to fade out
+	IParticleAffector* paf = ps->createFadeOutParticleAffector();
+
+    ps->addAffector(paf); // same goes for the affector
+    paf->drop();
+
 	//add the emitter to the particle and drop to prevent memory leakage
 	ps->setEmitter(em);
 	em->drop();
 
 	//check if the particlesystemscenenode is created correctly
 	if(ps){
-		ps->setPosition(vector3df(-20, 0, -40));
+		ps->setPosition(vector3df(-20, -15, -80));
 		ps->setScale(vector3df(2,2,2));
 		ps->setMaterialFlag(EMF_LIGHTING, false);
 		ps->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
@@ -62,16 +68,16 @@ void MainScene::start(void)
 	 ISceneNode* waternode = _engine->smgr->addWaterSurfaceSceneNode(_engine->smgr->getMesh("watermesh"),3.0f,300.0f,30.0f);
 
 	 if(waternode){
-		 waternode->setPosition(vector3df(0,3,0));
+		 waternode->setPosition(vector3df(0,5,0));
 		 waternode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/stones.jpg"));
 		 waternode->setMaterialTexture(1, _engine->driver->getTexture("../../Media/water.jpg"));
 		 waternode->setMaterialType(EMT_REFLECTION_2_LAYER);
-		 waternode->setMaterialFlag(EMF_FOG_ENABLE,true);
+		 waternode->setMaterialFlag(EMF_LIGHTING,false);
 	 }
 
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
-	camera->setPosition(vector3df(0, 30, 40));
+	camera->setPosition(vector3df(0, 30, 80));
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->addChild(camera);
 	robot->addChild(ps);
