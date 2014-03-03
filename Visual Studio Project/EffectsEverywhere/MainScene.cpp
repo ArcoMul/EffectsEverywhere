@@ -15,7 +15,7 @@ void MainScene::start(void)
 {
 	// The the mesh from the system
 	IMesh* mesh = _engine->smgr->getMesh("../../Media/robot.obj");
-
+	
 	// Add a new Irrlicht Node with the loaded mesh as mesh
 	robot = _engine->smgr->addMeshSceneNode(mesh);
 
@@ -35,6 +35,9 @@ void MainScene::start(void)
 	if (floor) {
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
+
+	// Set mouse Visible to false
+	_engine->setMouseVisible(false);
 
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
@@ -98,8 +101,8 @@ void MainScene::update(void)
 	}
 
 	// Add deltaMouse, the change of mouse position, to the rotation of the robot
-	std::cout << "DeltaMouse " << _engine->deltaMouse.X << " " << _engine->deltaMouse.Y << std::endl;
-    rot.Y += -.4 * _engine->deltaMouse.X;
+	//std::cout << "DeltaMouse " << _engine->deltaMouse.X << " " << _engine->deltaMouse.Y << std::endl;
+    rot.Y += -.6 * _engine->deltaMouse.X;
 
 	// Set the newly calculated position and rotation
 	robot->setPosition(pos);

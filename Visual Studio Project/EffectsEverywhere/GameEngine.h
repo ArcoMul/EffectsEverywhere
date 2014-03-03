@@ -22,6 +22,7 @@ public:
 	void run();
 	void setScene (GameScene* scene);
 	~GameEngine(void);
+	void setMouseVisible (bool MouseVisible);
 
 	float startTime;
 	float totalTime;
@@ -46,6 +47,8 @@ public:
 private:	
 	void update (void);
 	void draw (void);
+
+	bool mouseLock;
 
 	IrrlichtDevice* device;
 	IVideoDriver* driver;

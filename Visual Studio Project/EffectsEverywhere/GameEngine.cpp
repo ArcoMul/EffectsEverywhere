@@ -1,5 +1,5 @@
 #include <math.h>
-
+#include <iostream>
 #include "GameEngine.h"
 #include "GameScene.h"
 #include "InputReceiver.h"
@@ -76,8 +76,34 @@ void GameEngine::update (void)
 	// Calculate delta mouse based on the previous mouse position and the current one
 	deltaMouse = prevMouse - inputReceiver->cursor;
 
+	//Calculate screen size
+	const irr::core::dimension2du& screenSize = device->getVideoDriver()->getScreenSize();
+	if(!mouseLock)
+		{
+		if (prevMouse.X <= (screenSize.Width/2)- 40 || prevMouse.X >= (screenSize.Width/2) + 40)
+			{
+			// Reset delta Mouse
+			deltaMouse = position2di(0, 0);
+			// Set Cursor in the middel of the screen
+			device->getCursorControl()->setPosition(screenSize.Width/2, prevMouse.Y);
+			}
+		if (prevMouse.Y <= (screenSize.Height/2)- 40 || prevMouse.Y >= (screenSize.Height/2) + 40)
+			{
+			// Reset delta Mouse
+			deltaMouse = position2di(0, 0);
+			// Set Cursor in the middel of the screen
+			device->getCursorControl()->setPosition(prevMouse.X,screenSize.Height/2);
+			}
+		}
 	// Save the current mouse position for the next frame
 	prevMouse = inputReceiver->cursor;
+	
+}
+
+void GameEngine::setMouseVisible (bool mouseVisible)
+{
+	device->getCursorControl()->setVisible(mouseVisible);
+	 mouseLock = mouseVisible;
 }
 
 void GameEngine::draw (void)
