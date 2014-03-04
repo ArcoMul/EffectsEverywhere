@@ -6,10 +6,10 @@ class InputReceiver : public IEventReceiver
 {
 public:
 	InputReceiver(void);
-
+	core::position2di cursor; 
+	
 	// Called by Irrlicht when a key event happens
 	virtual bool OnEvent(const SEvent& event);
-
 	// To check if a key is down
 	virtual bool IsKeyDown(EKEY_CODE keyCode) const;
 

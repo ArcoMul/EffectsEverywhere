@@ -1,3 +1,4 @@
+
 #include "GameEngine.h"
 #include "GameScene.h"
 #include "Bullet.h"
@@ -15,6 +16,7 @@ public:
 	GameEngine* _engine;
 	ICameraSceneNode* camera;
 	BackgroundFader* backgroundFader;
+	
 private:
 	IMeshSceneNode* robot;
 

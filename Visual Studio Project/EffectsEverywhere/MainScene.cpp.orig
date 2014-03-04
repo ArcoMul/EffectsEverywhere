@@ -43,9 +43,12 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
+<<<<<<< HEAD
 	// Set mouse Visible to false
 	_engine->setMouseVisible(false);
-	
+
+=======
+>>>>>>> 66ef6626bc6513aab9900441b7d821ed8ffc174b
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));

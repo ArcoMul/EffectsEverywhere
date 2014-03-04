@@ -1,5 +1,5 @@
 #include <math.h>
-
+#include <iostream>
 #include "GameEngine.h"
 #include "GameScene.h"
 #include "InputReceiver.h"
@@ -39,7 +39,6 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	{
 		return false;
 	}
-
 	return true;
 }
 
@@ -72,6 +71,40 @@ void GameEngine::update (void)
 {
 	// Call the update function of the current scene
 	activeScene->update();
+
+	// Calculate delta mouse based on the previous mouse position and the current one
+	deltaMouse = prevMouse - inputReceiver->cursor;
+
+	// Calculate screen size
+	const irr::core::dimension2du& screenSize = device->getVideoDriver()->getScreenSize();
+	// Lock mouse in screen
+	if(!mouseLock)
+		{
+			// Check if the mouse in a box by 80 to 80 is in the center of the screen
+		if (prevMouse.X <= (screenSize.Width/2)- 40 || prevMouse.X >= (screenSize.Width/2) + 40)
+			{
+			// Reset delta Mouse
+			deltaMouse = position2di(0, 0);
+			// Set Cursor in the middel of the screen
+			device->getCursorControl()->setPosition(screenSize.Width/2, prevMouse.Y);
+			}
+		if (prevMouse.Y <= (screenSize.Height/2)- 40 || prevMouse.Y >= (screenSize.Height/2) + 40)
+			{
+			// Reset delta Mouse
+			deltaMouse = position2di(0, 0);
+			// Set Cursor in the middel of the screen
+			device->getCursorControl()->setPosition(prevMouse.X,screenSize.Height/2);
+			}
+		}
+	// Save the current mouse position for the next frame
+	prevMouse = inputReceiver->cursor;
+}
+
+void GameEngine::setMouseVisible (bool mouseVisible)
+{
+	// Set mouse visible
+	device->getCursorControl()->setVisible(mouseVisible);
+	mouseLock = mouseVisible;
 }
 
 void GameEngine::draw (void)
