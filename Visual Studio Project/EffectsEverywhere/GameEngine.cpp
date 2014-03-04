@@ -76,10 +76,12 @@ void GameEngine::update (void)
 	// Calculate delta mouse based on the previous mouse position and the current one
 	deltaMouse = prevMouse - inputReceiver->cursor;
 
-	//Calculate screen size
+	// Calculate screen size
 	const irr::core::dimension2du& screenSize = device->getVideoDriver()->getScreenSize();
+	// Lock mouse in screen
 	if(!mouseLock)
 		{
+			// Check if the mouse in a box by 80 to 80 is in the center of the screen
 		if (prevMouse.X <= (screenSize.Width/2)- 40 || prevMouse.X >= (screenSize.Width/2) + 40)
 			{
 			// Reset delta Mouse
@@ -102,8 +104,9 @@ void GameEngine::update (void)
 
 void GameEngine::setMouseVisible (bool mouseVisible)
 {
+	// Set mouse visible
 	device->getCursorControl()->setVisible(mouseVisible);
-	 mouseLock = mouseVisible;
+	mouseLock = mouseVisible;
 }
 
 void GameEngine::draw (void)

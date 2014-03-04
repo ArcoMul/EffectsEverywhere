@@ -16,8 +16,7 @@ void GameScene::start(void)
 }
 
 void GameScene::update(void)
-{
-	
+{	
 }
 
 GameScene::~GameScene(void)

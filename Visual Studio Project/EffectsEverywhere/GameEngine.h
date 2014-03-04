@@ -47,7 +47,6 @@ public:
 private:	
 	void update (void);
 	void draw (void);
-
 	bool mouseLock;
 
 	IrrlichtDevice* device;
