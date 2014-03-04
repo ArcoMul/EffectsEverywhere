@@ -2,7 +2,6 @@
 
 InputReceiver::InputReceiver(void)
 {
-
 	// Create a bool array with all keys
 	for (u32 i=0; i<KEY_KEY_CODES_COUNT; ++i)
 		KeyIsDown[i] = false;

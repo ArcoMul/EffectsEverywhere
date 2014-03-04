@@ -39,7 +39,6 @@ bool GameEngine::init(int width, int height, int colordepth, bool fullscreen, bo
 	{
 		return false;
 	}
-
 	return true;
 }
 
@@ -99,7 +98,6 @@ void GameEngine::update (void)
 		}
 	// Save the current mouse position for the next frame
 	prevMouse = inputReceiver->cursor;
-	
 }
 
 void GameEngine::setMouseVisible (bool mouseVisible)

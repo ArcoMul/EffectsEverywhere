@@ -5,8 +5,7 @@
 #include "BackgroundFader.h"
 
 MainScene::MainScene(GameEngine* engine) :
-	_engine(engine)
-	
+	_engine(engine)	
 {
 	this->backgroundFader = new BackgroundFader(engine);
 }
@@ -101,7 +100,6 @@ void MainScene::update(void)
 	}
 
 	// Add deltaMouse, the change of mouse position, to the rotation of the robot
-	//std::cout << "DeltaMouse " << _engine->deltaMouse.X << " " << _engine->deltaMouse.Y << std::endl;
     rot.Y += -.6 * _engine->deltaMouse.X;
 
 	// Set the newly calculated position and rotation
@@ -114,7 +112,6 @@ void MainScene::update(void)
 	// Set the background fader color to the engine background color
 	_engine->backgroundColor = backgroundFader->getColor();
 }
-
 
 MainScene::~MainScene(void)
 {
