@@ -7,11 +7,12 @@
 class Enemy
 {
 public:
-	Enemy(GameEngine* engine, ICameraSceneNode* _camera, IMeshSceneNode* robot);
+	Enemy(GameEngine* engine, core::vector3df position);
+	void addCollision (IMeshSceneNode* node);
 
 	GameEngine* _engine;
 private:
-	
+	IMeshSceneNode* node;
 };
 
 #endif
