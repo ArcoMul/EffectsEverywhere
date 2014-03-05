@@ -140,7 +140,35 @@ void MainScene::update(void)
 	}
 
 	// When the spacebar is pressed and the cooldown is low engouh, shoot!
-	if (_engine->inputReceiver->IsKeyDown(irr::KEY_SPACE) && shootCooldown <= 0) {
+	if (_engine->inputReceiver->IsKeyDown(irr::KEY_SPACE) && shootCooldown <= 0)
+	{
+		// START raycast part
+
+		// Create ray with start and endpoint
+		core::line3d<f32> ray;
+		ray.start = robot->getPosition();
+		core::vector3df end = core::vector3df(mat[2], 0, mat[0] * -1);
+		ray.end = ray.start + (end * 1000.);
+
+		// Tracks the current intersection point with the level or a mesh
+		core::vector3df intersection;
+		// Used to show with triangle has been hit
+		core::triangle3df hitTriangle;
+
+		// Checks collision for all node
+		scene::ISceneNode * selectedSceneNode = _engine->smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(
+			ray,
+			intersection, // Position of the collision
+			hitTriangle, // Triangle hit in the collision
+			0,
+			0);
+
+		if(selectedSceneNode)
+		{
+			std::cout << "Ray cast hit something!" << std::endl;
+		}
+
+		// END raycast part
 
 		// Reset the cooldown
 		shootCooldown = 250;
