@@ -73,16 +73,6 @@ void MainScene::update(void)
 	// Get the transformations done on this robot
 	core::matrix4 mat = robot->getAbsoluteTransformation();
 
-	// Movement speed
-	float speed = .1;
-
-	// WARNING HACKY: When both a front/back key and a right/left key is pressed reduce the speed,
-	// so that it doesn't move twice as fast when going in a diagonal line
-	if ((_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_S))
-		&& (_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_A) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_D)))
-		speed *= 0.667; // 0.667 is sort of the factor of the distance you move when you go in a 45 degree angle
-
-
 	// When the W key is down
 	if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W))
 	{
