@@ -43,8 +43,12 @@ void MainScene::start(void)
 	camera = _engine->smgr->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, 0, 0, true, 3.f);
 
 	// Creating an enemy and give it the parameters from the Enemy.cpp class
-	Enemy* enemy1 = new Enemy(_engine, core::vector3df(0, 0, -55));
+	Enemy* enemy1 = new Enemy(_engine, core::vector3df(-30, 0, -55));
+	Enemy* enemy2 = new Enemy(_engine, core::vector3df(30, 0, -55));
+
+	// Add collision with the player and the enemies
 	enemy1->addCollision(robot);
+	enemy2->addCollision(robot);
 
 	// Set the camera position and rotation plus
 	// the camera follows the robot.
