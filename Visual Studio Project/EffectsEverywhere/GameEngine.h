@@ -22,12 +22,18 @@ public:
 	void run();
 	void setScene (GameScene* scene);
 	~GameEngine(void);
+	void setMouseVisible (bool MouseVisible);
 
 	float startTime;
 	float totalTime;
 	float lastFrameTime;
 	float deltaTime;
 	
+	// Mouse position on the last frame
+	position2di prevMouse;
+
+	// The mouse change between this frame and last frame
+	position2di deltaMouse;
 
 	// Scene manager, keeps track of all nodes in the scene, I think (Arco)
 	ISceneManager* smgr;
@@ -41,6 +47,7 @@ public:
 private:	
 	void update (void);
 	void draw (void);
+	bool mouseLock;
 
 	IrrlichtDevice* device;
 	IVideoDriver* driver;
