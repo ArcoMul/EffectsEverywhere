@@ -1,3 +1,5 @@
+#ifndef MAINSCENE_H
+#define MAINSCENE_H
 
 #include "GameEngine.h"
 #include "GameScene.h"
@@ -30,3 +32,4 @@ private:
 	float shootCooldown;
 };
 
+#endif

@@ -13,6 +13,7 @@
     <ClCompile Include="InputReceiver.cpp">
       <Filter>core</Filter>
     </ClCompile>
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -29,6 +30,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InputReceiver.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Bullet.h" />
