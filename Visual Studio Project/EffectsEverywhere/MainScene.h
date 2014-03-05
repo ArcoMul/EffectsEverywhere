@@ -1,3 +1,6 @@
+#ifndef MAINSCENE_H
+#define MAINSCENE_H
+
 #include "GameEngine.h"
 #include "GameScene.h"
 
@@ -16,17 +19,6 @@ public:
 	BackgroundFader* backgroundFader;
 private:
 	IMeshSceneNode* robot;
-private:
-	IMeshSceneNode* enemy1;
-	IMeshSceneNode* enemy2;
-
-	ISceneNodeAnimatorCollisionResponse* collision;
-	ISceneNodeAnimatorCollisionResponse* collision2;
-
-	ITriangleSelector* selectorEnemy1;
-	ITriangleSelector* selectorEnemy2;
-
-	
-	
 };
 
+#endif

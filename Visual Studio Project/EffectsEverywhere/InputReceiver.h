@@ -1,3 +1,6 @@
+#ifndef INPUTRECEIVER_H
+#define INPUTRECEIVER_H
+
 #include <irrlicht.h>
 
 using namespace irr;
@@ -18,3 +21,5 @@ private:
     // We use this array to store the current state of each key
     bool KeyIsDown[KEY_KEY_CODES_COUNT];
 };
+
+#endif

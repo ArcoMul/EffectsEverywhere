@@ -3,21 +3,7 @@
 #include "GameEngine.h"
 #include "InputReceiver.h"
 #include "BackgroundFader.h"
-
-
-enum
-{
-	//Indicatior that a scene node is not pickable
-	//by getSceneNodeAndCollisionPointFromRay().
-	ID_IsNotPickable = 0,
-
-	//Indicator that a scene note is pickable
-	//by ray selection.
-	IDFlag_IsPickable = 1 << 0,
-
-	//Indicator that the scene node can be highlited.
-	IDFlagIsHighlightable = 1 << 1
-};
+#include "Enemy.h"
 
 MainScene::MainScene(GameEngine* engine) :
 	_engine(engine)
@@ -31,10 +17,6 @@ void MainScene::start(void)
 	// The the mesh from the system
 	IMesh* mesh = _engine->smgr->getMesh("../../Media/robot.obj");
 
-	//Load 2 enemies into the world
-	IAnimatedMesh* meshEnemy1 = _engine->smgr->getMesh("../../Media/Wall.obj");
-	IAnimatedMesh* meshEnemy2 = _engine->smgr->getMesh("../../Media/Wall.obj");
-
 	// Add a new Irrlicht Node with the loaded mesh as mesh
 	robot = _engine->smgr->addMeshSceneNode(mesh);
 
@@ -46,7 +28,7 @@ void MainScene::start(void)
 		robot->setMaterialFlag(EMF_LIGHTING, false);
 
 		// Set start position (on top of floor)
-		robot->setPosition(core::vector3df(0, 7.2, 0));
+		robot->setPosition(core::vector3df(0, 7.2f, 0));
 	}
 
 	// Add floor to scene
@@ -56,61 +38,12 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
-	//The cube mesh is pickable, but doesn't get highlighted.
-	if (meshEnemy1){
-		enemy1 = _engine->smgr->addOctreeSceneNode(meshEnemy1, 0, IDFlag_IsPickable);
-	}
-
-	// The enemy2 is pickable, but doesn't get highlighted.
-	if (meshEnemy2) {
-		enemy2 = _engine->smgr->addOctreeSceneNode(meshEnemy2, 0, IDFlag_IsPickable);
-	}
-
-	//Creating a triangle selector
-	if (enemy1){
-		selectorEnemy1 = _engine->smgr->createOctreeTriangleSelector(
-			enemy1->getMesh(), enemy1, 12);
-		enemy1->setTriangleSelector(selectorEnemy1);
-		enemy1->setPosition(core::vector3df(0, 10, -55));
-	}
-
-	//Creating a second triangle selector, this time for the second enemy.
-	if (enemy2) {
-		selectorEnemy2 = _engine->smgr->createOctreeTriangleSelector(
-			enemy2->getMesh(), enemy2, 12);
-		enemy2->setTriangleSelector(selectorEnemy2);
-		enemy2->setPosition(core::vector3df(30, 10, -55));
-	}
-
 	//Set a jump of 3 units per second, which gives a fairly realistic jump
 	// when used with the gravity of (0, -10, 0) in the collision response animator.
-	camera = _engine->smgr->addCameraSceneNodeFPS(0, 100.0f, .3f, ID_IsNotPickable, 0, 0, true, 3.f);
+	camera = _engine->smgr->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, 0, 0, true, 3.f);
 
-	//Check for collision and give an animator to the robot when it collides with something
-	if(selectorEnemy1) {
-
-		collision = _engine->smgr->createCollisionResponseAnimator(
-			selectorEnemy1, camera, core::vector3df(7, 7, 7),
-			core::vector3df(0, 0, 0), core::vector3df(0, 0, 1));
-
-		scene::ISceneNodeAnimator* anim = (scene::ISceneNodeAnimator*) collision;
-		selectorEnemy1->drop();
-		robot->addAnimator(anim);
-		anim->drop();
-	}
-
-	//Collision check for enemy2.
-		if(selectorEnemy2) {
-
-		collision2 = _engine->smgr->createCollisionResponseAnimator(
-			selectorEnemy2, camera, core::vector3df(7, 7, 7),
-			core::vector3df(0, 0, 0), core::vector3df(0, 0, 1));
-
-		scene::ISceneNodeAnimator* anim2 = (scene::ISceneNodeAnimator*) collision2;
-		selectorEnemy2->drop();
-		robot->addAnimator(anim2);
-		anim2->drop();
-	}
+	// Creating an enemy and give it the parameters from the Enemy.cpp class
+	Enemy* enemy1 = new Enemy(_engine, camera, robot);
 
 	// Set the camera position and rotation plus
 	// the camera follows the robot.
@@ -182,15 +115,6 @@ void MainScene::update(void)
 
 	// Calculate the new colors for the background fader
 	backgroundFader->fade();
-
-	// Ouput collision when there is collision in the last frame
-	if (collision->collisionOccurred()) {
-		std::cout << "Collision!" << std::endl;
-	}
-
-	if (collision2->collisionOccurred()) {
-		std::cout << "Collision with enemy2!!" << std::endl;
-	}
 }
 
 MainScene::~MainScene(void)

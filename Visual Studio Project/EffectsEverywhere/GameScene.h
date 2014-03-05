@@ -1,5 +1,7 @@
+#ifndef GAMESCENE_H
+#define GAMESCENE_H
 
-class GameEngine;
+#include "GameEngine.h"
 
 class GameScene
 {
@@ -13,3 +15,4 @@ public:
 	GameEngine* _engine;
 };
 
+#endif
