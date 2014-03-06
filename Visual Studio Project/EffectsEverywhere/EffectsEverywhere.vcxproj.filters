@@ -1,7 +1,6 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
-    <ClCompile Include="BackgroundFader.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="GameEngine.cpp">
       <Filter>core</Filter>
@@ -17,9 +16,6 @@
     <ClCompile Include="Bullet.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BackgroundFader.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="GameEngine.h">
       <Filter>Header Files</Filter>
     </ClInclude>

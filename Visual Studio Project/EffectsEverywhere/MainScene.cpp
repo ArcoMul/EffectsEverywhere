@@ -2,14 +2,11 @@
 #include "MainScene.h"
 #include "GameEngine.h"
 #include "InputReceiver.h"
-#include "BackgroundFader.h"
 #include "Enemy.h"
 
 MainScene::MainScene(GameEngine* engine) :
 	_engine(engine)	
 {
-	backgroundFader = new BackgroundFader(engine);
-
 	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
 	for (int i = 0; i < 10; i++) {
 		bullets[i] = NULL;
@@ -39,7 +36,7 @@ void MainScene::start(void)
 	}
 
 	// Add floor to scene
-	IMesh* floorMesh = _engine->smgr->getMesh("../../Media/floor.obj");
+	IMesh* floorMesh = _engine->smgr->getMesh("../../Media/level.obj");
 	IMeshSceneNode* floor = _engine->smgr->addMeshSceneNode(floorMesh);
 	if (floor) {
 		floor->setMaterialFlag(EMF_LIGHTING, false);
@@ -66,10 +63,11 @@ void MainScene::start(void)
 	// Add the camera node to the scene
 
 	camera = _engine->smgr->addCameraSceneNode();
-	camera->setPosition(vector3df(0, 30, 40));
+	camera->setPosition(vector3df(0, 40, 55));
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->addChild(camera);
- 
+
+	_engine->backgroundColor = video::SColor(1, 0, 0, 0);
 }
 
 void MainScene::update(void)
@@ -79,9 +77,6 @@ void MainScene::update(void)
 
 	// Get the rotation of the robot
 	core::vector3df rot = robot->getRotation();
-	
-	// Set camera position update
-	camera->setTarget(pos);
 
 	// Get the transformations done on this robot
 	core::matrix4 mat = robot->getAbsoluteTransformation();
@@ -128,11 +123,14 @@ void MainScene::update(void)
 	}
 
 	// Add deltaMouse, the change of mouse position, to the rotation of the robot
-    rot.Y += -.6 * _engine->deltaMouse.X;
+    rot.Y += -.3 * _engine->deltaMouse.X;
 
 	// Set the newly calculated position and rotation
 	robot->setPosition(pos);
 	robot->setRotation(rot);
+
+	// Set where the camera has to look at
+	camera->setTarget(robot->getPosition());
 
 	// Reduce the cooldown of shooting
 	if (shootCooldown > 0) {
@@ -197,12 +195,9 @@ void MainScene::update(void)
 			mat[0] * -.5 * _engine->deltaTime);
 		bullets[i]->node->setPosition(pos);
 	}
-
-	// Calculate the new colors for the background fader
-	backgroundFader->fade();
 }
 
 MainScene::~MainScene(void)
 {
-	delete backgroundFader;
+	
 }
