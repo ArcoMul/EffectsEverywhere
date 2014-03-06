@@ -15,7 +15,6 @@ public:
 	void update (void);
 	~MainScene(void);
 
-	GameEngine* _engine;
 	ICameraSceneNode* camera;
 	
 private:
