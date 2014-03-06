@@ -12,7 +12,11 @@ bool InputReceiver::OnEvent(const SEvent& event)
 	// Remember whether each key is down or up
 	if (event.EventType == irr::EET_KEY_INPUT_EVENT)
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
-
+	if(event.EventType == EET_MOUSE_INPUT_EVENT)
+        {
+            // store mouse X and Y coords
+            cursor = core::position2di(event.MouseInput.X, event.MouseInput.Y);
+        }
 	return false;
 }
 
@@ -23,7 +27,7 @@ bool InputReceiver::IsKeyDown(EKEY_CODE keyCode) const
 }
 
 
+
 InputReceiver::~InputReceiver(void)
-{
-	
+{	
 }

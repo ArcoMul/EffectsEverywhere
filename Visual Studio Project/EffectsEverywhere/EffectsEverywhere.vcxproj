@@ -65,7 +65,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="BackgroundFader.cpp" />
+    <ClCompile Include="Enemy.cpp" />
+    <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="GameEngine.cpp" />
     <ClCompile Include="GameScene.cpp" />
     <ClCompile Include="InputReceiver.cpp" />
@@ -78,7 +79,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BackgroundFader.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="Bullet.h" />
     <ClInclude Include="GameEngine.h" />
     <ClInclude Include="GameScene.h" />
     <ClInclude Include="InputReceiver.h" />
