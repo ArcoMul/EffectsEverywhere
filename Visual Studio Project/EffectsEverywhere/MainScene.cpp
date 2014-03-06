@@ -1,12 +1,14 @@
 #include <iostream>
 #include "MainScene.h"
 #include "GameEngine.h"
+#include "GameScene.h"
 #include "InputReceiver.h"
 #include "Enemy.h"
 
-MainScene::MainScene(GameEngine* engine) :
-	_engine(engine)	
+MainScene::MainScene(GameEngine* engine)
 {
+	_engine = engine;
+
 	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
 	for (int i = 0; i < 10; i++) {
 		bullets[i] = NULL;
@@ -61,7 +63,6 @@ void MainScene::start(void)
 	_engine->setMouseVisible(false);
 	
 	// Add the camera node to the scene
-
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 40, 55));
 	camera->setRotation(vector3df(0, 180, 0));
@@ -138,7 +139,16 @@ void MainScene::update(void)
 	}
 
 	// When the spacebar is pressed and the cooldown is low engouh, shoot!
-	if (_engine->inputReceiver->IsKeyDown(irr::KEY_SPACE) && shootCooldown <= 0) {
+	if (_engine->inputReceiver->IsKeyDown(irr::KEY_SPACE) && shootCooldown <= 0)
+	{
+		// Calculate the start and end of the ray and pass the intersection variable to get the collision position
+		core::vector3df intersection;
+		core::vector3df end = core::vector3df(mat[2], 0, mat[0] * -1);
+		if (checkRayCastIntersection(robot->getPosition(), robot->getPosition() + (end * 1000.), intersection))
+		{
+			// Spawn a mesh at the place of the collision
+			spawnDebugMesh (intersection);
+		}
 
 		// Reset the cooldown
 		shootCooldown = 250;
