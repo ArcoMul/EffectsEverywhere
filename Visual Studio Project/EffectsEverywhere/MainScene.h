@@ -16,7 +16,6 @@ public:
 	~MainScene(void);
 
 	ICameraSceneNode* camera;
-	BackgroundFader* backgroundFader;
 	
 private:
 	IMeshSceneNode* robot;
