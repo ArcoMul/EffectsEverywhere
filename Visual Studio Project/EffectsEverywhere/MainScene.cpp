@@ -1,13 +1,14 @@
 #include <iostream>
 #include "MainScene.h"
 #include "GameEngine.h"
+#include "GameScene.h"
 #include "InputReceiver.h"
 #include "BackgroundFader.h"
 #include "Enemy.h"
 
-MainScene::MainScene(GameEngine* engine) :
-	_engine(engine)	
+MainScene::MainScene(GameEngine* engine)
 {
+	_engine = engine;
 	backgroundFader = new BackgroundFader(engine);
 
 	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
@@ -64,12 +65,10 @@ void MainScene::start(void)
 	_engine->setMouseVisible(false);
 	
 	// Add the camera node to the scene
-
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 30, 40));
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->addChild(camera);
- 
 }
 
 void MainScene::update(void)
@@ -142,33 +141,14 @@ void MainScene::update(void)
 	// When the spacebar is pressed and the cooldown is low engouh, shoot!
 	if (_engine->inputReceiver->IsKeyDown(irr::KEY_SPACE) && shootCooldown <= 0)
 	{
-		// START raycast part
-
-		// Create ray with start and endpoint
-		core::line3d<f32> ray;
-		ray.start = robot->getPosition();
-		core::vector3df end = core::vector3df(mat[2], 0, mat[0] * -1);
-		ray.end = ray.start + (end * 1000.);
-
-		// Tracks the current intersection point with the level or a mesh
+		// Calculate the start and end of the ray and pass the intersection variable to get the collision position
 		core::vector3df intersection;
-		// Used to show with triangle has been hit
-		core::triangle3df hitTriangle;
-
-		// Checks collision for all node
-		scene::ISceneNode * selectedSceneNode = _engine->smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(
-			ray,
-			intersection, // Position of the collision
-			hitTriangle, // Triangle hit in the collision
-			0,
-			0);
-
-		if(selectedSceneNode)
+		core::vector3df end = core::vector3df(mat[2], 0, mat[0] * -1);
+		if (checkRayCastIntersection(robot->getPosition(), robot->getPosition() + (end * 1000.), intersection))
 		{
-			std::cout << "Ray cast hit something!" << std::endl;
+			// Spawn a mesh at the place of the collision
+			spawnDebugMesh (intersection);
 		}
-
-		// END raycast part
 
 		// Reset the cooldown
 		shootCooldown = 250;
