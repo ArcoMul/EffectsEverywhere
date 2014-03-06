@@ -2,6 +2,7 @@
 #include "MainScene.h"
 #include "GameEngine.h"
 #include "InputReceiver.h"
+#include "Enemy.h"
 
 MainScene::MainScene(GameEngine* engine) :
 	_engine(engine)	
@@ -27,10 +28,11 @@ void MainScene::start(void)
 	if (robot)
 	{
 		// Set what kind of matarial it is
+
 		robot->setMaterialFlag(EMF_LIGHTING, false);
 
 		// Set start position (on top of floor)
-		robot->setPosition(core::vector3df(0, 7.2, 0));
+		robot->setPosition(core::vector3df(0, 7.2f, 0));
 	}
 
 	// Add floor to scene
@@ -40,10 +42,26 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
+	//Set a jump of 3 units per second, which gives a fairly realistic jump
+	// when used with the gravity of (0, -10, 0) in the collision response animator.
+	camera = _engine->smgr->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, 0, 0, true, 3.f);
+
+	// Creating an enemy and give it the parameters from the Enemy.cpp class
+	Enemy* enemy1 = new Enemy(_engine, core::vector3df(-30, 0, -55));
+	Enemy* enemy2 = new Enemy(_engine, core::vector3df(30, 0, -55));
+
+	// Add collision with the player and the enemies
+	enemy1->addCollision(robot);
+	enemy2->addCollision(robot);
+
+	// Set the camera position and rotation plus
+	// the camera follows the robot.
+
 	// Set mouse Visible to false
 	_engine->setMouseVisible(false);
 	
 	// Add the camera node to the scene
+
 	camera = _engine->smgr->addCameraSceneNode();
 	camera->setPosition(vector3df(0, 40, 55));
 	camera->setRotation(vector3df(0, 180, 0));
@@ -63,15 +81,16 @@ void MainScene::update(void)
 	// Get the transformations done on this robot
 	core::matrix4 mat = robot->getAbsoluteTransformation();
 
+	
 	// Movement speed
-	float speed = .1;
-
-	// WARNING HACKY: When both a front/back key and a right/left key is pressed reduce the speed,
-	// so that it doesn't move twice as fast when going in a diagonal line
-	if ((_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_S))
-		&& (_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_A) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_D)))
-		speed *= 0.667; // 0.667 is sort of the factor of the distance you move when you go in a 45 degree angle
-
+ 	float speed = .1;
+ 
+ 	// WARNING HACKY: When both a front/back key and a right/left key is pressed reduce the speed,
+ 	// so that it doesn't move twice as fast when going in a diagonal line
+ 	if ((_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_S))
+ 	&& (_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_A) || _engine->inputReceiver->IsKeyDown(irr::KEY_KEY_D)))
+ 	speed *= 0.667; // 0.667 is sort of the factor of the distance you move when you go in a 45 degree angle
+ 
 	// When the W key is down
 	if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W))
 	{
