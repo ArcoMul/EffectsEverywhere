@@ -1,10 +1,20 @@
 # Blender MTL File: 'level.blend'
-# Material Count: 1
+# Material Count: 2
 
 newmtl Material
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
 Kd 0.039639 0.019607 0.013489
+Ks 0.000000 0.000000 0.000000
+Ni 1.000000
+d 1.000000
+illum 1
+map_Kd level.png
+
+newmtl Material.001
+Ns 96.078431
+Ka 0.000000 0.000000 0.000000
+Kd 0.303197 0.303197 0.303197
 Ks 0.000000 0.000000 0.000000
 Ni 1.000000
 d 1.000000
