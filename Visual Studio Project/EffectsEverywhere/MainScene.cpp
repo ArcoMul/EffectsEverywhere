@@ -9,6 +9,14 @@ MainScene::MainScene(GameEngine* engine)
 {
 	_engine = engine;
 
+	/** We set the particleScene node to a nullpointer so it can be first created before we disable the emitter
+	 * otherwise it will break and lose memory
+	 **/
+	particleSceneNode = nullptr;
+
+	// This boolean is used to make sure that the emitter will be disabled after the particle cooldown
+	hasEmitter = true;
+
 	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
 	for (int i = 0; i < 10; i++) {
 		bullets[i] = NULL;
@@ -44,40 +52,13 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
-	//creating a particlesystemscenenode which basicly is a particle
-	IParticleSystemSceneNode* ps = _engine->smgr->addParticleSystemSceneNode(false);
-	
-	//creating an emitter so u actually emit the particle from somewhere so it will be visual( in this case it's a box )
-	IParticleEmitter* em = ps->createBoxEmitter(aabbox3df(-5, 0, -5, 5, 1, 5 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
-		SColor(0,255,255,255),800,1000,0,dimension2df(10.0f, 10.0f), dimension2df(20.0f, 20.0f));
-
-	// adding a particle affector which causes the particles to fade out
-	IParticleAffector* paf = ps->createFadeOutParticleAffector();
-
-    ps->addAffector(paf); // same goes for the affector
-    paf->drop();
-
-	//add the emitter to the particle and drop to prevent memory leakage
-	ps->setEmitter(em);
-	em->drop();
-
-	//check if the particlesystemscenenode is created correctly
-	if(ps){
-		ps->setPosition(vector3df(-20, -15, -80));
-		ps->setScale(vector3df(2,2,2));
-		ps->setMaterialFlag(EMF_LIGHTING, false);
-		ps->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
-		ps->setMaterialTexture(0, _engine->driver->getTexture("../../Media/fireball.bmp"));
-		ps->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
-	}
-
 	// create a hilleplanemesh to simulate height so we can create waves for the water particle
-	 IMesh* watermesh = _engine->smgr->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(20,20),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
-	 ISceneNode* waternode = _engine->smgr->addWaterSurfaceSceneNode(_engine->smgr->getMesh("watermesh"),3.0f,300.0f,30.0f);
+	 IMesh* watermesh = _engine->smgr->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(5,5),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
+	 ISceneNode* waternode = _engine->smgr->addWaterSurfaceSceneNode(_engine->smgr->getMesh("watermesh"),2.0f,300.0f,30.0f);
 
 	 if(waternode){
 		 waternode->setPosition(vector3df(0,5,0));
-		 waternode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/stones.jpg"));
+		 waternode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/water.jpg"));
 		 waternode->setMaterialTexture(1, _engine->driver->getTexture("../../Media/water.jpg"));
 		 waternode->setMaterialType(EMT_REFLECTION_2_LAYER);
 		 waternode->setMaterialFlag(EMF_LIGHTING,false);
@@ -104,10 +85,9 @@ void MainScene::start(void)
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
 
-	camera->setPosition(vector3df(0, 40, 55));
+	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->addChild(camera);
-	robot->addChild(ps);
 
 	_engine->backgroundColor = video::SColor(1, 0, 0, 0);
 }
@@ -179,6 +159,22 @@ void MainScene::update(void)
 		shootCooldown -= _engine->deltaTime;
 	}
 
+	/**
+	 * This if function checks if the particle cooldown != null and the cooldown is lower than 0 
+	 * if so, it will disable the emitter but this will not remove/drop it. This needs to be done when the 
+	 * enemy dies.
+	 * WARNING the particleCooldown must always be lower than the shootCooldown otherwise it will never come into this
+	 * if function and the particle will be constantly emitting. TIP: if u want to make a particle that needs to be there all
+	 * the time then just set the particleCooldown equal to or higher than the shootCooldown
+	 **/
+	if (particleCooldown <= 0 && particleSceneNode != nullptr) {
+		particleSceneNode->setEmitter(0);
+	}
+	// Reduce the cooldown of the particle
+	if (particleCooldown > 0) {
+		particleCooldown -= _engine->deltaTime;
+	}
+	
 	// When the spacebar is pressed and the cooldown is low engouh, shoot!
 	if (_engine->inputReceiver->IsKeyDown(irr::KEY_SPACE) && shootCooldown <= 0)
 	{
@@ -187,12 +183,15 @@ void MainScene::update(void)
 		core::vector3df end = core::vector3df(mat[2], 0, mat[0] * -1);
 		if (checkRayCastIntersection(robot->getPosition(), robot->getPosition() + (end * 1000.), intersection))
 		{
-			// Spawn a mesh at the place of the collision
-			spawnDebugMesh (intersection);
+			/** Spawn a particle at the place of the collision
+			 * the particle is created in the gamescene
+			 * Set the cooldown of the particle
+			 **/
+			spawnParticleEffect (intersection);
+			particleCooldown = 250;
 		}
-
 		// Reset the cooldown
-		shootCooldown = 250;
+		shootCooldown = 350;
 
 		// Create the bullet mesh
 		IMesh* bulletMesh = _engine->smgr->getMesh("../../Media/bullet.obj");
@@ -250,5 +249,5 @@ void MainScene::update(void)
 
 MainScene::~MainScene(void)
 {
-	
+	this->Emitter->drop();
 }

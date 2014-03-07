@@ -28,6 +28,8 @@ private:
 
 	// Counter to keep track of the shoot cooldown
 	float shootCooldown;
+
+	float particleCooldown;
 };
 
 #endif

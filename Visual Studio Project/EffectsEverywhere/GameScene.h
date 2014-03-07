@@ -2,6 +2,7 @@
 #define GAMESCENE_H
 
 #include "GameEngine.h"
+#include <irrlicht.h>
 
 class GameScene
 {
@@ -10,6 +11,14 @@ public:
 	GameScene(GameEngine* engine);
 	virtual void start (void);
 	virtual void update (void);
+
+	scene::IParticleSystemSceneNode* particleSceneNode;
+	scene::IParticleEmitter* Emitter;
+
+	/** 
+	 * boolean to regulate emitter of the particle
+	 */
+	bool hasEmitter;
 
 	/**
 	 * Cast ray to check for collision
@@ -22,6 +31,12 @@ public:
 	 * Spawn mesh a certain position, only for debug purposes
 	 */
 	void spawnDebugMesh (core::vector3df position);
+
+	/**
+	 * Spawns a particle at a certain position
+	 * Give the position of the object to spawn the particle onto that object
+	 */
+	void spawnParticleEffect (core::vector3df position);
 
 	~GameScene(void);
 
