@@ -53,11 +53,11 @@ void MainScene::start(void)
 	}
 
 	// create a hilleplanemesh to simulate height so we can create waves for the water particle
-	 IMesh* watermesh = _engine->smgr->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(5,5),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
+	 IMesh* watermesh = _engine->smgr->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(2.5f,2.5f),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
 	 ISceneNode* waternode = _engine->smgr->addWaterSurfaceSceneNode(_engine->smgr->getMesh("watermesh"),2.0f,300.0f,30.0f);
 
 	 if(waternode){
-		 waternode->setPosition(vector3df(0,5,0));
+		 waternode->setPosition(vector3df(-60, 5, 60));
 		 waternode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/water.jpg"));
 		 waternode->setMaterialTexture(1, _engine->driver->getTexture("../../Media/water.jpg"));
 		 waternode->setMaterialType(EMT_REFLECTION_2_LAYER);
