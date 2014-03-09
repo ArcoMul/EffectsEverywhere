@@ -4,6 +4,7 @@
 #include "GameEngine.h"
 #include "GameScene.h"
 #include "Bullet.h"
+#include "Enemy.h"
 
 class BackgroundFader;
 
@@ -28,6 +29,9 @@ private:
 
 	// Counter to keep track of the shoot cooldown
 	float shootCooldown;
+
+	Enemy* enemy1;
+	Enemy* enemy2;
 };
 
 #endif
