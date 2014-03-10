@@ -38,7 +38,6 @@ void MainScene::start(void)
 	if (robot)
 	{
 		// Set what kind of matarial it is
-
 		robot->setMaterialFlag(EMF_LIGHTING, false);
 
 		// Set start position (on top of floor)
@@ -185,8 +184,10 @@ void MainScene::update(void)
 	{
 		// Calculate the start and end of the ray and pass the intersection variable to get the collision position
 		core::vector3df intersection;
-		core::vector3df end = core::vector3df(mat[2], 0, mat[0] * -1);
-		if (checkRayCastIntersection(robot->getPosition(), robot->getPosition() + (end * 1000.), intersection))
+		core::vector3df forward = core::vector3df(mat[2], 0, mat[0] * -1);
+
+		// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
+		if (checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection))
 		{
 			/** Spawn a particle at the place of the collision
 			 * the particle is created in the gamescene
