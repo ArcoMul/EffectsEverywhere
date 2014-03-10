@@ -19,7 +19,7 @@ public:
 	 * Spawns a particle at a certain position
 	 * Give the position of the object to spawn the particle onto that object
 	 */
-	void spawnParticleEffect (core::vector3df position);
+	void spawnParticleEffect (core::vector3df position, core::stringc pathname);
 	~MainScene(void);
 
 	ICameraSceneNode* camera;
@@ -47,6 +47,8 @@ private:
 	Enemy* enemy2;
 
 	float particleCooldown;
+
+	bool particleOnCooldown;
 };
 
 #endif

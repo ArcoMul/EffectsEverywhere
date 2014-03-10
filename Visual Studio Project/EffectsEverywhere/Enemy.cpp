@@ -15,6 +15,10 @@ Enemy::Enemy(GameEngine* engine, core::vector3df position, float speed)
 	// Set the right lightning and position
 	node->setMaterialFlag(EMF_LIGHTING, false);
 	node->setPosition(position);
+
+	// Give the enemies a triangle selector for ray cast detecting of bullets
+	ITriangleSelector* selector = _engine->smgr->createOctreeTriangleSelector(meshEnemy, node, 12);
+	node->setTriangleSelector(selector);
 }
 
 void Enemy::update(float deltaTime)
@@ -32,14 +36,28 @@ void Enemy::update(float deltaTime)
 	// Set the right rotation for the enemy
 	node->setRotation(core::vector3df(0, angle + 180, 0));
 
-	if (direction.getLength() < 15) return;
+	// As long as there is no collision, walk in the direction of the target
+	if (collision->collisionOccurred()) return;
 
 	// Walk forwards using the transformation matrix
 	core::matrix4 mat = node->getAbsoluteTransformation();
 	pos -= core::vector3df(mat[2] * speed * _engine->deltaTime,
 			0,
 			mat[0] * -speed * _engine->deltaTime);
+
+	// WARNING: hacky; collision influences Y position, reset this one to prevent weird behaviour
+	pos.Y = 0;
+
 	node->setPosition(pos);
+}
+
+bool Enemy::collisionOccurred (core::vector3df* position)
+{
+	if (collision->collisionOccurred()) {
+		*position = collision->getCollisionPoint();
+		return true;
+	}
+	return false;
 }
 
 /**
@@ -49,20 +67,20 @@ void Enemy::update(float deltaTime)
 void Enemy::addCollision (IMeshSceneNode* collisionNode)
 {
 	// Create an octree triangle selector for collision detection and attach it to our node.
-	ITriangleSelector* selector = _engine->smgr->createOctreeTriangleSelector(node->getMesh(), node, 12);
-	node->setTriangleSelector(selector);
+	ITriangleSelector* selector = _engine->smgr->createOctreeTriangleSelector(collisionNode->getMesh(), collisionNode, 12);
+	collisionNode->setTriangleSelector(selector);
 
 	// Add an animator to the camera, a Collision Response Animator. This animator prevents
 	// your object (player) to move through walls and other objects. The collision box of the enemy
 	// has been set to 7, 7, 7. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
-	ISceneNodeAnimatorCollisionResponse* collision = _engine->smgr->createCollisionResponseAnimator(
-			selector, collisionNode, core::vector3df(7, 7, 7),
+	collision = _engine->smgr->createCollisionResponseAnimator(
+			selector, node, core::vector3df(7, 7, 7),
 			core::vector3df(0, 0, 0), core::vector3df(0, 0, 1));
 
 	// We add the animator to our collisionNode and drop the selector and collision if
 	// we don't need it anymore.
-	collisionNode->addAnimator((scene::ISceneNodeAnimator*) collision);
+	node->addAnimator((scene::ISceneNodeAnimator*) collision);
 	selector->drop();
 	collision->drop();
 }

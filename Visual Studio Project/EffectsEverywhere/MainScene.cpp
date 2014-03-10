@@ -28,6 +28,9 @@ void MainScene::start(void)
 	 **/
 	particleSceneNode = nullptr;
 
+	//  boolean used for player and enemy collision
+	particleOnCooldown = false;
+
 	// The the mesh from the system
 	IMesh* mesh = _engine->smgr->getMesh("../../Media/robot.obj");
 	
@@ -38,7 +41,6 @@ void MainScene::start(void)
 	if (robot)
 	{
 		// Set what kind of matarial it is
-
 		robot->setMaterialFlag(EMF_LIGHTING, false);
 
 		// Set start position (on top of floor)
@@ -159,6 +161,26 @@ void MainScene::update(void)
 	enemy1->update(_engine->deltaTime);
 	enemy2->update(_engine->deltaTime);
 
+	// Check if there was collision with enemy 1 and 2
+	core::vector3df collisionPosition;
+	if(particleCooldown <= 0)
+	{
+		if(enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
+			spawnParticleEffect(collisionPosition,"../../Media/portal1.bmp");
+			Emitter->setMaxLifeTime(250u);
+			particleOnCooldown = true;
+			particleCooldown = 100;
+		}
+		else if(enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
+			spawnParticleEffect(collisionPosition,"../../Media/particle.bmp");
+			Emitter->setMaxLifeTime(250u);
+			particleOnCooldown = true;
+			particleCooldown = 100;
+		
+		}else
+			particleOnCooldown = false;
+	}
+
 	// Reduce the cooldown of shooting
 	if (shootCooldown > 0) {
 		shootCooldown -= _engine->deltaTime;
@@ -185,15 +207,18 @@ void MainScene::update(void)
 	{
 		// Calculate the start and end of the ray and pass the intersection variable to get the collision position
 		core::vector3df intersection;
-		core::vector3df end = core::vector3df(mat[2], 0, mat[0] * -1);
-		if (checkRayCastIntersection(robot->getPosition(), robot->getPosition() + (end * 1000.), intersection))
+		core::vector3df forward = core::vector3df(mat[2], 0, mat[0] * -1);
+
+		// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
+		if (checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection)&& !particleOnCooldown)
 		{
 			/** Spawn a particle at the place of the collision
 			 * the particle is created in the gamescene
 			 * Set the cooldown of the particle
 			 **/
-			spawnParticleEffect (intersection);
+			spawnParticleEffect (intersection,"../../Media/fireball.bmp");
 			particleCooldown = 250;
+			particleOnCooldown = true;
 		}
 		// Reset the cooldown
 		shootCooldown = 350;
@@ -251,7 +276,7 @@ void MainScene::update(void)
 		bullets[i]->node->setPosition(pos);
 	}
 }
-void MainScene::spawnParticleEffect (core::vector3df position) 
+void MainScene::spawnParticleEffect (core::vector3df position, core::stringc pathname) 
 {
 	//creating a particlesystemscenenode which basicly is a particle
 	particleSceneNode = _engine->smgr->addParticleSystemSceneNode(false);
@@ -275,7 +300,7 @@ void MainScene::spawnParticleEffect (core::vector3df position)
 		particleSceneNode->setScale(vector3df(0.5f, 0.5f,0.5f));
 		particleSceneNode->setMaterialFlag(EMF_LIGHTING, false);
 		particleSceneNode->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
-		particleSceneNode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/fireball.bmp"));
+		particleSceneNode->setMaterialTexture(0, _engine->driver->getTexture(pathname));
 		particleSceneNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 	}
 }
