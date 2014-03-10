@@ -16,6 +16,8 @@ public:
 	// Create a constructor addCollision and give it a node
 	void addCollision (IMeshSceneNode* node);
 
+	bool collisionOccurred (core::vector3df* position);
+
 	void setTarget (scene::ISceneNode* target);
 
 	GameEngine* _engine;

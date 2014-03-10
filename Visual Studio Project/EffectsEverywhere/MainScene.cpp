@@ -158,6 +158,12 @@ void MainScene::update(void)
 	enemy1->update(_engine->deltaTime);
 	enemy2->update(_engine->deltaTime);
 
+	// Check if there was collision with enemy 1 and log the position if so
+	core::vector3df collisionPosition;
+	if (enemy1->collisionOccurred(&collisionPosition)) {
+		std::cout << "Player got hit at " << collisionPosition.X << ", " << collisionPosition.Y << ", " << collisionPosition.Z << std::endl;
+	}
+
 	// Reduce the cooldown of shooting
 	if (shootCooldown > 0) {
 		shootCooldown -= _engine->deltaTime;

@@ -37,11 +37,7 @@ void Enemy::update(float deltaTime)
 	node->setRotation(core::vector3df(0, angle + 180, 0));
 
 	// As long as there is no collision, walk in the direction of the target
-	if (collision->collisionOccurred()) {
-		core::vector3df collisionPoint = collision->getCollisionPoint();
-		std::cout << "Player got hit at " << collisionPoint.X << ", " << collisionPoint.Y << ", " << collisionPoint.Z << std::endl;
-		return;
-	}
+	if (collision->collisionOccurred()) return;
 
 	// Walk forwards using the transformation matrix
 	core::matrix4 mat = node->getAbsoluteTransformation();
@@ -53,6 +49,15 @@ void Enemy::update(float deltaTime)
 	pos.Y = 0;
 
 	node->setPosition(pos);
+}
+
+bool Enemy::collisionOccurred (core::vector3df* position)
+{
+	if (collision->collisionOccurred()) {
+		*position = collision->getCollisionPoint();
+		return true;
+	}
+	return false;
 }
 
 /**
