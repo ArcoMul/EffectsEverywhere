@@ -47,6 +47,8 @@ private:
 	Enemy* enemy2;
 
 	float particleCooldown;
+
+	bool particleOnCooldown;
 };
 
 #endif

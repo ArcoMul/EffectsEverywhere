@@ -28,6 +28,9 @@ void MainScene::start(void)
 	 **/
 	particleSceneNode = nullptr;
 
+	//  boolean used for player and enemy collision
+	particleOnCooldown = false;
+
 	// The the mesh from the system
 	IMesh* mesh = _engine->smgr->getMesh("../../Media/robot.obj");
 	
@@ -156,12 +159,29 @@ void MainScene::update(void)
 	camera->setTarget(robot->getPosition());
 
 	enemy1->update(_engine->deltaTime);
-	enemy2->update(_engine->deltaTime);
+	//enemy2->update(_engine->deltaTime);
 
 	// Check if there was collision with enemy 1 and log the position if so
 	core::vector3df collisionPosition;
-	if (enemy1->collisionOccurred(&collisionPosition)) {
+	/*if (enemy1->collisionOccurred(&collisionPosition)) {
 		std::cout << "Player got hit at " << collisionPosition.X << ", " << collisionPosition.Y << ", " << collisionPosition.Z << std::endl;
+	}*/
+
+	if(particleCooldown <= 0)
+	{
+		if(enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
+			spawnParticleEffect(robot->getPosition());
+			particleOnCooldown = true;
+			particleCooldown = 100;
+			std::cout << "enemy 1" << std::endl;
+		}
+		else if(enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
+			spawnParticleEffect(robot->getPosition());
+			particleOnCooldown = true;
+			particleCooldown = 100;
+			std::cout << "enemy 2" << std::endl;
+		}else
+			particleOnCooldown = false;
 	}
 
 	// Reduce the cooldown of shooting
@@ -193,7 +213,7 @@ void MainScene::update(void)
 		core::vector3df forward = core::vector3df(mat[2], 0, mat[0] * -1);
 
 		// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
-		if (checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection))
+		if (checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection)&& !particleOnCooldown)
 		{
 			/** Spawn a particle at the place of the collision
 			 * the particle is created in the gamescene
@@ -201,6 +221,7 @@ void MainScene::update(void)
 			 **/
 			spawnParticleEffect (intersection);
 			particleCooldown = 250;
+			particleOnCooldown = true;
 		}
 		// Reset the cooldown
 		shootCooldown = 350;
