@@ -170,13 +170,13 @@ void MainScene::update(void)
 	if(particleCooldown <= 0)
 	{
 		if(enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(robot->getPosition());
+			spawnParticleEffect(collisionPosition);
 			particleOnCooldown = true;
 			particleCooldown = 100;
 			std::cout << "enemy 1" << std::endl;
 		}
 		else if(enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(robot->getPosition());
+			spawnParticleEffect(collisionPosition);
 			particleOnCooldown = true;
 			particleCooldown = 100;
 			std::cout << "enemy 2" << std::endl;
