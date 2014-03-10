@@ -9,14 +9,6 @@ MainScene::MainScene(GameEngine* engine)
 {
 	_engine = engine;
 
-	/** We set the particleScene node to a nullpointer so it can be first created before we disable the emitter
-	 * otherwise it will break and lose memory
-	 **/
-	particleSceneNode = nullptr;
-
-	// This boolean is used to make sure that the emitter will be disabled after the particle cooldown
-	hasEmitter = true;
-
 	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
 	for (int i = 0; i < 10; i++) {
 		bullets[i] = NULL;
@@ -28,6 +20,14 @@ MainScene::MainScene(GameEngine* engine)
 
 void MainScene::start(void)
 {
+	// This boolean is used to make sure that the emitter will be disabled after the particle cooldown
+	hasEmitter = true;
+
+	/** We set the particleScene node to a nullpointer so it can be first created before we disable the emitter
+	 * otherwise it will break and lose memory
+	 **/
+	particleSceneNode = nullptr;
+
 	// The the mesh from the system
 	IMesh* mesh = _engine->smgr->getMesh("../../Media/robot.obj");
 	
@@ -76,15 +76,14 @@ void MainScene::start(void)
 	enemy1->addCollision(robot);
 	enemy2->addCollision(robot);
 
-	// Set the camera position and rotation plus
-	// the camera follows the robot.
-
 	// Set mouse Visible to false
 	_engine->setMouseVisible(false);
 	
 	// Add the camera node to the scene
 	camera = _engine->smgr->addCameraSceneNode();
 
+	// Set the camera position and rotation plus
+	// the camera follows the robot.
 	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->addChild(camera);
@@ -244,6 +243,34 @@ void MainScene::update(void)
 			0,
 			mat[0] * -.5 * _engine->deltaTime);
 		bullets[i]->node->setPosition(pos);
+	}
+}
+void MainScene::spawnParticleEffect (core::vector3df position) 
+{
+	//creating a particlesystemscenenode which basicly is a particle
+	particleSceneNode = _engine->smgr->addParticleSystemSceneNode(false);
+	
+	//creating an emitter so u actually emit the particle from somewhere so it will be visual( in this case it's a box )
+	Emitter = particleSceneNode->createBoxEmitter(aabbox3df(-3, 0, -3, 3, 1, 3 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
+		SColor(0,255,255,255),500,750,0,dimension2df(4.0f, 4.0f), dimension2df(8.0f, 8.0f));
+
+	// adding a particle affector which causes the particles to fade out
+	IParticleAffector* paf = particleSceneNode->createFadeOutParticleAffector();
+
+    particleSceneNode->addAffector(paf); // same goes for the affector
+    paf->drop();
+
+	//add the emitter to the particle and drop to prevent memory leakage
+	particleSceneNode->setEmitter(Emitter);
+
+	//check if the particlesystemscenenode is created correctly
+	if(particleSceneNode){
+		particleSceneNode->setPosition(position);
+		particleSceneNode->setScale(vector3df(0.5f, 0.5f,0.5f));
+		particleSceneNode->setMaterialFlag(EMF_LIGHTING, false);
+		particleSceneNode->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
+		particleSceneNode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/fireball.bmp"));
+		particleSceneNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 	}
 }
 
