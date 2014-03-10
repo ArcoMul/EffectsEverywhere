@@ -69,8 +69,8 @@ void MainScene::start(void)
 	camera = _engine->smgr->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, 0, 0, true, 3.f);
 
 	// Creating an enemy and give it the parameters from the Enemy.cpp class
-	Enemy* enemy1 = new Enemy(_engine, core::vector3df(-30, 0, -55));
-	Enemy* enemy2 = new Enemy(_engine, core::vector3df(30, 0, -55));
+	enemy1 = new Enemy(_engine, core::vector3df(-30, 0, -55), .05);
+	enemy2 = new Enemy(_engine, core::vector3df(30, 0, -55), .03);
 
 	// Add collision with the player and the enemies
 	enemy1->addCollision(robot);
@@ -102,7 +102,6 @@ void MainScene::update(void)
 	// Get the transformations done on this robot
 	core::matrix4 mat = robot->getAbsoluteTransformation();
 
-	
 	// Movement speed
  	float speed = .1;
  
@@ -115,6 +114,10 @@ void MainScene::update(void)
 	// When the W key is down
 	if(_engine->inputReceiver->IsKeyDown(irr::KEY_KEY_W))
 	{
+		// Add the player as the target of the enemies
+		enemy1->setTarget(robot);
+		enemy2->setTarget(robot);
+
 		// Multiply the already done transformations of the robot with the speed and deltaTime
 		pos += core::vector3df(mat[2] * speed * _engine->deltaTime,
 			0,
@@ -152,6 +155,9 @@ void MainScene::update(void)
 
 	// Set where the camera has to look at
 	camera->setTarget(robot->getPosition());
+
+	enemy1->update(_engine->deltaTime);
+	enemy2->update(_engine->deltaTime);
 
 	// Reduce the cooldown of shooting
 	if (shootCooldown > 0) {

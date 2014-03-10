@@ -1,10 +1,12 @@
-#include <iostream>
 #include "Enemy.h"
-#include "irrlicht.h"
+#include <iostream>
+#include <math.h> 
 
-Enemy::Enemy(GameEngine* engine, core::vector3df position)
+Enemy::Enemy(GameEngine* engine, core::vector3df position, float speed)
 {
 	this->_engine = engine;
+	this->target = nullptr;
+	this->speed = speed;
 
 	// Get the mesh
 	IMesh* meshEnemy = engine->smgr->getMesh("../../Media/enemy.obj");
@@ -13,6 +15,31 @@ Enemy::Enemy(GameEngine* engine, core::vector3df position)
 	// Set the right lightning and position
 	node->setMaterialFlag(EMF_LIGHTING, false);
 	node->setPosition(position);
+}
+
+void Enemy::update(float deltaTime)
+{
+	if (target == nullptr) return;
+
+	core::vector3df pos = node->getPosition();
+
+	// The direction vector
+	core::vector3df direction = pos - target->getPosition();
+
+	// Angle based on the direction vector
+	float angle = atan2 (direction.X, direction.Z) * 180 / PI;
+
+	// Set the right rotation for the enemy
+	node->setRotation(core::vector3df(0, angle + 180, 0));
+
+	if (direction.getLength() < 15) return;
+
+	// Walk forwards using the transformation matrix
+	core::matrix4 mat = node->getAbsoluteTransformation();
+	pos -= core::vector3df(mat[2] * speed * _engine->deltaTime,
+			0,
+			mat[0] * -speed * _engine->deltaTime);
+	node->setPosition(pos);
 }
 
 /**
@@ -38,4 +65,9 @@ void Enemy::addCollision (IMeshSceneNode* collisionNode)
 	collisionNode->addAnimator((scene::ISceneNodeAnimator*) collision);
 	selector->drop();
 	collision->drop();
+}
+
+void Enemy::setTarget (ISceneNode* target)
+{
+	this->target = target;
 }
