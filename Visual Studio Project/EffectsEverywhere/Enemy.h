@@ -23,6 +23,8 @@ private:
 	scene::IMeshSceneNode* node;
 	scene::ISceneNode* target;
 	float speed;
+
+	ISceneNodeAnimatorCollisionResponse* collision;
 };
 
 #endif
