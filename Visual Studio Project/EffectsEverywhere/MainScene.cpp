@@ -161,25 +161,22 @@ void MainScene::update(void)
 	enemy1->update(_engine->deltaTime);
 	enemy2->update(_engine->deltaTime);
 
-	// Check if there was collision with enemy 1 and log the position if so
+	// Check if there was collision with enemy 1 and 2
 	core::vector3df collisionPosition;
-	/*if (enemy1->collisionOccurred(&collisionPosition)) {
-		std::cout << "Player got hit at " << collisionPosition.X << ", " << collisionPosition.Y << ", " << collisionPosition.Z << std::endl;
-	}*/
-
 	if(particleCooldown <= 0)
 	{
 		if(enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(collisionPosition);
+			spawnParticleEffect(collisionPosition,"../../Media/portal1.bmp");
+			Emitter->setMaxLifeTime(250u);
 			particleOnCooldown = true;
 			particleCooldown = 100;
-			std::cout << "enemy 1" << std::endl;
 		}
 		else if(enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(collisionPosition);
+			spawnParticleEffect(collisionPosition,"../../Media/particle.bmp");
+			Emitter->setMaxLifeTime(250u);
 			particleOnCooldown = true;
 			particleCooldown = 100;
-			std::cout << "enemy 2" << std::endl;
+		
 		}else
 			particleOnCooldown = false;
 	}
@@ -219,7 +216,7 @@ void MainScene::update(void)
 			 * the particle is created in the gamescene
 			 * Set the cooldown of the particle
 			 **/
-			spawnParticleEffect (intersection);
+			spawnParticleEffect (intersection,"../../Media/fireball.bmp");
 			particleCooldown = 250;
 			particleOnCooldown = true;
 		}
@@ -279,7 +276,7 @@ void MainScene::update(void)
 		bullets[i]->node->setPosition(pos);
 	}
 }
-void MainScene::spawnParticleEffect (core::vector3df position) 
+void MainScene::spawnParticleEffect (core::vector3df position, core::stringc pathname) 
 {
 	//creating a particlesystemscenenode which basicly is a particle
 	particleSceneNode = _engine->smgr->addParticleSystemSceneNode(false);
@@ -303,7 +300,7 @@ void MainScene::spawnParticleEffect (core::vector3df position)
 		particleSceneNode->setScale(vector3df(0.5f, 0.5f,0.5f));
 		particleSceneNode->setMaterialFlag(EMF_LIGHTING, false);
 		particleSceneNode->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
-		particleSceneNode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/fireball.bmp"));
+		particleSceneNode->setMaterialTexture(0, _engine->driver->getTexture(pathname));
 		particleSceneNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
 	}
 }
