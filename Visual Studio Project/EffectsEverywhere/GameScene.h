@@ -2,6 +2,7 @@
 #define GAMESCENE_H
 
 #include "GameEngine.h"
+#include <irrlicht.h>
 
 class GameScene
 {

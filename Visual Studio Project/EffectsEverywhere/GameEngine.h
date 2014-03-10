@@ -44,13 +44,15 @@ public:
 	// Background color of the scene
 	SColor backgroundColor;
 
+	IVideoDriver* driver; //was private
+
 private:	
 	void update (void);
 	void draw (void);
 	bool mouseLock;
 
 	IrrlichtDevice* device;
-	IVideoDriver* driver;
+	
 
 	// Which scene we will call the update function of
 	GameScene* activeScene;
