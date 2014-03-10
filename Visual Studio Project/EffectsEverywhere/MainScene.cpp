@@ -159,7 +159,7 @@ void MainScene::update(void)
 	camera->setTarget(robot->getPosition());
 
 	enemy1->update(_engine->deltaTime);
-	//enemy2->update(_engine->deltaTime);
+	enemy2->update(_engine->deltaTime);
 
 	// Check if there was collision with enemy 1 and log the position if so
 	core::vector3df collisionPosition;
