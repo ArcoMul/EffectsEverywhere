@@ -60,7 +60,7 @@ void MainScene::start(void)
 	 IMesh* watermesh = _engine->smgr->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(2.5f,2.5f),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
 	 ISceneNode* waternode = _engine->smgr->addWaterSurfaceSceneNode(_engine->smgr->getMesh("watermesh"),2.0f,300.0f,30.0f);
 
-	 if(waternode){
+	 if (waternode) {
 		 waternode->setPosition(vector3df(-60, 5, 60));
 		 waternode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/water.jpg"));
 		 waternode->setMaterialTexture(1, _engine->driver->getTexture("../../Media/water.jpg"));
@@ -97,8 +97,6 @@ void MainScene::start(void)
 
 void MainScene::update(void)
 {
-	if (isPlayerDeath) return;
-
 	// Get the position of the robot
 	core::vector3df pos = robot->getPosition();
 
@@ -169,16 +167,15 @@ void MainScene::update(void)
 	core::vector3df collisionPosition;
 	if(particleCooldown <= 0)
 	{
-		if(!enemy1->isDeath && enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(collisionPosition,"../../Media/portal1.bmp");
-			playerHit();
+		if(!enemy1->isDeath && enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown) {
+			playerHit(collisionPosition);
 		}
-		else if(!enemy2->isDeath && enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(collisionPosition,"../../Media/particle.bmp");
-			playerHit();
+		else if(!enemy2->isDeath && enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown) {
+			playerHit(collisionPosition);
 		
-		} else
+		} else {
 			particleOnCooldown = false;
+		}
 	}
 
 	// Reduce the cooldown of shooting
@@ -221,19 +218,12 @@ void MainScene::update(void)
 			particleCooldown = 250;
 			particleOnCooldown = true;
 
-			std::cout << "hit:" << intersectionNode->getName() << std::endl;
-			//if (intersectionNode->getName() == "enemy") {
-				std::cout << "hit enemy" << std::endl;
-				if (enemy1->node == intersectionNode) {
-					if (enemy1->hit()) {
-						enemy1->die();
-					}
-				} else {
-					if (enemy2->hit()) {
-						enemy2->die();
-					}
-				}
-			//}
+			// Check which enemy was hit and tell the enemy it is hit, if the the hit function returns true, it has to die
+			if (enemy1->node == intersectionNode) {
+				enemy1->hit();
+			} else {
+				enemy2->hit();
+			}
 		}
 		// Reset the cooldown
 		shootCooldown = 350;
@@ -325,20 +315,10 @@ MainScene::~MainScene(void)
 	this->Emitter->drop();
 }
 
-void MainScene::playerHit ()
+void MainScene::playerHit (core::vector3df hitPosition)
 {
+	spawnParticleEffect(hitPosition, "../../Media/portal1.bmp");
 	Emitter->setMaxLifeTime(250u);
 	particleOnCooldown = true;
 	particleCooldown = 100;
-	playerHp -= 1;
-	if (playerHp <= 0) {
-		playerDie();
-	}
-}
-
-void MainScene::playerDie ()
-{
-	robot->setPosition (core::vector3df (0, -30, 0));
-	isPlayerDeath = true;
-	particleSceneNode->setEmitter(0);
 }

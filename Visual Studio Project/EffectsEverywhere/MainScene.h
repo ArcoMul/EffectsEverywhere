@@ -1,5 +1,5 @@
-#ifndef MAINSCENE_H
-#define MAINSCENE_H
+#ifndef MAINSCENE_H_
+#define MAINSCENE_H_
 
 #include "GameEngine.h"
 #include "GameScene.h"
@@ -31,7 +31,7 @@ public:
 	
 private:
 
-	void playerHit (void);
+	void playerHit (core::vector3df hitPosition);
 	void playerDie (void);
 
 	IMeshSceneNode* robot;

@@ -7,7 +7,7 @@ Enemy::Enemy(GameEngine* engine, core::vector3df position, float speed)
 	this->_engine = engine;
 	this->target = nullptr;
 	this->speed = speed;
-	this->hp = 5;
+	this->health = 5;
 	this->isDeath = false;
 
 	// Get the mesh
@@ -95,8 +95,9 @@ void Enemy::setTarget (ISceneNode* target)
 
 bool Enemy::hit ()
 {
-	hp -= 1;
-	if (hp <= 0) {
+	health -= 1;
+	if (health <= 0) {
+		die ();
 		return true;
 	} else {
 		return false;
