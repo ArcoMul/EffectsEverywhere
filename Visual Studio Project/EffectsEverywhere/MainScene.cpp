@@ -218,10 +218,11 @@ void MainScene::update(void)
 			particleCooldown = 250;
 			particleOnCooldown = true;
 
-			// Check which enemy was hit and tell the enemy it is hit, if the the hit function returns true, it has to die
+			// Check which enemy was hit and tell the enemy it is hit, if the the hit function
+			// returns true, it has to die
 			if (enemy1->node == intersectionNode) {
 				enemy1->hit();
-			} else {
+			} else if (enemy2->node == intersectionNode) {
 				enemy2->hit();
 			}
 		}

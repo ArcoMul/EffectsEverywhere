@@ -17,7 +17,6 @@ Enemy::Enemy(GameEngine* engine, core::vector3df position, float speed)
 	// Set the right lightning and position
 	node->setMaterialFlag(EMF_LIGHTING, false);
 	node->setPosition(position);
-	node->setName ("enemy");
 
 	// Give the enemies a triangle selector for ray cast detecting of bullets
 	ITriangleSelector* selector = _engine->smgr->createOctreeTriangleSelector(meshEnemy, node, 12);
