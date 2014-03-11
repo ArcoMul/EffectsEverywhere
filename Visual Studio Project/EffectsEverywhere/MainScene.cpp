@@ -56,12 +56,13 @@ void MainScene::start(void)
 		floor->setMaterialFlag(EMF_LIGHTING, false);
 	}
 
+	//Create a Triangle selector for the level
 	levelSelector = _engine->smgr->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
 	floor->setTriangleSelector(levelSelector);
 
 	// Add an animator to the camera, a Collision Response Animator. This animator prevents
 	// your object (player) to move through walls and other objects. The collision box of the enemy
-	// has been set to 7, 7, 7. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
+	// has been set to 7, 7, 10. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
 	collisionLevel = _engine->smgr->createCollisionResponseAnimator(
 			levelSelector, robot, core::vector3df(7, 7, 10),
@@ -69,7 +70,6 @@ void MainScene::start(void)
 
 	// We add the animator to our collisionNode and drop the selector and collision if
 	// we don't need it anymore.
-
 	robot->addAnimator(collisionLevel);
 	levelSelector->drop();
 	collisionLevel->drop();
