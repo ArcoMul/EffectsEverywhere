@@ -19,7 +19,7 @@ void GameScene::update(void)
 {	
 }
 
-bool GameScene::checkRayCastIntersection (core::vector3df start, core::vector3df end, core::vector3df &intersection)
+scene::ISceneNode* GameScene::checkRayCastIntersection (core::vector3df start, core::vector3df end, core::vector3df &intersection)
 {
 	// Create ray with start and endpoint
 	core::line3d<f32> ray;
@@ -30,7 +30,7 @@ bool GameScene::checkRayCastIntersection (core::vector3df start, core::vector3df
 	core::triangle3df hitTriangle;
 
 	// Checks collision for all node
-	scene::ISceneNode * selectedSceneNode = _engine->smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(
+	scene::ISceneNode* selectedSceneNode = _engine->smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(
 		ray,
 		intersection, // Position of the collision
 		hitTriangle, // Triangle hit in the collision
@@ -40,10 +40,10 @@ bool GameScene::checkRayCastIntersection (core::vector3df start, core::vector3df
 	// We hit something
 	if(selectedSceneNode)
 	{
-		return true;
+		return selectedSceneNode;
 	}
 
-	return false;
+	return nullptr;
 }
 
 void GameScene::spawnDebugMesh (core::vector3df position) 

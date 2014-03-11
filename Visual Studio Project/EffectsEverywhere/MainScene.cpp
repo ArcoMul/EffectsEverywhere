@@ -8,6 +8,8 @@
 MainScene::MainScene(GameEngine* engine)
 {
 	_engine = engine;
+	playerHp = 5;
+	isPlayerDeath = false;
 
 	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
 	for (int i = 0; i < 10; i++) {
@@ -95,6 +97,8 @@ void MainScene::start(void)
 
 void MainScene::update(void)
 {
+	if (isPlayerDeath) return;
+
 	// Get the position of the robot
 	core::vector3df pos = robot->getPosition();
 
@@ -165,19 +169,15 @@ void MainScene::update(void)
 	core::vector3df collisionPosition;
 	if(particleCooldown <= 0)
 	{
-		if(enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
+		if(!enemy1->isDeath && enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
 			spawnParticleEffect(collisionPosition,"../../Media/portal1.bmp");
-			Emitter->setMaxLifeTime(250u);
-			particleOnCooldown = true;
-			particleCooldown = 100;
+			playerHit();
 		}
-		else if(enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
+		else if(!enemy2->isDeath && enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
 			spawnParticleEffect(collisionPosition,"../../Media/particle.bmp");
-			Emitter->setMaxLifeTime(250u);
-			particleOnCooldown = true;
-			particleCooldown = 100;
+			playerHit();
 		
-		}else
+		} else
 			particleOnCooldown = false;
 	}
 
@@ -210,7 +210,8 @@ void MainScene::update(void)
 		core::vector3df forward = core::vector3df(mat[2], 0, mat[0] * -1);
 
 		// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
-		if (checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection)&& !particleOnCooldown)
+		scene::ISceneNode* intersectionNode = checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection);
+		if (intersectionNode != nullptr && !particleOnCooldown)
 		{
 			/** Spawn a particle at the place of the collision
 			 * the particle is created in the gamescene
@@ -219,6 +220,20 @@ void MainScene::update(void)
 			spawnParticleEffect (intersection,"../../Media/fireball.bmp");
 			particleCooldown = 250;
 			particleOnCooldown = true;
+
+			std::cout << "hit:" << intersectionNode->getName() << std::endl;
+			//if (intersectionNode->getName() == "enemy") {
+				std::cout << "hit enemy" << std::endl;
+				if (enemy1->node == intersectionNode) {
+					if (enemy1->hit()) {
+						enemy1->die();
+					}
+				} else {
+					if (enemy2->hit()) {
+						enemy2->die();
+					}
+				}
+			//}
 		}
 		// Reset the cooldown
 		shootCooldown = 350;
@@ -308,4 +323,22 @@ void MainScene::spawnParticleEffect (core::vector3df position, core::stringc pat
 MainScene::~MainScene(void)
 {
 	this->Emitter->drop();
+}
+
+void MainScene::playerHit ()
+{
+	Emitter->setMaxLifeTime(250u);
+	particleOnCooldown = true;
+	particleCooldown = 100;
+	playerHp -= 1;
+	if (playerHp <= 0) {
+		playerDie();
+	}
+}
+
+void MainScene::playerDie ()
+{
+	robot->setPosition (core::vector3df (0, -30, 0));
+	isPlayerDeath = true;
+	particleSceneNode->setEmitter(0);
 }

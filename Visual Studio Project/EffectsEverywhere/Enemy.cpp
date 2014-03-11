@@ -7,6 +7,8 @@ Enemy::Enemy(GameEngine* engine, core::vector3df position, float speed)
 	this->_engine = engine;
 	this->target = nullptr;
 	this->speed = speed;
+	this->hp = 5;
+	this->isDeath = false;
 
 	// Get the mesh
 	IMesh* meshEnemy = engine->smgr->getMesh("../../Media/enemy.obj");
@@ -15,6 +17,7 @@ Enemy::Enemy(GameEngine* engine, core::vector3df position, float speed)
 	// Set the right lightning and position
 	node->setMaterialFlag(EMF_LIGHTING, false);
 	node->setPosition(position);
+	node->setName ("enemy");
 
 	// Give the enemies a triangle selector for ray cast detecting of bullets
 	ITriangleSelector* selector = _engine->smgr->createOctreeTriangleSelector(meshEnemy, node, 12);
@@ -23,7 +26,7 @@ Enemy::Enemy(GameEngine* engine, core::vector3df position, float speed)
 
 void Enemy::update(float deltaTime)
 {
-	if (target == nullptr) return;
+	if (target == nullptr || isDeath) return;
 
 	core::vector3df pos = node->getPosition();
 
@@ -88,4 +91,20 @@ void Enemy::addCollision (IMeshSceneNode* collisionNode)
 void Enemy::setTarget (ISceneNode* target)
 {
 	this->target = target;
+}
+
+bool Enemy::hit ()
+{
+	hp -= 1;
+	if (hp <= 0) {
+		return true;
+	} else {
+		return false;
+	}
+}
+
+void Enemy::die ()
+{
+	isDeath = true;
+	node->remove();
 }

@@ -20,11 +20,17 @@ public:
 
 	void setTarget (scene::ISceneNode* target);
 
+	bool hit (void);
+	void die (void);
+
+	bool isDeath;
+
+	scene::IMeshSceneNode* node;
 	GameEngine* _engine;
 private:
-	scene::IMeshSceneNode* node;
 	scene::ISceneNode* target;
 	float speed;
+	int hp;
 
 	ISceneNodeAnimatorCollisionResponse* collision;
 };

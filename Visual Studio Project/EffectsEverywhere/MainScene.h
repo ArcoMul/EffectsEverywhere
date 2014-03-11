@@ -30,6 +30,10 @@ public:
 	bool hasEmitter;
 	
 private:
+
+	void playerHit (void);
+	void playerDie (void);
+
 	IMeshSceneNode* robot;
 	IParticleSystemSceneNode* particleSceneNode;
 	IParticleEmitter* Emitter;
@@ -49,6 +53,9 @@ private:
 	float particleCooldown;
 
 	bool particleOnCooldown;
+
+	int playerHp;
+	bool isPlayerDeath;
 };
 
 #endif
