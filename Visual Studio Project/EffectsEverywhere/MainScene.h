@@ -56,6 +56,10 @@ private:
 
 	int playerHp;
 	bool isPlayerDeath;
+
+	// Triangle Selector and Animator Collision Response for the level collision.
+	ITriangleSelector* levelSelector;
+	ISceneNodeAnimatorCollisionResponse* collisionLevel;
 };
 
 #endif
