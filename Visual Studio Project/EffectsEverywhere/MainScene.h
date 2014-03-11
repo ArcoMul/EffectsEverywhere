@@ -56,6 +56,9 @@ private:
 
 	int playerHp;
 	bool isPlayerDeath;
+
+	ITriangleSelector* levelSelector;
+	ISceneNodeAnimatorCollisionResponse* collisionLevel;
 };
 
 #endif
