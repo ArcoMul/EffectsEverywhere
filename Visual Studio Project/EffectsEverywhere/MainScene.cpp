@@ -8,6 +8,8 @@
 MainScene::MainScene(GameEngine* engine)
 {
 	_engine = engine;
+	playerHp = 5;
+	isPlayerDeath = false;
 
 	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
 	for (int i = 0; i < 10; i++) {
@@ -58,7 +60,7 @@ void MainScene::start(void)
 	 IMesh* watermesh = _engine->smgr->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(2.5f,2.5f),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
 	 ISceneNode* waternode = _engine->smgr->addWaterSurfaceSceneNode(_engine->smgr->getMesh("watermesh"),2.0f,300.0f,30.0f);
 
-	 if(waternode){
+	 if (waternode) {
 		 waternode->setPosition(vector3df(-60, 5, 60));
 		 waternode->setMaterialTexture(0, _engine->driver->getTexture("../../Media/water.jpg"));
 		 waternode->setMaterialTexture(1, _engine->driver->getTexture("../../Media/water.jpg"));
@@ -165,20 +167,15 @@ void MainScene::update(void)
 	core::vector3df collisionPosition;
 	if(particleCooldown <= 0)
 	{
-		if(enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(collisionPosition,"../../Media/portal1.bmp");
-			Emitter->setMaxLifeTime(250u);
-			particleOnCooldown = true;
-			particleCooldown = 100;
+		if(!enemy1->isDeath && enemy1->collisionOccurred(&collisionPosition) && !particleOnCooldown) {
+			playerHit(collisionPosition);
 		}
-		else if(enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown){
-			spawnParticleEffect(collisionPosition,"../../Media/particle.bmp");
-			Emitter->setMaxLifeTime(250u);
-			particleOnCooldown = true;
-			particleCooldown = 100;
+		else if(!enemy2->isDeath && enemy2->collisionOccurred(&collisionPosition) && !particleOnCooldown) {
+			playerHit(collisionPosition);
 		
-		}else
+		} else {
 			particleOnCooldown = false;
+		}
 	}
 
 	// Reduce the cooldown of shooting
@@ -210,7 +207,8 @@ void MainScene::update(void)
 		core::vector3df forward = core::vector3df(mat[2], 0, mat[0] * -1);
 
 		// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
-		if (checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection)&& !particleOnCooldown)
+		scene::ISceneNode* intersectionNode = checkRayCastIntersection(robot->getPosition() + (forward * 5), robot->getPosition() + (forward * 1000.), intersection);
+		if (intersectionNode != nullptr && !particleOnCooldown)
 		{
 			/** Spawn a particle at the place of the collision
 			 * the particle is created in the gamescene
@@ -219,6 +217,14 @@ void MainScene::update(void)
 			spawnParticleEffect (intersection,"../../Media/fireball.bmp");
 			particleCooldown = 250;
 			particleOnCooldown = true;
+
+			// Check which enemy was hit and tell the enemy it is hit, if the the hit function
+			// returns true, it has to die
+			if (enemy1->node == intersectionNode) {
+				enemy1->hit();
+			} else if (enemy2->node == intersectionNode) {
+				enemy2->hit();
+			}
 		}
 		// Reset the cooldown
 		shootCooldown = 350;
@@ -308,4 +314,12 @@ void MainScene::spawnParticleEffect (core::vector3df position, core::stringc pat
 MainScene::~MainScene(void)
 {
 	this->Emitter->drop();
+}
+
+void MainScene::playerHit (core::vector3df hitPosition)
+{
+	spawnParticleEffect(hitPosition, "../../Media/portal1.bmp");
+	Emitter->setMaxLifeTime(250u);
+	particleOnCooldown = true;
+	particleCooldown = 100;
 }

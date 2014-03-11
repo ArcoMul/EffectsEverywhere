@@ -1,5 +1,5 @@
-#ifndef MAINSCENE_H
-#define MAINSCENE_H
+#ifndef MAINSCENE_H_
+#define MAINSCENE_H_
 
 #include "GameEngine.h"
 #include "GameScene.h"
@@ -30,6 +30,10 @@ public:
 	bool hasEmitter;
 	
 private:
+
+	void playerHit (core::vector3df hitPosition);
+	void playerDie (void);
+
 	IMeshSceneNode* robot;
 	IParticleSystemSceneNode* particleSceneNode;
 	IParticleEmitter* Emitter;
@@ -49,6 +53,9 @@ private:
 	float particleCooldown;
 
 	bool particleOnCooldown;
+
+	int playerHp;
+	bool isPlayerDeath;
 };
 
 #endif
