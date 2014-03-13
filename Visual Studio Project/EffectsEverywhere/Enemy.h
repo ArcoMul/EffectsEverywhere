@@ -1,20 +1,23 @@
 #ifndef ENEMY_H_
 #define ENEMY_H_
 
-#include "irrlicht.h"
-#include "GameEngine.h"
-#include "GameScene.h"
+#include <irrlicht.h>
+
+using namespace irr;
+
+class EffEngine;
+class EffScene;
 
 class Enemy
 {
 public:
 	// Create a constructor Enemy and give it the engine and position.
-	Enemy(GameEngine* engine, core::vector3df position, float speed = .05);
+	Enemy(scene::ISceneManager* manager, core::vector3df position, float speed = .05);
 
 	void update(float deltaTime);
 
 	// Add collision between this enemy and the given node
-	void addCollision (IMeshSceneNode* node);
+	void addCollision (scene::IMeshSceneNode* node);
 
 	// Check if collision occured and tell what position it happened
 	bool collisionOccurred (core::vector3df* position);
@@ -33,7 +36,7 @@ public:
 
 	scene::IMeshSceneNode* node;
 
-	GameEngine* _engine;
+	EffEngine* _engine;
 
 private:
 	// Which ISceneNode to follow when walking
@@ -46,7 +49,9 @@ private:
 	int health;
 
 	// Keep track of the collision animator to check if there was collision
-	ISceneNodeAnimatorCollisionResponse* collision;
+	scene::ISceneNodeAnimatorCollisionResponse* collision;
+
+	scene::ISceneManager* manager;
 };
 
 #endif

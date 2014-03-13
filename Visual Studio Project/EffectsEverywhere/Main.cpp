@@ -1,21 +1,27 @@
-#include "GameEngine.h"
+#include <iostream>
+#include "EffEngine.h"
 #include "MainScene.h"
 
 int main()
 {
 	// Create the engine
-	GameEngine* engine = new GameEngine();
+	EffEngine* engine = new EffEngine();
 
 	// Start the engine
-	engine->init();
+	if (engine->init(800, 600))
+	{
+		// Set the initial scene
+		engine->setScene (new MainScene());
 
-	// Set the initial scene
-	engine->setScene (new MainScene(engine));
+		// Start running the engine
+		engine->run();
+	}
+	else
+	{
+		std::cout << "Error start EffEngine" << std::endl;
+	}
 
-	// Start running the engine
-	engine->run();
-
-	// Delete the engine
+	// Delete the engine after the game is finished
 	delete engine;
 
 	return 0;
