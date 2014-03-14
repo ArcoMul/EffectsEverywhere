@@ -73,6 +73,7 @@
     <ClCompile Include="InputReceiver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="Robot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Irrlicht\source\Irrlicht\Irrlicht10.0.vcxproj">
@@ -87,6 +88,7 @@
     <ClInclude Include="EffScene.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="MainScene.h" />
+    <ClInclude Include="Robot.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

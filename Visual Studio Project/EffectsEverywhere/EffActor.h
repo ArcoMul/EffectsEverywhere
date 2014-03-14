@@ -5,14 +5,20 @@
 
 using namespace irr;
 
+class EffScene;
+
 class EffActor
 {
 public:
 	EffActor(void);
 	virtual void update (float deltaTime);
+	virtual void setNode (scene::ISceneNode* node);
+	virtual void setScene (EffScene* scene);
 	~EffActor(void);
-private:
+
 	scene::ISceneNode* node;
+protected:
+	EffScene* scene;
 };
 
 #endif

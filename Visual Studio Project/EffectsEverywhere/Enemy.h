@@ -9,11 +9,11 @@ using namespace irr;
 class EffEngine;
 class EffScene;
 
-class Enemy : EffActor
+class Enemy : public EffActor
 {
 public:
 	// Create a constructor Enemy and give it the engine and position.
-	Enemy(scene::ISceneManager* manager, core::vector3df position, float speed = .05);
+	Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 
 	virtual void update (float deltaTime);
 
@@ -23,14 +23,13 @@ public:
 	// Check if collision occured and tell what position it happened
 	bool collisionOccurred (core::vector3df* position);
 
-	// Set which node the enemy has to follow
-	void setTarget (scene::ISceneNode* target);
-
 	// When the enemy gets hit by a bullet
 	bool hit (void);
 
 	// When the health of the enemy is zero
 	void die (void);
+
+	bool followTarget;
 
 	// True if the player is death
 	bool isDeath;

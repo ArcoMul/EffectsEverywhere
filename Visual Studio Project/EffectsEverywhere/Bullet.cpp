@@ -4,12 +4,15 @@ Bullet::Bullet(void)
 {
 }
 
-Bullet::Bullet(scene::IMeshSceneNode* node, float aliveSince)
+Bullet::Bullet(float aliveSince)
 {
-	this->node = node;
 	this->aliveSince = aliveSince;
 }
 
+void Bullet::update (float deltaTime)
+{
+	EffActor::update(deltaTime);
+}
 
 Bullet::~Bullet(void)
 {

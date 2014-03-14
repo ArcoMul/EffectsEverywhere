@@ -17,6 +17,7 @@
     <ClCompile Include="EffActor.cpp">
       <Filter>EffEngine</Filter>
     </ClCompile>
+    <ClCompile Include="Robot.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -40,6 +41,7 @@
     <ClInclude Include="EffActor.h">
       <Filter>EffEngine\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Robot.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

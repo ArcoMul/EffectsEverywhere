@@ -1,13 +1,16 @@
 #include "Enemy.h"
+#include "EffScene.h"
+#include "InputReceiver.h"
 #include <iostream>
 #include <cmath>
 
-Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, float speed)
+Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
 {
 	this->manager = manager;
-	this->target = nullptr;
+	this->target = target;
 	this->speed = speed;
 	this->health = 5;
+	this->followTarget = false;
 	this->isDeath = false;
 
 	// Get the mesh
@@ -27,7 +30,14 @@ void Enemy::update(float deltaTime)
 {
 	EffActor::update(deltaTime);
 
-	if (target == nullptr || isDeath) return;
+	// Someting goes wrong when the target is set from the start of the game
+	// so we set it when W is pressed once
+	if (!followTarget && scene->getInput()->IsKeyDown(irr::KEY_KEY_W)) {
+		followTarget = true;
+	}
+	
+	// When there is no target, we don't want to follow the target, or the enemy is death; stop
+	if (target == nullptr || !followTarget || isDeath) return;
 
 	core::vector3df pos = node->getPosition();
 
@@ -87,11 +97,6 @@ void Enemy::addCollision (scene::IMeshSceneNode* collisionNode)
 	node->addAnimator((scene::ISceneNodeAnimator*) collision);
 	selector->drop();
 	collision->drop();
-}
-
-void Enemy::setTarget (scene::ISceneNode* target)
-{
-	this->target = target;
 }
 
 bool Enemy::hit ()
