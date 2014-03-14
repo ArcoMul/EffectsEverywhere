@@ -89,6 +89,9 @@ bool MainScene::init(void)
 	enemy1->addCollision(robot);
 	enemy2->addCollision(robot);
 
+	this->addActor ((EffActor*) enemy1);
+	this->addActor ((EffActor*) enemy2);
+
 	// Set mouse Visible to false
 	setMouseVisible(true);
 	
@@ -106,6 +109,8 @@ bool MainScene::init(void)
 
 void MainScene::update(float deltaTime)
 {
+	EffScene::update(deltaTime);
+
 	// Get the position of the robot
 	core::vector3df pos = robot->getPosition();
 
@@ -169,8 +174,8 @@ void MainScene::update(float deltaTime)
 	// Set where the camera has to look at
 	camera->setTarget(robot->getPosition());
 
-	enemy1->update(deltaTime);
-	enemy2->update(deltaTime);
+	// enemy1->update(deltaTime);
+	// enemy2->update(deltaTime);
 
 	// Check if there was collision with enemy 1 and 2
 	core::vector3df collisionPosition;

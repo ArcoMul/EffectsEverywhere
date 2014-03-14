@@ -1,6 +1,7 @@
 #include "EffScene.h"
 #include "EffEngine.h"
 #include "InputReceiver.h"
+#include "EffActor.h"
 #include <iostream>
 
 EffScene::EffScene()
@@ -14,11 +15,22 @@ EffScene::EffScene(EffEngine* engine) :
 
 bool EffScene::init(void)
 {
+	actors = core::list<EffActor*>();
 	return true;
 }
 
 void EffScene::update(float deltaTime)
-{	
+{
+	for(core::list<EffActor*>::Iterator a = actors.begin(); a != actors.end(); a++)
+	{
+		(*a)->update(deltaTime);
+	}
+}
+
+EffActor* EffScene::addActor(EffActor* actor)
+{
+	actors.push_back (actor);
+	return actor;
 }
 
 void EffScene::setEngine (EffEngine* engine)

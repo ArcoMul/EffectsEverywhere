@@ -14,6 +14,9 @@
     <ClCompile Include="EffScene.cpp">
       <Filter>EffEngine</Filter>
     </ClCompile>
+    <ClCompile Include="EffActor.cpp">
+      <Filter>EffEngine</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -32,6 +35,9 @@
       <Filter>EffEngine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="InputReceiver.h">
+      <Filter>EffEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EffActor.h">
       <Filter>EffEngine\Header Files</Filter>
     </ClInclude>
   </ItemGroup>

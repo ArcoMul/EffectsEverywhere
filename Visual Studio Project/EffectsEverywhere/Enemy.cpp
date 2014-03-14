@@ -25,6 +25,8 @@ Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, float spee
 
 void Enemy::update(float deltaTime)
 {
+	EffActor::update(deltaTime);
+
 	if (target == nullptr || isDeath) return;
 
 	core::vector3df pos = node->getPosition();

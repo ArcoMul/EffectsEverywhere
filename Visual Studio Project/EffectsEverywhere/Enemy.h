@@ -2,19 +2,20 @@
 #define ENEMY_H_
 
 #include <irrlicht.h>
+#include "EffActor.h"
 
 using namespace irr;
 
 class EffEngine;
 class EffScene;
 
-class Enemy
+class Enemy : EffActor
 {
 public:
 	// Create a constructor Enemy and give it the engine and position.
 	Enemy(scene::ISceneManager* manager, core::vector3df position, float speed = .05);
 
-	void update(float deltaTime);
+	virtual void update (float deltaTime);
 
 	// Add collision between this enemy and the given node
 	void addCollision (scene::IMeshSceneNode* node);
