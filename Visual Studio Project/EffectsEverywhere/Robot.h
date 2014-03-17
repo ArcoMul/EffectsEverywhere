@@ -15,9 +15,9 @@ class Robot : public EffActor
 public:
 	Robot(void);
 
-	virtual void update (float deltaTime);
+	virtual void start (void);
 
-	virtual void setNode (scene::ISceneNode* node);
+	virtual void update (float deltaTime);
 
 	void shoot (core::list<Enemy*> enemies);
 

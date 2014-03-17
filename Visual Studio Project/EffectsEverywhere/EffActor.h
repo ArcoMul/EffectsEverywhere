@@ -11,14 +11,18 @@ class EffActor
 {
 public:
 	EffActor(void);
+	virtual void start (void);
 	virtual void update (float deltaTime);
-	virtual void setNode (scene::ISceneNode* node);
-	virtual void setScene (EffScene* scene);
+	void setScene (EffScene* scene);
+	void setNode (scene::ISceneNode* node);
 	~EffActor(void);
 
 	scene::ISceneNode* node;
+
 protected:
 	EffScene* scene;
+
+private:
 };
 
 #endif

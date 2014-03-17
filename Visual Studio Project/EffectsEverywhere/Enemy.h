@@ -15,6 +15,7 @@ public:
 	// Create a constructor Enemy and give it the engine and position.
 	Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 
+	virtual void start ();
 	virtual void update (float deltaTime);
 
 	// Add collision between this enemy and the given node
@@ -29,12 +30,12 @@ public:
 	// When the health of the enemy is zero
 	void die (void);
 
+	~Enemy(void);
+
 	bool followTarget;
 
 	// True if the player is death
 	bool isDeath;
-
-	scene::IMeshSceneNode* node;
 
 	EffEngine* _engine;
 
@@ -47,6 +48,8 @@ private:
 
 	// Health of the enemy
 	int health;
+
+	core::vector3df spawnPosition;
 
 	// Keep track of the collision animator to check if there was collision
 	scene::ISceneNodeAnimatorCollisionResponse* collision;

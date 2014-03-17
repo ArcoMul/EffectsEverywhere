@@ -79,10 +79,11 @@ bool MainScene::init(void)
 
 	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
 	{
-		// Add collision with the player and the enemies
-		(*enemy)->addCollision((scene::IMeshSceneNode*) robot->node);
 		// Add the actor to the scene
 		this->addActor ((EffActor*) (*enemy));
+
+		// Add collision with the player and the enemies
+		(*enemy)->addCollision((scene::IMeshSceneNode*) robot->node);
 	}
 
 	// Set mouse Visible to false

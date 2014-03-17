@@ -16,45 +16,95 @@ EffScene::EffScene(EffEngine* engine) :
 bool EffScene::init(void)
 {
 	actors = core::list<EffActor*>();
+	actorsToRemove = core::list<EffActor*>();
 	return true;
 }
 
 void EffScene::update(float deltaTime)
 {
-	for(core::list<EffActor*>::Iterator a = actors.begin(); a != actors.end(); a++)
+	// Call the update function of each actor
+	for(core::list<EffActor*>::Iterator actor = actors.begin(); actor != actors.end(); actor++)
 	{
-		(*a)->update(deltaTime);
+		(*actor)->update(deltaTime);
 	}
+
+	// Some actors are saved to be removed, remove these now after we updated all the actors
+	cleanupActors ();
+}
+
+// Private method, don't use directly to add actor to the scene,
+// see header file for more info
+EffActor* EffScene::addActorToScene (EffActor* actor)
+{
+	// Add the actor to the actors array of this scene
+	actors.push_back (actor);
+
+	// Tell the actor in which scene it is
+	actor->setScene (this);
+
+	return actor;
 }
 
 EffActor* EffScene::addActor(EffActor* actor)
 {
-	actors.push_back (actor);
-	actor->setScene (this);
+	// Add the actor to the current scene
+	addActorToScene (actor);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
 	return actor;
 }
 
 EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath)
 {
-	addActor(actor);
+	// Add the actor to the current scene
+	addActorToScene(actor);
 
+	// Create a mesh using the given source path
 	scene::IMesh* mesh = manager->getMesh(meshPath);
 	scene::ISceneNode* node = (scene::ISceneNode*) manager->addMeshSceneNode(mesh);
+
+	// Tell the actor which irrlicht node belongs to him
 	actor->setNode (node);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
 	return actor;
 }
 
 void EffScene::removeActor(EffActor* actor)
 {
-	for(core::list<EffActor*>::Iterator a = actors.begin(); a != actors.end(); a++)
+	// Save that this actors has to be removed
+	actorsToRemove.push_back (actor);
+}
+
+void EffScene::cleanupActors ()
+{
+	// Loop through all the actors which needs to be removed
+	for(core::list<EffActor*>::Iterator actorToRemove = actorsToRemove.begin(); actorToRemove != actorsToRemove.end(); actorToRemove++)
 	{
-		if ((*a) == actor)
+		// Loop through all the actors in the scene
+		// TODO: loop in a loop, make more optimal using a find function or some sort of
+		for(core::list<EffActor*>::Iterator actor = actors.begin(); actor != actors.end(); actor++)
 		{
-			actor->node->remove();
-			actors.erase (a);
-			break;
+			// Find the actor wich matches with the actor which needs to be removed
+			if ((*actor) == (*actorToRemove))
+			{
+				// Delete the actor
+				delete (*actor);
+
+				// Erase the actor from the actors list
+				actors.erase(actor);
+
+				break;
+			}
 		}
 	}
+
+	// All actors which needed to be removed are removed, clear the to remove list
+	actorsToRemove.clear();
 }
 
 void EffScene::setEngine (EffEngine* engine)

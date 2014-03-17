@@ -12,6 +12,12 @@ Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISc
 	this->health = 5;
 	this->followTarget = false;
 	this->isDeath = false;
+	this->spawnPosition = position;
+}
+
+void Enemy::start ()
+{
+	EffActor::start ();
 
 	// Get the mesh
 	scene::IMesh* meshEnemy = manager->getMesh("../../Media/enemy.obj");
@@ -19,7 +25,7 @@ Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISc
 
 	// Set the right lightning and position
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
-	node->setPosition(position);
+	node->setPosition (spawnPosition);
 
 	// Give the enemies a triangle selector for ray cast detecting of bullets
 	scene::ITriangleSelector* selector = manager->createOctreeTriangleSelector(meshEnemy, node, 12);
@@ -114,4 +120,8 @@ void Enemy::die ()
 {
 	isDeath = true;
 	node->remove();
+}
+
+Enemy::~Enemy()
+{
 }

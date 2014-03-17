@@ -8,7 +8,6 @@ using namespace irr;
 
 class EffEngine;
 class Enemy;
-class Bullet;
 class Robot;
 
 class MainScene : public EffScene

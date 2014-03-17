@@ -22,6 +22,15 @@ public:
 
 	EffActor* addActor(EffActor* actor);
 	EffActor* addMeshActor(EffActor* actor, core::stringc meshPath);
+
+	/**
+	 * Public function to record that an actors has to be removed, this
+	 * actors will be removed from the scene at the end of the execution
+	 * of this frame. (We can't remove an actor in the update call 
+	 * because we are in the middle of an iteration then.
+	 * TODO: set property on actor that it is deleted so that we know
+	 *       that in other parts of the engine
+	 */
 	void removeActor(EffActor* actor);
 
 	/**
@@ -88,10 +97,24 @@ protected:
 
 private:
 
+	/**
+	 * Add actor to the actors array and set the scene,
+	 * don't use this function directly to add an actor to the scene, actor->start()
+	 * should always be called after this method
+	 */
+	EffActor* addActorToScene (EffActor* actor);
+
+	/**
+	 * All the actors which were saved to be deleted will be deleted by calling
+	 * this method. Usually this happens at the end of the frame
+	 */
+	void cleanupActors(void);
+
 	// TODO: remove the reference to the engine from the scene, I think
 	EffEngine* engine;
 
 	core::list<EffActor*> actors;
+	core::list<EffActor*> actorsToRemove;
 };
 
 #endif

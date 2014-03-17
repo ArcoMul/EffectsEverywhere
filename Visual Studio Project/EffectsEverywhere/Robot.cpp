@@ -6,13 +6,13 @@
 
 Robot::Robot(void)
 {
-	// Set the whole bullet array at NULL so that we can check if the item is NULL or not later on
-	for (int i = 0; i < 10; i++) {
-		bullets[i] = NULL;
-	}
 
-	// Active bullet index starts at zero
-	bulletIndex = 0;
+}
+
+void Robot::start ()
+{
+	EffActor::start();
+	node->setMaterialFlag(video::EMF_LIGHTING, false);
 }
 
 void Robot::update(float deltaTime)
@@ -75,29 +75,6 @@ void Robot::update(float deltaTime)
 	node->setPosition(pos);
 	node->setRotation(rot);
 
-	// Update all the bullets
-	for (int i = 0; i < 10; i++)
-	{
-		if (bullets[i] == NULL) continue;
-
-		// Remove the bullet if it is alive for 500 miliseconds
-		if (scene->getTime() - bullets[i]->aliveSince > 500)
-		{
-			scene->removeActor((EffActor*) bullets[i]);
-			delete bullets[i];
-			bullets[i] = NULL;
-			continue;
-		}
-
-		// Get the current position and rotation and calculate based on that the new position
-		core::vector3df pos = bullets[i]->node->getPosition();
-		core::matrix4 mat = bullets[i]->node->getAbsoluteTransformation();
-		pos += core::vector3df(mat[2] * .5 * deltaTime,
-			0,
-			mat[0] * -.5 * deltaTime);
-		bullets[i]->node->setPosition(pos);
-	}
-
 	// Reduce the cooldown of shooting
 	if (shootCooldown > 0) {
 		shootCooldown -= deltaTime;
@@ -139,37 +116,9 @@ void Robot::shoot (core::list<Enemy*> enemies)
 	// Reset the cooldown
 	shootCooldown = 350;
 
-	// Create bullet actor
-	Bullet* bullet = new Bullet(scene->getTime());
+	// Create bullet actor with the right position and rotation
+	Bullet* bullet = new Bullet(node->getPosition(), node->getRotation());
 	scene->addMeshActor ((EffActor*) bullet, "../../Media/bullet.obj");
-
-	// Give the bullet mesh the right material and position
-	bullet->node->setMaterialFlag(video::EMF_LIGHTING, false);
-	bullet->node->setPosition(node->getPosition());
-	bullet->node->setRotation(node->getRotation());
-
-	// If there is already a bullet in the bullet array on this position, remove that bullet
-	if (bullets[bulletIndex] != NULL) {
-		bullets[bulletIndex]->node->remove();
-		delete bullets[bulletIndex];
-		bullets[bulletIndex] = NULL;
-	}
-
-	// Add the bullet to the bullet array on the active index
-	bullets[bulletIndex] = bullet;
-
-	// Add one to the active bullet index or reset it to zero
-	if (bulletIndex < 9) {
-		bulletIndex++;
-	} else {
-		bulletIndex = 0;
-	}
-}
-
-void Robot::setNode(scene::ISceneNode* node)
-{
-	EffActor::setNode(node);
-	node->setMaterialFlag(video::EMF_LIGHTING, false);
 }
 
 Robot::~Robot(void)
