@@ -13,7 +13,7 @@ class Enemy;
 class Robot : public EffActor
 {
 public:
-	Robot(void);
+	Robot (void);
 
 	virtual void start (void);
 
@@ -26,6 +26,7 @@ public:
 	~Robot(void);
 
 private:
+
 	// Counter to keep track of the shoot cooldown
 	float shootCooldown;
 

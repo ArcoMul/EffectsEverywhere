@@ -50,14 +50,20 @@ public:
 
 	~Enemy(void);
 
+	/**
+	 * Only start following the set target when this is true
+	 */
 	bool followTarget;
 
-	// True if the player is death
+	/**
+	 * True if the player is death
+	 */
 	bool isDeath;
 
 	EffEngine* _engine;
 
 private:
+
 	/**
 	 * Which ISceneNode to follow when walking
 	 */

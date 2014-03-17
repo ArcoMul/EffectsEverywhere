@@ -23,12 +23,18 @@ public:
 	/**
 	 * Add a default actor to the scene
 	 */
-	EffActor* addActor(EffActor* actor);
+	EffActor* addActor (EffActor* actor, bool start = true);
 
 	/**
 	 * Add an actor to the scene where we add a mesh to and set a IMeshSceneNode
 	 */
-	EffActor* addMeshActor(EffActor* actor, core::stringc meshPath);
+	EffActor* addMeshActor (EffActor* actor, core::stringc meshPath, bool start = true);
+
+	/**
+	 * Add MeshActor and set position by default, also one with rotation as extra parameter
+	 */
+	EffActor* addMeshActor (EffActor* actor, core::stringc meshPath, core::vector3df position, bool start = true);
+	EffActor* addMeshActor (EffActor* actor, core::stringc meshPath, core::vector3df position, core::vector3df rotation);
 
 	/**
 	 * Add an actor to the scene where we add a emitter to and set a IParticleSystemSceneNode
@@ -96,13 +102,6 @@ protected:
 	scene::ISceneManager* manager;
 
 private:
-
-	/**
-	 * Add actor to the actors array and set the scene,
-	 * don't use this function directly to add an actor to the scene, actor->start()
-	 * should always be called after this method
-	 */
-	EffActor* addActorToScene (EffActor* actor);
 
 	/**
 	 * All the actors which were saved to be deleted will be deleted by calling

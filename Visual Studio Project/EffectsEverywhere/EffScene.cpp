@@ -32,9 +32,7 @@ void EffScene::update(float deltaTime)
 	cleanupActors ();
 }
 
-// Private method, don't use directly to add actor to the scene,
-// see header file for more info
-EffActor* EffScene::addActorToScene (EffActor* actor)
+EffActor* EffScene::addActor (EffActor* actor, bool start)
 {
 	// Add the actor to the actors array of this scene
 	actors.push_back (actor);
@@ -42,24 +40,16 @@ EffActor* EffScene::addActorToScene (EffActor* actor)
 	// Tell the actor in which scene it is
 	actor->setScene (this);
 
-	return actor;
-}
-
-EffActor* EffScene::addActor(EffActor* actor)
-{
-	// Add the actor to the current scene
-	addActorToScene (actor);
-
 	// Done, tell the actor everything is set and ready
-	actor->start ();
+	if (start) actor->start ();
 
 	return actor;
 }
 
-EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath)
+EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, bool start)
 {
 	// Add the actor to the current scene
-	addActorToScene(actor);
+	actor = addActor(actor, false);
 
 	// Create a mesh using the given source path
 	scene::IMesh* mesh = manager->getMesh(meshPath);
@@ -67,6 +57,32 @@ EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath)
 
 	// Tell the actor which irrlicht node belongs to him
 	actor->setNode (node);
+
+	// Done, tell the actor everything is set and ready
+	if (start) actor->start ();
+
+	return actor;
+}
+
+EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, core::vector3df position, bool start)
+{
+	actor = addMeshActor (actor, meshPath, false);
+
+	// Set the node at the given position
+	actor->node->setPosition (position);
+
+	// Done, tell the actor everything is set and ready
+	if(start) actor->start ();
+
+	return actor;
+}
+
+EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, core::vector3df position, core::vector3df rotation)
+{
+	actor = addMeshActor (actor, meshPath, position, false);
+
+	// Set the node at the given position
+	actor->node->setRotation (rotation);
 
 	// Done, tell the actor everything is set and ready
 	actor->start ();
@@ -77,7 +93,7 @@ EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath)
 EffActor* EffScene::addParticleActor(EffActor* actor)
 {
 	// Add the actor to the current scene
-	addActorToScene(actor);
+	actor = addActor(actor, false);
 
 	// Create the particle system scene node
 	scene::IParticleSystemSceneNode* particleNode = manager->addParticleSystemSceneNode(false);

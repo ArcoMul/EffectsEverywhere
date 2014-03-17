@@ -14,28 +14,32 @@ class MainScene : public EffScene
 {
 public:
 	MainScene();
-	bool init (void);
-	void update (float deltaTime);
+
+	/**
+	 * Creates all the objects, basically sets up the scene visually
+	 */
+	virtual bool init (void);
+	
+	virtual void update (float deltaTime);
 
 	~MainScene(void);
-
-	scene::ICameraSceneNode* camera;
 	
 private:
 
-	void playerHit (core::vector3df hitPosition);
-	void playerDie (void);
-
+	/**
+	 * The player
+	 */
 	Robot* robot;
 
+	/**
+	 * List of all the enemies in the scene
+	 */
 	core::list<Enemy*> enemies;
 
-	int playerHp;
-	bool isPlayerDeath;
-
-	// Triangle Selector and Animator Collision Response for the level collision.
-	scene::ITriangleSelector* levelSelector;
-	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel;
+	/**
+	 * The camera in the scene
+	 */
+	scene::ICameraSceneNode* camera;
 };
 
 #endif

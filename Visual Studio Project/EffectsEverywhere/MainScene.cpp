@@ -10,16 +10,16 @@
 
 MainScene::MainScene()
 {
-	playerHp = 5;
-	isPlayerDeath = false;
 }
 
 bool MainScene::init(void)
 {
+	EffScene::init ();
+
 	// Create robot actor
-	robot = new Robot();
-	addMeshActor ((EffActor*) robot, "../../Media/robot.obj");
-	robot->node->setPosition(core::vector3df(0, 7.2f, 0));
+	robot = new Robot ();
+	addMeshActor ((EffActor*) robot, "../../Media/robot.obj", core::vector3df(0, 7.2f, 0));
+	if (!robot) return false;
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
@@ -27,15 +27,15 @@ bool MainScene::init(void)
 	if (!floor) return false;
 	floor->setMaterialFlag(EMF_LIGHTING, false);
 
-	//Create a Triangle selector for the level
-	levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
+	// Create a Triangle selector for the level
+	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
 	floor->setTriangleSelector(levelSelector);
 
 	// Add an animator to the camera, a Collision Response Animator. This animator prevents
 	// your object (player) to move through walls and other objects. The collision box of the enemy
 	// has been set to 7, 7, 10. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
-	collisionLevel = manager->createCollisionResponseAnimator(
+	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel = manager->createCollisionResponseAnimator(
 			levelSelector, robot->node, core::vector3df(7, 7, 10),
 			core::vector3df(0, -100, 0), core::vector3df(0, 0, 1));
 
@@ -56,7 +56,7 @@ bool MainScene::init(void)
 	waternode->setMaterialType(video::EMT_REFLECTION_2_LAYER);
 	waternode->setMaterialFlag(video::EMF_LIGHTING,false);
 
-	//Set a jump of 3 units per second, which gives a fairly realistic jump
+	// Set a jump of 3 units per second, which gives a fairly realistic jump
 	// when used with the gravity of (0, -10, 0) in the collision response animator.
 	camera = manager->addCameraSceneNodeFPS(0, 100.0f, .3f, -1, 0, 0, true, 3.f);
 
@@ -77,7 +77,7 @@ bool MainScene::init(void)
 	}
 
 	// Set mouse Visible to false
-	setMouseVisible(true);
+	setMouseVisible(false);
 	
 	// Add the camera node to the scene
 	camera = manager->addCameraSceneNode();
@@ -98,7 +98,7 @@ void MainScene::update(float deltaTime)
 	// Set where the camera has to look at
 	camera->setTarget(robot->node->getPosition());
 	
-	// When the spacebar is pressed and the cooldown is low engouh, shoot!
+	// When the spacebar is pressed and the cooldown is low enough, shoot!
 	if (getInput()->IsKeyDown(irr::KEY_SPACE))
 	{
 		robot->shoot(enemies);
@@ -108,6 +108,7 @@ void MainScene::update(float deltaTime)
 	core::vector3df collisionPosition;
 	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
 	{
+		// If there was collision tell the enemy that it can hit the robot
 		if(!(*enemy)->isDeath && (*enemy)->collisionOccurred(&collisionPosition)) {
 			(*enemy)->hit (robot, collisionPosition);
 			break;
@@ -117,4 +118,5 @@ void MainScene::update(float deltaTime)
 
 MainScene::~MainScene(void)
 {
+	delete robot;
 }

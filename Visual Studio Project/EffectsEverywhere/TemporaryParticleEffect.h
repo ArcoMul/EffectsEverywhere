@@ -8,6 +8,10 @@ using namespace irr;
 
 class EffScene;
 
+/**
+ * The temprory particle effect is a particle effect with some default settings which
+ * gets deleted after a certain lifetime.
+ */
 class TemporaryParticleEffect : public EffActor
 {
 public:

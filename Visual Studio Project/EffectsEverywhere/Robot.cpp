@@ -114,8 +114,8 @@ void Robot::shoot (core::list<Enemy*> enemies)
 	shootCooldown = 350;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(node->getPosition(), node->getRotation());
-	scene->addMeshActor ((EffActor*) bullet, "../../Media/bullet.obj");
+	Bullet* bullet = new Bullet();
+	scene->addMeshActor ((EffActor*) bullet, "../../Media/bullet.obj", node->getPosition(), node->getRotation());
 }
 
 void Robot::hit (core::vector3df position)

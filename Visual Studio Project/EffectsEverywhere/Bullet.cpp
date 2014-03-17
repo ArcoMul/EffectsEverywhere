@@ -6,14 +6,6 @@ Bullet::Bullet(void)
 {
 }
 
-Bullet::Bullet (core::vector3df position, core::vector3df rotation)
-{
-	// Save the position, we can't set these yet since the node isn't
-	// set yet probably
-	this->startPosition = position;
-	this->startRotation = rotation;
-}
-
 void Bullet::start ()
 {
 	EffActor::start();
@@ -23,8 +15,6 @@ void Bullet::start ()
 
 	// The node is set now, set some properties
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
-	node->setPosition(startPosition);
-	node->setRotation(startRotation);
 }
 
 void Bullet::update (float deltaTime)

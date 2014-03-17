@@ -18,7 +18,7 @@ int main()
 	}
 	else
 	{
-		std::cout << "Error start EffEngine" << std::endl;
+		std::cout << "Error starting EffEngine" << std::endl;
 	}
 
 	// Delete the engine after the game is finished
