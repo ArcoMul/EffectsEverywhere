@@ -1,0 +1,229 @@
+#include "EffScene.h"
+#include "EffEngine.h"
+#include "InputReceiver.h"
+#include "EffActor.h"
+#include <iostream>
+
+EffScene::EffScene()
+{
+}
+
+EffScene::EffScene(EffEngine* engine) :
+	engine(engine)
+{
+}
+
+bool EffScene::init(void)
+{
+	actors = core::list<EffActor*>();
+	actorsToRemove = core::list<EffActor*>();
+	return true;
+}
+
+void EffScene::update(float deltaTime)
+{
+	// Call the update function of each actor
+	for(core::list<EffActor*>::Iterator actor = actors.begin(); actor != actors.end(); actor++)
+	{
+		(*actor)->update(deltaTime);
+	}
+
+	// Some actors are saved to be removed, remove these now after we updated all the actors
+	cleanupActors ();
+}
+
+EffActor* EffScene::addActor (EffActor* actor, bool start)
+{
+	// Add the actor to the actors array of this scene
+	actors.push_back (actor);
+
+	// Tell the actor in which scene it is
+	actor->setScene (this);
+
+	// Done, tell the actor everything is set and ready
+	if (start) actor->start ();
+
+	return actor;
+}
+
+EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, bool start)
+{
+	// Add the actor to the current scene
+	actor = addActor(actor, false);
+
+	// Create a mesh using the given source path
+	scene::IMesh* mesh = manager->getMesh(meshPath);
+	scene::ISceneNode* node = (scene::ISceneNode*) manager->addMeshSceneNode(mesh);
+
+	// Tell the actor which irrlicht node belongs to him
+	actor->setNode (node);
+
+	// Done, tell the actor everything is set and ready
+	if (start) actor->start ();
+
+	return actor;
+}
+
+EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, core::vector3df position, bool start)
+{
+	actor = addMeshActor (actor, meshPath, false);
+
+	// Set the node at the given position
+	actor->node->setPosition (position);
+
+	// Done, tell the actor everything is set and ready
+	if(start) actor->start ();
+
+	return actor;
+}
+
+EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, core::vector3df position, core::vector3df rotation)
+{
+	actor = addMeshActor (actor, meshPath, position, false);
+
+	// Set the node at the given position
+	actor->node->setRotation (rotation);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
+	return actor;
+}
+
+EffActor* EffScene::addParticleActor(EffActor* actor)
+{
+	// Add the actor to the current scene
+	actor = addActor(actor, false);
+
+	// Create the particle system scene node
+	scene::IParticleSystemSceneNode* particleNode = manager->addParticleSystemSceneNode(false);
+
+	// Add a particle affector to the node which causes the particles to fade out
+	// TODO: not every particle effect will have this, maybe not put this here...
+	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
+	particleNode->addAffector(affector);
+    affector->drop();
+
+	// Create the emitter so that the particle node actually emits the particles,
+	// In this case the emitter is a box
+	// TODO: not every particle has the same emitter, maybe not put this here...
+	scene::IParticleBoxEmitter* emitter = particleNode->createBoxEmitter(aabbox3df(-3, 0, -3, 3, 1, 3 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
+		SColor(0,255,255,255),500,750,0,dimension2df(4.0f, 4.0f), dimension2df(8.0f, 8.0f));
+	particleNode->setEmitter(emitter);
+	emitter->drop();
+
+	// Tell the actor which irrlicht node belongs to him
+	actor->setNode ((scene::ISceneNode*) particleNode);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
+	return actor;
+}
+
+void EffScene::removeActor(EffActor* actor)
+{
+	// Save that this actors has to be removed
+	actorsToRemove.push_back (actor);
+}
+
+void EffScene::cleanupActors ()
+{
+	// Loop through all the actors which needs to be removed
+	for(core::list<EffActor*>::Iterator actorToRemove = actorsToRemove.begin(); actorToRemove != actorsToRemove.end(); actorToRemove++)
+	{
+		// Loop through all the actors in the scene
+		// TODO: loop in a loop, make more optimal using a find function or some sort of
+		for(core::list<EffActor*>::Iterator actor = actors.begin(); actor != actors.end(); actor++)
+		{
+			// Find the actor wich matches with the actor which needs to be removed
+			if ((*actor) == (*actorToRemove))
+			{
+				// Delete the actor
+				delete (*actor);
+
+				// Erase the actor from the actors list
+				actors.erase(actor);
+
+				break;
+			}
+		}
+	}
+
+	// All actors which needed to be removed are removed, clear the to remove list
+	actorsToRemove.clear();
+}
+
+void EffScene::setEngine (EffEngine* engine)
+{
+	this->engine = engine;
+}
+
+void EffScene::setManager(scene::ISceneManager* manager)
+{
+	this->manager = manager;
+}
+
+video::ITexture* EffScene::getTexture (core::stringc pathname)
+{
+	return engine->driver->getTexture(pathname);
+}
+
+void EffScene::setMouseVisible (bool mouseVisible)
+{
+	engine->setMouseVisible(mouseVisible);
+}
+
+InputReceiver* EffScene::getInput ()
+{
+	return engine->inputReceiver;
+}
+
+core::vector2di EffScene::getDeltaMouse ()
+{
+	return engine->deltaMouse;
+}
+
+const irr::u32 EffScene::getTime()
+{
+	return engine->device->getTimer()->getTime();
+}
+
+scene::ISceneNode* EffScene::checkRayCastIntersection (core::vector3df start, core::vector3df end, core::vector3df &intersection)
+{
+	// Create ray with start and endpoint
+	core::line3d<f32> ray;
+	ray.start = start;
+	ray.end = end;
+
+	// Used to show with triangle has been hit
+	core::triangle3df hitTriangle;
+
+	// Checks collision for all node
+	scene::ISceneNode* selectedSceneNode = engine->smgr->getSceneCollisionManager()->getSceneNodeAndCollisionPointFromRay(
+		ray,
+		intersection, // Position of the collision
+		hitTriangle, // Triangle hit in the collision
+		0,
+		0);
+
+	// We hit something
+	if(selectedSceneNode)
+	{
+		return selectedSceneNode;
+	}
+
+	return nullptr;
+}
+
+void EffScene::spawnDebugMesh (core::vector3df position) 
+{
+	scene::IMesh* debugMesh = engine->smgr->getMesh("../../Media/debug-sphere.obj");
+	scene::IMeshSceneNode* debugNode = engine->smgr->addMeshSceneNode(debugMesh);
+	debugNode->setMaterialFlag(video::EMF_LIGHTING, false);
+	debugNode->setPosition(position);
+}
+
+EffScene::~EffScene(void)
+{
+}

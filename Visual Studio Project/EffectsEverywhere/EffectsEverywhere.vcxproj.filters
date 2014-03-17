@@ -2,30 +2,26 @@
 <Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="GameEngine.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
-    <ClCompile Include="GameScene.cpp">
-      <Filter>core</Filter>
-    </ClCompile>
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="InputReceiver.cpp">
-      <Filter>core</Filter>
+      <Filter>EffEngine</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="Bullet.cpp" />
+    <ClCompile Include="EffEngine.cpp">
+      <Filter>EffEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="EffScene.cpp">
+      <Filter>EffEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="EffActor.cpp">
+      <Filter>EffEngine</Filter>
+    </ClCompile>
+    <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="TemporaryParticleEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="GameEngine.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GameScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="MainScene.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="InputReceiver.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Enemy.h">
@@ -34,13 +30,34 @@
     <ClInclude Include="Bullet.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EffEngine.h">
+      <Filter>EffEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EffScene.h">
+      <Filter>EffEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="InputReceiver.h">
+      <Filter>EffEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="EffActor.h">
+      <Filter>EffEngine\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TemporaryParticleEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
       <UniqueIdentifier>{cd88c6eb-906e-4ed5-968c-a4c81aa19df1}</UniqueIdentifier>
     </Filter>
-    <Filter Include="core">
+    <Filter Include="EffEngine">
       <UniqueIdentifier>{fa5adca0-6b05-484a-8df1-0999482d120a}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="EffEngine\Header Files">
+      <UniqueIdentifier>{d53e5158-9c93-4cae-aa48-72f649b7ef59}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

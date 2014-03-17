@@ -1,65 +1,45 @@
 #ifndef MAINSCENE_H_
 #define MAINSCENE_H_
 
-#include "GameEngine.h"
-#include "GameScene.h"
-#include "Bullet.h"
-#include "Enemy.h"
+#include <irrlicht.h>
+#include "EffScene.h"
 
-class BackgroundFader;
+using namespace irr;
 
-class MainScene : public GameScene
+class EffEngine;
+class Enemy;
+class Robot;
+
+class MainScene : public EffScene
 {
 public:
-	MainScene(GameEngine* engine);
-	void start (void);
-	void update (void);
+	MainScene();
 
 	/**
-	 * Spawns a particle at a certain position
-	 * Give the position of the object to spawn the particle onto that object
+	 * Creates all the objects, basically sets up the scene visually
 	 */
-	void spawnParticleEffect (core::vector3df position, core::stringc pathname);
+	virtual bool init (void);
+	
+	virtual void update (float deltaTime);
+
 	~MainScene(void);
-
-	ICameraSceneNode* camera;
-
-	/** 
-	 * boolean to regulate emitter of the particle
-	 */
-	bool hasEmitter;
 	
 private:
 
-	void playerHit (core::vector3df hitPosition);
-	void playerDie (void);
+	/**
+	 * The player
+	 */
+	Robot* robot;
 
-	IMeshSceneNode* robot;
-	IParticleSystemSceneNode* particleSceneNode;
-	IParticleEmitter* Emitter;
+	/**
+	 * List of all the enemies in the scene
+	 */
+	core::list<Enemy*> enemies;
 
-	// Array with bullets
-	Bullet* bullets[10];
-
-	// Add which place in the bullets array to add the new bullet
-	int bulletIndex;
-
-	// Counter to keep track of the shoot cooldown
-	float shootCooldown;
-
-	Enemy* enemy1;
-	Enemy* enemy2;
-
-	float particleCooldown;
-
-	bool particleOnCooldown;
-
-	int playerHp;
-	bool isPlayerDeath;
-
-	// Triangle Selector and Animator Collision Response for the level collision.
-	ITriangleSelector* levelSelector;
-	ISceneNodeAnimatorCollisionResponse* collisionLevel;
+	/**
+	 * The camera in the scene
+	 */
+	scene::ICameraSceneNode* camera;
 };
 
 #endif

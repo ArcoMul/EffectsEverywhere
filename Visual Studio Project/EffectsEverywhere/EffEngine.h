@@ -10,24 +10,19 @@ using namespace video;
 using namespace io;
 using namespace gui;
 
-class GameScene;
+class EffScene;
 class InputReceiver;
 
-class GameEngine
+class EffEngine
 {
 public:
-	GameEngine();
+	EffEngine();
 	bool init(int width = 800, int height = 600, int colordepth = 16, bool fullscreen = false, 
 		bool stencilbuffer = false, bool vsyncenabled = false); 
 	void run();
-	void setScene (GameScene* scene);
-	~GameEngine(void);
-	void setMouseVisible (bool MouseVisible);
-
-	float startTime;
-	float totalTime;
-	float lastFrameTime;
-	float deltaTime;
+	void setScene (EffScene* scene);
+	void setMouseVisible (bool mouseVisible);
+	~EffEngine(void);
 	
 	// Mouse position on the last frame
 	position2di prevMouse;
@@ -41,21 +36,34 @@ public:
 	// Controls input event receiver
 	InputReceiver* inputReceiver;
 
+	IVideoDriver* driver;
+	IrrlichtDevice* device;
+
+private:
+
+	// Update all the objects in the game
+	void update (float deltaTime);
+
+	// Draws everything in the game
+	void draw (void);
+
+	// Lock the mouse in the screen
+	void lockMouse (void);
+
+	// Timestamp of the starttime
+	float startTime;
+
+	// Frame timestamp of the last frame
+	float lastFrameTime;
+
+	// If the mouse should be locked in the screen or not
+	bool mouseLock;
+	
+	// Which scene we will call the update function of
+	EffScene* activeEffScene;
+
 	// Background color of the scene
 	SColor backgroundColor;
-
-	IVideoDriver* driver; //was private
-
-private:	
-	void update (void);
-	void draw (void);
-	bool mouseLock;
-
-	IrrlichtDevice* device;
-	
-
-	// Which scene we will call the update function of
-	GameScene* activeScene;
 };
 
 #endif
