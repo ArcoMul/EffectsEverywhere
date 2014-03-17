@@ -18,6 +18,7 @@
       <Filter>EffEngine</Filter>
     </ClCompile>
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="TemporaryParticleEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -42,6 +43,9 @@
       <Filter>EffEngine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="Robot.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TemporaryParticleEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

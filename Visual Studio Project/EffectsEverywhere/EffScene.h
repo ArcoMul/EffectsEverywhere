@@ -20,8 +20,20 @@ public:
 
 	virtual void update (float deltaTime);
 
+	/**
+	 * Add a default actor to the scene
+	 */
 	EffActor* addActor(EffActor* actor);
+
+	/**
+	 * Add an actor to the scene where we add a mesh to and set a IMeshSceneNode
+	 */
 	EffActor* addMeshActor(EffActor* actor, core::stringc meshPath);
+
+	/**
+	 * Add an actor to the scene where we add a emitter to and set a IParticleSystemSceneNode
+	 */
+	EffActor* addParticleActor(EffActor* actor);
 
 	/**
 	 * Public function to record that an actors has to be removed, this
@@ -62,31 +74,19 @@ public:
 	 */
 	scene::ISceneNode* checkRayCastIntersection(core::vector3df start, core::vector3df end, core::vector3df &intersection);
 
-	
-	/**
-	 * Spawns a particle at a certain position
-	 * Give the position of the object to spawn the particle onto that object
-	 */
-	void spawnParticleEffect (core::vector3df position, core::stringc pathname);
-
 	/**
 	 * Spawn mesh a certain position, only for debug purposes
 	 */
 	void spawnDebugMesh (core::vector3df position);
-
-	scene::IParticleSystemSceneNode* particleSceneNode;
-	scene::IParticleEmitter* Emitter;
-
-	float particleCooldown;
-
-	bool particleOnCooldown;
+	
+	/**
+	 * Function to load a texture from the irrlicht driver object
+	 */
+	video::ITexture* getTexture (core::stringc pathname);
 
 	~EffScene(void);
 
 protected:
-
-	// Function to load a texture from the irrlicht driver object
-	video::ITexture* getTexture (core::stringc pathname);
 
 	// Change visibility of the mouse in the EffEngine
 	// TODO: make special mouse object to do this, not in the effeninge class

@@ -21,6 +21,8 @@ public:
 
 	void shoot (core::list<Enemy*> enemies);
 
+	void hit (core::vector3df position);
+
 	~Robot(void);
 
 private:

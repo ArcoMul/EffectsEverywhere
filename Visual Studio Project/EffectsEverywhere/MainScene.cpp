@@ -6,6 +6,7 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Robot.h"
+#include "TemporaryParticleEffect.h"
 
 MainScene::MainScene()
 {
@@ -15,17 +16,6 @@ MainScene::MainScene()
 
 bool MainScene::init(void)
 {
-	// This boolean is used to make sure that the emitter will be disabled after the particle cooldown
-	hasEmitter = true;
-
-	/** We set the particleScene node to a nullpointer so it can be first created before we disable the emitter
-	 * otherwise it will break and lose memory
-	 **/
-	particleSceneNode = nullptr;
-
-	//  boolean used for player and enemy collision
-	particleOnCooldown = false;
-
 	// Create robot actor
 	robot = new Robot();
 	addMeshActor ((EffActor*) robot, "../../Media/robot.obj");
@@ -107,22 +97,6 @@ void MainScene::update(float deltaTime)
 
 	// Set where the camera has to look at
 	camera->setTarget(robot->node->getPosition());
-
-	/**
-	 * This if function checks if the particle cooldown != null and the cooldown is lower than 0 
-	 * if so, it will disable the emitter but this will not remove/drop it. This needs to be done when the 
-	 * enemy dies.
-	 * WARNING the particleCooldown must always be lower than the shootCooldown otherwise it will never come into this
-	 * if function and the particle will be constantly emitting. TIP: if u want to make a particle that needs to be there all
-	 * the time then just set the particleCooldown equal to or higher than the shootCooldown
-	 **/
-	if (particleCooldown <= 0 && particleSceneNode != nullptr) {
-		particleSceneNode->setEmitter(0);
-	}
-	// Reduce the cooldown of the particle
-	if (particleCooldown > 0) {
-		particleCooldown -= deltaTime;
-	}
 	
 	// When the spacebar is pressed and the cooldown is low engouh, shoot!
 	if (getInput()->IsKeyDown(irr::KEY_SPACE))
@@ -130,34 +104,17 @@ void MainScene::update(float deltaTime)
 		robot->shoot(enemies);
 	}
 
-	// Check if there was collision with enemy 1 and 2
+	// Check if there was collision with an enemy
 	core::vector3df collisionPosition;
-	if(particleCooldown <= 0)
+	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
 	{
-		bool canParticleCooldownGoFalse = true;
-		for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
-		{
-			if(!(*enemy)->isDeath && (*enemy)->collisionOccurred(&collisionPosition) && !particleOnCooldown) {
-				playerHit(collisionPosition);
-				canParticleCooldownGoFalse = false;
-				break;
-			}
-		}
-		if (canParticleCooldownGoFalse) {
-			particleOnCooldown = false;
+		if(!(*enemy)->isDeath && (*enemy)->collisionOccurred(&collisionPosition)) {
+			(*enemy)->hit (robot, collisionPosition);
+			break;
 		}
 	}
 }
 
 MainScene::~MainScene(void)
 {
-	this->Emitter->drop();
-}
-
-void MainScene::playerHit (core::vector3df hitPosition)
-{
-	spawnParticleEffect(hitPosition, "../../Media/portal1.bmp");
-	Emitter->setMaxLifeTime(250u);
-	particleOnCooldown = true;
-	particleCooldown = 100;
 }

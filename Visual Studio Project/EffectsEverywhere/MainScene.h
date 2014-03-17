@@ -20,11 +20,6 @@ public:
 	~MainScene(void);
 
 	scene::ICameraSceneNode* camera;
-
-	/** 
-	 * boolean to regulate emitter of the particle
-	 */
-	bool hasEmitter;
 	
 private:
 

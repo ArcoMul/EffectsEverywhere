@@ -74,6 +74,37 @@ EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath)
 	return actor;
 }
 
+EffActor* EffScene::addParticleActor(EffActor* actor)
+{
+	// Add the actor to the current scene
+	addActorToScene(actor);
+
+	// Create the particle system scene node
+	scene::IParticleSystemSceneNode* particleNode = manager->addParticleSystemSceneNode(false);
+
+	// Add a particle affector to the node which causes the particles to fade out
+	// TODO: not every particle effect will have this, maybe not put this here...
+	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
+	particleNode->addAffector(affector);
+    affector->drop();
+
+	// Create the emitter so that the particle node actually emits the particles,
+	// In this case the emitter is a box
+	// TODO: not every particle has the same emitter, maybe not put this here...
+	scene::IParticleBoxEmitter* emitter = particleNode->createBoxEmitter(aabbox3df(-3, 0, -3, 3, 1, 3 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
+		SColor(0,255,255,255),500,750,0,dimension2df(4.0f, 4.0f), dimension2df(8.0f, 8.0f));
+	particleNode->setEmitter(emitter);
+	emitter->drop();
+
+	// Tell the actor which irrlicht node belongs to him
+	actor->setNode ((scene::ISceneNode*) particleNode);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
+	return actor;
+}
+
 void EffScene::removeActor(EffActor* actor)
 {
 	// Save that this actors has to be removed
@@ -175,36 +206,6 @@ void EffScene::spawnDebugMesh (core::vector3df position)
 	scene::IMeshSceneNode* debugNode = engine->smgr->addMeshSceneNode(debugMesh);
 	debugNode->setMaterialFlag(video::EMF_LIGHTING, false);
 	debugNode->setPosition(position);
-}
-
-void EffScene::spawnParticleEffect (core::vector3df position, core::stringc pathname) 
-{
-	//creating a particlesystemscenenode which basicly is a particle
-	particleSceneNode = manager->addParticleSystemSceneNode(false);
-	
-	//creating an emitter so u actually emit the particle from somewhere so it will be visual( in this case it's a box )
-	Emitter = particleSceneNode->createBoxEmitter(aabbox3df(-3, 0, -3, 3, 1, 3 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
-		SColor(0,255,255,255),500,750,0,dimension2df(4.0f, 4.0f), dimension2df(8.0f, 8.0f));
-
-	// adding a particle affector which causes the particles to fade out
-	scene::IParticleAffector* paf = particleSceneNode->createFadeOutParticleAffector();
-    
-	particleSceneNode->addAffector(paf); // same goes for the affector
-    paf->drop();
-
-	//add the emitter to the particle and drop to prevent memory leakage
-	particleSceneNode->setEmitter(Emitter);
-
-	//check if the particlesystemscenenode is created correctly
-	if(particleSceneNode)
-	{
-		particleSceneNode->setPosition(position);
-		particleSceneNode->setScale(vector3df(0.5f, 0.5f,0.5f));
-		particleSceneNode->setMaterialFlag(EMF_LIGHTING, false);
-		particleSceneNode->setMaterialFlag(EMF_ZWRITE_ENABLE, false);
-		particleSceneNode->setMaterialTexture(0, getTexture(pathname));
-		particleSceneNode->setMaterialType(EMT_TRANSPARENT_ADD_COLOR);
-	}
 }
 
 EffScene::~EffScene(void)

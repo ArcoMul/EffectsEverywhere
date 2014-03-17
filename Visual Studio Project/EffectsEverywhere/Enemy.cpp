@@ -1,6 +1,7 @@
 #include "Enemy.h"
 #include "EffScene.h"
 #include "InputReceiver.h"
+#include "Robot.h"
 #include <iostream>
 #include <cmath>
 
@@ -13,6 +14,7 @@ Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISc
 	this->followTarget = false;
 	this->isDeath = false;
 	this->spawnPosition = position;
+	this->cooldown = 0;
 }
 
 void Enemy::start ()
@@ -69,6 +71,8 @@ void Enemy::update(float deltaTime)
 	pos.Y = 0;
 
 	node->setPosition(pos);
+
+	cooldown -= deltaTime;
 }
 
 bool Enemy::collisionOccurred (core::vector3df* position)
@@ -113,6 +117,15 @@ bool Enemy::hit ()
 		return true;
 	} else {
 		return false;
+	}
+}
+
+void Enemy::hit (Robot* robot, core::vector3df position)
+{
+	if (cooldown <= 0)
+	{
+		robot->hit(position);
+		cooldown = 500;
 	}
 }
 

@@ -74,6 +74,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="TemporaryParticleEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Irrlicht\source\Irrlicht\Irrlicht10.0.vcxproj">
@@ -89,6 +90,7 @@
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Robot.h" />
+    <ClInclude Include="TemporaryParticleEffect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

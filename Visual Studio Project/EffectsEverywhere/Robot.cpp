@@ -3,6 +3,7 @@
 #include "InputReceiver.h"
 #include "Enemy.h"
 #include "Bullet.h"
+#include "TemporaryParticleEffect.h"
 
 Robot::Robot(void)
 {
@@ -93,15 +94,11 @@ void Robot::shoot (core::list<Enemy*> enemies)
 
 	// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
 	scene::ISceneNode* intersectionNode = scene->checkRayCastIntersection(node->getPosition() + (forward * 5), node->getPosition() + (forward * 1000.), intersection);
-	if (intersectionNode != nullptr && !scene->particleOnCooldown)
+	if (intersectionNode != nullptr)
 	{
-		/** Spawn a particle at the place of the collision
-			* the particle is created in the gamescene
-			* Set the cooldown of the particle
-			**/
-		scene->spawnParticleEffect (intersection, "../../Media/fireball.bmp");
-		scene->particleCooldown = 250;
-		scene->particleOnCooldown = true;
+		// Spawn a particle effect at the position where we hit something with the bullet
+		TemporaryParticleEffect* p = new TemporaryParticleEffect(intersection, 250, "../../Media/fireball.bmp");
+		scene->addParticleActor ((EffActor*) p);
 
 		// Check which enemy was hit and tell the enemy it is hit, if the the hit function
 		// returns true, it has to die
@@ -119,6 +116,13 @@ void Robot::shoot (core::list<Enemy*> enemies)
 	// Create bullet actor with the right position and rotation
 	Bullet* bullet = new Bullet(node->getPosition(), node->getRotation());
 	scene->addMeshActor ((EffActor*) bullet, "../../Media/bullet.obj");
+}
+
+void Robot::hit (core::vector3df position)
+{
+	// Spawn a particle effect where the robot was hit
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(position, 500, "../../Media/portal1.bmp");
+	scene->addParticleActor ((EffActor*) p);
 }
 
 Robot::~Robot(void)
