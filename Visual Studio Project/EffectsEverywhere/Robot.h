@@ -38,6 +38,8 @@ private:
 	int bulletIndex;
 
     Gun* gun;
+
+	core::vector3df gunPosition;
 };
 
 #endif
