@@ -18,7 +18,7 @@ bool MainScene::init(void)
 
 	// Create robot actor
 	robot = new Robot ();
-	addMeshActor ((EffActor*) robot, "../../Media/robot.obj", core::vector3df(0, 7.2f, 0));
+	addMeshActor ((EffActor*) robot, "../../Media/robot.obj", core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 	
 	// Add floor to scene

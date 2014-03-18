@@ -39,6 +39,10 @@ private:
 	 * The time this bullet was spawned
 	 */
 	float aliveSince;
+
+	float speed;
+
+	int lifeTime;
 };
 
 #endif
