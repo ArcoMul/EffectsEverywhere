@@ -37,7 +37,7 @@ bool MainScene::init(void)
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
 	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel = manager->createCollisionResponseAnimator(
 			levelSelector, robot->node, core::vector3df(7, 7, 10),
-			core::vector3df(0, -100, 0), core::vector3df(0, 0, 1));
+			core::vector3df(0, -100, 0), core::vector3df(0, 0, 0));
 
 	// We add the animator to our collisionNode and drop the selector and collision if
 	// we don't need it anymore.
