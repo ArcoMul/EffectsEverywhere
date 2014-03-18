@@ -4,6 +4,8 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "TemporaryParticleEffect.h"
+#include "Gun.h"
+#include <iostream>
 
 Robot::Robot(void)
 {
@@ -14,6 +16,10 @@ void Robot::start ()
 {
 	EffActor::start();
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
+
+    gun = new Gun();
+	scene->addMeshActor ((EffActor*) gun, "../../Media/rock-gun.obj");
+	gun->node->setParent (node);
 }
 
 void Robot::update(float deltaTime)
@@ -43,7 +49,7 @@ void Robot::update(float deltaTime)
 	{
 		// Multiply the already done transformations of the robot with the speed and deltaTime
 		pos += core::vector3df(mat[2] * speed * deltaTime,
-			0,
+		 	0,
 			mat[0] * -speed * deltaTime);
 	}
 	// When the S key is down go back
@@ -90,7 +96,8 @@ void Robot::shoot (core::list<Enemy*> enemies)
 
 	// Calculate the start and end of the ray and pass the intersection variable to get the collision position
 	core::vector3df intersection;
-	core::vector3df forward = core::vector3df(mat[2], 0, mat[0] * -1);
+	core::vector3df forward = core::vector3df(mat[2], 0, -mat[0]);
+	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
 
 	// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
 	scene::ISceneNode* intersectionNode = scene->checkRayCastIntersection(node->getPosition() + (forward * 5), node->getPosition() + (forward * 1000.), intersection);
@@ -115,7 +122,9 @@ void Robot::shoot (core::list<Enemy*> enemies)
 
 	// Create bullet actor with the right position and rotation
 	Bullet* bullet = new Bullet();
-	scene->addMeshActor ((EffActor*) bullet, "../../Media/bullet.obj", node->getPosition(), node->getRotation());
+	scene->addMeshActor ((EffActor*) bullet, "../../Media/rock-bullet.obj", node->getPosition() + (right * 9), node->getRotation());
+
+	gun->shoot();
 }
 
 void Robot::hit (core::vector3df position)

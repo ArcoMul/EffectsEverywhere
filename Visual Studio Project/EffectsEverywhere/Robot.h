@@ -9,6 +9,7 @@ using namespace irr;
 class EffEngine;
 class Bullet;
 class Enemy;
+class Gun;
 
 class Robot : public EffActor
 {
@@ -35,6 +36,8 @@ private:
 
 	// Add which place in the bullets array to add the new bullet
 	int bulletIndex;
+
+    Gun* gun;
 };
 
 #endif
