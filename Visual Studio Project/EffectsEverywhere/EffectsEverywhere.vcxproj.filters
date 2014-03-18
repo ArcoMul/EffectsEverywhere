@@ -19,6 +19,12 @@
     </ClCompile>
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="TemporaryParticleEffect.cpp" />
+    <ClCompile Include="ParticleModel.cpp">
+      <Filter>Engine Feature</Filter>
+    </ClCompile>
+    <ClCompile Include="ParticleManager.cpp">
+      <Filter>Engine Feature</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -48,6 +54,12 @@
     <ClInclude Include="TemporaryParticleEffect.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="ParticleModel.h">
+      <Filter>Engine Feature\Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="ParticleManager.h">
+      <Filter>Engine Feature\Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -58,6 +70,12 @@
     </Filter>
     <Filter Include="EffEngine\Header Files">
       <UniqueIdentifier>{d53e5158-9c93-4cae-aa48-72f649b7ef59}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Feature">
+      <UniqueIdentifier>{6e5fb162-0c98-4753-97b3-b81f2e743c0c}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="Engine Feature\Header Files">
+      <UniqueIdentifier>{ec787bb8-bfb8-403b-9c0f-5bbf810bfcec}</UniqueIdentifier>
     </Filter>
   </ItemGroup>
 </Project>

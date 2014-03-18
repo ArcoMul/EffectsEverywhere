@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 
 using namespace irr;
+using namespace video;
 
 class ParticleModel
 {
@@ -12,7 +13,7 @@ public:
 	void switchEmitterType();
 	~ParticleModel(void);
 
-	enum emitterType
+	enum EmitterType
 	{
 		BOX,
 		POINT,
@@ -24,14 +25,16 @@ public:
 		NONE = 0
 	};
 
+	aabbox3df<f32> aabbox;
+	vector3df direction;
+	s32 maxAngleDegrees;
+	u32 lifeTimeMax,lifeTimeMin, maxPPS, minPPS;
+	ITexture* texture;
+	const video::SColor &color;
+	const core::dimension2df &size;
+
 private:
-	void createBoxEmittingParticle();
-	void createPointEmittingParticle();
-	void createAnimatedMeshEmittingParticle();
-	void createCylinderEmittingParticle();
-	void createMeshEmittingParticle();
-	void createRingEmittingParticle();
-	void createSphereEmittingParticle();
+
 };
 
 #endif
