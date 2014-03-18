@@ -37,7 +37,7 @@ private:
 	// Add which place in the bullets array to add the new bullet
 	int bulletIndex;
 
-    Gun* gun;
+	Gun* gun;
 
 	core::vector3df gunPosition;
 };

@@ -17,7 +17,7 @@ void Robot::start ()
 	EffActor::start();
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 
-    gun = new Gun();
+	gun = new Gun();
 	scene->addMeshActor ((EffActor*) gun, "../../Media/rock-gun.obj");
 	gun->node->setParent (node);
 
