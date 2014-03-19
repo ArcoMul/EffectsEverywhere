@@ -33,6 +33,7 @@ bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, boo
 
 	// Get the start time of the engine
 	this->startTime = device->getTimer()->getTime();
+	this->lastFrameTime = device->getTimer()->getTime();
 	
 	return true;
 }

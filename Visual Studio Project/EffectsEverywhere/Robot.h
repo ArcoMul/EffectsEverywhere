@@ -26,6 +26,8 @@ public:
 
 	~Robot(void);
 
+	EffActor* mesh;
+
 private:
 
 	// Counter to keep track of the shoot cooldown
@@ -40,6 +42,11 @@ private:
 	Gun* gun;
 
 	core::vector3df gunPosition;
+
+	int floatDirection;
+	float restFloatSpeed;
+	float movingFloatSpeed;
+	float floatSpeed;
 };
 
 #endif
