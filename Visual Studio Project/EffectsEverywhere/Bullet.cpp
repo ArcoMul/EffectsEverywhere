@@ -1,9 +1,12 @@
 #include "EffScene.h"
 #include "Bullet.h"
+#include "Enemy.h"
+#include "TemporaryParticleEffect.h"
 #include <iostream>
 
-Bullet::Bullet(void)
+Bullet::Bullet (core::list<Enemy*>* enemies)
 {
+	this->enemies = enemies;
 	this->speed = .3;
 	this->lifeTime = 1000;
 }
@@ -28,6 +31,20 @@ void Bullet::update (float deltaTime)
 	{
 		scene->removeActor((EffActor*) this);
 		return;
+	}
+
+	for(core::list<Enemy*>::Iterator enemy = enemies->begin(); enemy != enemies->end(); enemy++)
+	{
+		if((*enemy)->node != nullptr && node->getTransformedBoundingBox().intersectsWithBox((*enemy)->node->getTransformedBoundingBox()))
+		{
+			// Spawn a particle effect at the position where we hit something with the bullet
+			TemporaryParticleEffect* p = new TemporaryParticleEffect(node->getPosition(), 250, "../../Media/fireball.bmp");
+			scene->addParticleActor ((EffActor*) p);
+
+			(*enemy)->hit();
+			scene->removeActor ((EffActor*) this);
+			return;
+		}
 	}
 
 	// Get the current position and rotation and calculate based on that the new position,

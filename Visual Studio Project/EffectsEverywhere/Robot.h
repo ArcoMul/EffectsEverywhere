@@ -20,7 +20,7 @@ public:
 
 	virtual void update (float deltaTime);
 
-	void shoot (core::list<Enemy*> enemies);
+	void shoot (core::list<Enemy*>* enemies);
 
 	void hit (core::vector3df position);
 
@@ -31,15 +31,14 @@ private:
 	// Counter to keep track of the shoot cooldown
 	float shootCooldown;
 
-	// Array with bullets
-	Bullet* bullets[10];
-
 	// Add which place in the bullets array to add the new bullet
 	int bulletIndex;
 
 	Gun* gun;
 
 	core::vector3df gunPosition;
+
+	core::list<Enemy*> enemies;
 };
 
 #endif
