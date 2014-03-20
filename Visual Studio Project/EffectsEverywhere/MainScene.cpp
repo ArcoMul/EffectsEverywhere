@@ -63,6 +63,9 @@ bool MainScene::init(void)
 	// Create list to keep track of enemies
 	enemies = core::list<Enemy*>();
 
+	// Tell the scene about this list of actors, so that removed actors also gets removed from this list
+	addActorList((core::list<EffActor*>*) &enemies);
+
 	// Creating an enemy and give it the parameters from the Enemy.cpp class
 	enemies.push_back(new Enemy(manager, core::vector3df(-30, 0, -55), robot->node, .05));
 	enemies.push_back(new Enemy(manager, core::vector3df(30, 0, -55), robot->node, .03));
@@ -101,7 +104,7 @@ void MainScene::update(float deltaTime)
 	// When the spacebar is pressed and the cooldown is low enough, shoot!
 	if (getInput()->IsKeyDown(irr::KEY_SPACE))
 	{
-		robot->shoot(enemies);
+		robot->shoot(&enemies);
 	}
 
 	// Check if there was collision with an enemy

@@ -54,6 +54,13 @@ public:
 	void removeActor(EffActor* actor);
 
 	/**
+	 * To make an actor list which is up to date with deleted actors in
+	 * the scene we tell the scene about the list, so that the scene can
+	 * delete actors from this list too
+	 */
+	void addActorList (core::list<EffActor*>* list);
+
+	/**
 	 * Scene has a reference to the engine to do some special stuff
 	 * TODO: we probably want to remove this reference
 	 */
@@ -110,12 +117,26 @@ private:
 	 * this method. Usually this happens at the end of the frame
 	 */
 	void cleanupActors(void);
+	bool removeActorFromList (EffActor* actorToRemove, core::list<EffActor*>* list);
 
 	// TODO: remove the reference to the engine from the scene, I think
 	EffEngine* engine;
 
+	/**
+	 * All actors in the scene
+	 */
 	core::list<EffActor*> actors;
+
+	/**
+	 * Actors which need to be removed at the end of the frame
+	 */
 	core::list<EffActor*> actorsToRemove;
+
+	/**
+	 * Other actor lists which are used in the game so that we can
+	 * delete deleted actors from these lists too
+	 */
+	core::list<core::list<EffActor*>*> actorLists;
 };
 
 #endif

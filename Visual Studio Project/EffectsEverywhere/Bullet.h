@@ -6,6 +6,8 @@
 
 using namespace irr;
 
+class Enemy;
+
 class Bullet : public EffActor
 {
 
@@ -14,7 +16,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	Bullet (void);
+	Bullet (core::list<Enemy*>* enemies);
 
 	/**
 	 * When the actor is ready apply some material settings to the node
@@ -43,6 +45,8 @@ private:
 	float speed;
 
 	int lifeTime;
+
+	core::list<Enemy*>* enemies;
 };
 
 #endif

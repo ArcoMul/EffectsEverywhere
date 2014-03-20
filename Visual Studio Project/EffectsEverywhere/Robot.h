@@ -29,7 +29,7 @@ public:
 	/**
 	 * Shoot a bullet from the gun
 	 */
-	void shoot (core::list<Enemy*> enemies);
+	void shoot (core::list<Enemy*>* enemies);
 
 	/**
 	 * The robot gets hit on a certain position

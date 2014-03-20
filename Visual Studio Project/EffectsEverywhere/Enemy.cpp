@@ -132,7 +132,7 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 void Enemy::die ()
 {
 	isDeath = true;
-	node->remove();
+	scene->removeActor ((EffActor*) this);
 }
 
 Enemy::~Enemy()

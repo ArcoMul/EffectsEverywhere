@@ -140,10 +140,32 @@ EffActor* EffScene::addParticleActor(EffActor* actor)
 	return actor;
 }
 
+void EffScene::addActorList (core::list<EffActor*>* list)
+{
+	actorLists.push_back(list);
+}
+
 void EffScene::removeActor(EffActor* actor)
 {
 	// Save that this actors has to be removed
 	actorsToRemove.push_back (actor);
+}
+
+bool EffScene::removeActorFromList (EffActor* actorToRemove, core::list<EffActor*>* list)
+{
+	// Loop through all the actors in the scene
+	// TODO: loop in a loop, make more optimal using a find function or some sort of
+	for(auto actor = list->begin(); actor != list->end(); ++actor)
+	{
+		// Find the actor wich matches with the actor which needs to be removed
+		if ((*actor) == actorToRemove)
+		{
+			// Erase the actor from the actors list
+			list->erase(actor);
+			return true;
+		}
+	}
+	return false;
 }
 
 void EffScene::cleanupActors ()
@@ -151,21 +173,17 @@ void EffScene::cleanupActors ()
 	// Loop through all the actors which needs to be removed
 	for(core::list<EffActor*>::Iterator actorToRemove = actorsToRemove.begin(); actorToRemove != actorsToRemove.end(); actorToRemove++)
 	{
-		// Loop through all the actors in the scene
-		// TODO: loop in a loop, make more optimal using a find function or some sort of
-		for(core::list<EffActor*>::Iterator actor = actors.begin(); actor != actors.end(); actor++)
+		// Remove the actor from the main list
+		if (removeActorFromList((*actorToRemove), &actors))
 		{
-			// Find the actor wich matches with the actor which needs to be removed
-			if ((*actor) == (*actorToRemove))
-			{
-				// Delete the actor
-				delete (*actor);
+			// If the actor is found, tell also the actor to delete itself
+			delete (*actorToRemove);
+		}
 
-				// Erase the actor from the actors list
-				actors.erase(actor);
-
-				break;
-			}
+		// Remove the actor from other actor lists we keep track of
+		for(auto it = actorLists.begin(); it != actorLists.end(); ++it)
+		{
+			removeActorFromList((*actorToRemove), (*it));
 		}
 	}
 
