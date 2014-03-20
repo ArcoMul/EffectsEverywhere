@@ -20,7 +20,7 @@ public:
 
 	virtual void update (float deltaTime);
 
-	void shoot (core::list<Enemy*> enemies);
+	void shoot (core::list<Enemy*>* enemies);
 
 	void hit (core::vector3df position);
 

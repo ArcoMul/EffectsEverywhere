@@ -4,7 +4,7 @@
 #include "TemporaryParticleEffect.h"
 #include <iostream>
 
-Bullet::Bullet (core::list<Enemy*> enemies)
+Bullet::Bullet (core::list<Enemy*>* enemies)
 {
 	this->enemies = enemies;
 	this->speed = .3;
@@ -33,7 +33,7 @@ void Bullet::update (float deltaTime)
 		return;
 	}
 
-	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
+	for(core::list<Enemy*>::Iterator enemy = enemies->begin(); enemy != enemies->end(); enemy++)
 	{
 		if((*enemy)->node != nullptr && node->getTransformedBoundingBox().intersectsWithBox((*enemy)->node->getTransformedBoundingBox()))
 		{

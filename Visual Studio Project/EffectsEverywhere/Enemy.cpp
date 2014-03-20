@@ -132,17 +132,7 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 void Enemy::die ()
 {
 	isDeath = true;
-
-	// TODO: now only the node gets removed, when we remove the actor
-	//	the bullet class has a problem with checking if there is a collision
-	//	somehow the pointers in the enemies array in the bullet still points
-	//	to the enemy and can read its values. We need to make that a null pointer
-	//	when deleting a pointer
-	node->remove();
-	node = nullptr;
-
-	// TODO: this is what we want instead of above two lines
-	// scene->removeActor ((EffActor*) this);
+	scene->removeActor ((EffActor*) this);
 }
 
 Enemy::~Enemy()

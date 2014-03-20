@@ -92,7 +92,7 @@ void Robot::update(float deltaTime)
 	}
 }
 
-void Robot::shoot (core::list<Enemy*> enemies)
+void Robot::shoot (core::list<Enemy*>* enemies)
 {
 	if (shootCooldown > 0) return;
 

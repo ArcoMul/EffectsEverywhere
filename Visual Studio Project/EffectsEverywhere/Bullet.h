@@ -16,7 +16,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	Bullet (core::list<Enemy*> enemies);
+	Bullet (core::list<Enemy*>* enemies);
 
 	/**
 	 * When the actor is ready apply some material settings to the node
@@ -46,7 +46,7 @@ private:
 
 	int lifeTime;
 
-	core::list<Enemy*> enemies;
+	core::list<Enemy*>* enemies;
 };
 
 #endif
