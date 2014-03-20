@@ -9,6 +9,7 @@
 
 Robot::Robot(void)
 {
+	// Set some default values
 	floatDirection = 1;
 	restFloatSpeed = 0.005;
 	movingFloatSpeed = 0.0075;
@@ -18,16 +19,19 @@ Robot::Robot(void)
 void Robot::start ()
 {
 	EffActor::start();
-
+	
+	// Create the robot mesh
 	mesh = new EffActor();
 	scene->addMeshActor ((EffActor*) mesh, "../../Media/robot.obj", core::vector3df(0, 0, 0), core::vector3df(0, 0, 0));
 	mesh->node->setMaterialFlag(video::EMF_LIGHTING, false);
 	mesh->node->setParent(node);
 
+	// Create gun actor
 	gun = new Gun();
 	scene->addMeshActor ((EffActor*) gun, "../../Media/rock-gun.obj");
 	gun->node->setParent (mesh->node);
 
+	// Put the gun on the right position
 	core::matrix4 mat = node->getAbsoluteTransformation();
 	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
 	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
@@ -37,9 +41,11 @@ void Robot::update(float deltaTime)
 {
 	EffActor::update(deltaTime);
 
+	// Rotation and position of the robot
 	core::vector3df rot = node->getRotation();
 	core::vector3df pos = node->getPosition();
 
+	// Rotation of the mesh
 	core::vector3df meshRotation = mesh->node->getRotation();
 
 	// Get the transformations done on this robot
