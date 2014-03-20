@@ -14,14 +14,18 @@ class ParticleModel;
 class ParticleManager
 {
 public:
-	ParticleManager(video::IVideoDriver* driver, IrrlichtDevice* device);
+	ParticleManager(video::IVideoDriver* driver, IrrlichtDevice* device, ISceneManager* smgr);
 	IParticleSystemSceneNode* spawnDataModelParticle(ParticleModel* model, vector3df position);
 	IParticleSystemSceneNode* spawnXMLParticle(stringc xmlname, vector3df position);
 	~ParticleManager(void);
 
+	ISceneManager* smgr;
+	IVideoDriver* driver;
+	IrrlichtDevice* device;
+
 private:
-	void createBoxEmittingParticle();
-	void createPointEmittingParticle();
+	void createBoxEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
+	void createPointEmittingParticle(ParticleModel* particleModel);
 	void createAnimatedMeshEmittingParticle();
 	void createCylinderEmittingParticle();
 	void createMeshEmittingParticle();

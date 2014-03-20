@@ -13,25 +13,26 @@ public:
 	void switchEmitterType();
 	~ParticleModel(void);
 
-	enum EmitterType
+	enum EmitterTypes
 	{
+		NONE = 0,
 		BOX,
 		POINT,
 		ANIMATED_MESH,
 		CYLINDER,
 		MESH,
 		RING,
-		SPHERE,
-		NONE = 0
+		SPHERE
 	};
 
-	aabbox3df<f32> aabbox;
-	vector3df direction;
+	EmitterTypes emitterType;
+	core::aabbox3df aabbox;
+	core::vector3df direction;
 	s32 maxAngleDegrees;
 	u32 lifeTimeMax,lifeTimeMin, maxPPS, minPPS;
-	ITexture* texture;
-	const video::SColor &color;
-	const core::dimension2df &size;
+	stringc pathNameTexture;
+	const video::SColor &minStartColor, &maxStartColor;
+	const core::dimension2df &minStartSize, &maxStartSize;
 
 private:
 
