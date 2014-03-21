@@ -25,6 +25,8 @@ public:
 	 */
 	EffActor* addActor (EffActor* actor, bool start = true);
 
+	EffActor* addNodeActor (EffActor* actor, core::vector3df position, core::vector3df rotation);
+
 	/**
 	 * Add an actor to the scene where we add a mesh to and set a IMeshSceneNode
 	 */

@@ -26,7 +26,7 @@ public:
 	/**
 	 * Add collision between this enemy and the given node
 	 */
-	void addCollision (scene::IMeshSceneNode* node);
+	void addCollision (scene::ISceneNode* collisionNode, scene::IMesh* mesh);
 
 	/**
 	 * Check if collision occured and tell what position it happened

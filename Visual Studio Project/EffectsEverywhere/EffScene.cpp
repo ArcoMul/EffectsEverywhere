@@ -46,6 +46,25 @@ EffActor* EffScene::addActor (EffActor* actor, bool start)
 	return actor;
 }
 
+EffActor* EffScene::addNodeActor(EffActor* actor, core::vector3df position, core::vector3df rotation)
+{
+	// Add the actor to the current scene
+	actor = addActor(actor, false);
+
+	// Create a mesh using the given source path
+	scene::ISceneNode* node = (scene::ISceneNode*) manager->addSceneNode("empty", manager->getRootSceneNode());
+	node->setPosition (position);
+	node->setRotation (rotation);
+
+	// Tell the actor which irrlicht node belongs to him
+	actor->setNode (node);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
+	return actor;
+}
+
 EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, bool start)
 {
 	// Add the actor to the current scene
