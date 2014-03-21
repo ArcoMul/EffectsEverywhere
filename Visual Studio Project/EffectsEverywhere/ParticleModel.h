@@ -30,7 +30,7 @@ public:
 	core::vector3df direction;
 	s32 maxAngleDegrees;
 	u32 lifeTimeMax,lifeTimeMin, maxPPS, minPPS;
-	stringc pathNameTexture;
+	core::stringc pathNameTexture;
 	const video::SColor &minStartColor, &maxStartColor;
 	const core::dimension2df &minStartSize, &maxStartSize;
 

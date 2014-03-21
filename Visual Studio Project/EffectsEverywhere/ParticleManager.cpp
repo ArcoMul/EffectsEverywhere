@@ -17,22 +17,22 @@ IParticleSystemSceneNode* ParticleManager::spawnDataModelParticle(ParticleModel*
 		createBoxEmittingParticle(model,particleNode);
 		break;
 	case(model->POINT):
-		createPointEmittingParticle();
+		createPointEmittingParticle(model,particleNode);
 		break;
 	case(model->ANIMATED_MESH):
-		createAnimatedMeshEmittingParticle();
+		createAnimatedMeshEmittingParticle(model,particleNode);
 		break;
 	case(model->CYLINDER):
-		createCylinderEmittingParticle();
+		createCylinderEmittingParticle(model,particleNode);
 		break;
 	case(model->MESH):
-		createMeshEmittingParticle();
+		createMeshEmittingParticle(model,particleNode);
 		break;
 	case(model->RING):
-		createRingEmittingParticle();
+		createRingEmittingParticle(model,particleNode);
 		break;
 	case(model->SPHERE):
-		createSphereEmittingParticle();
+		createSphereEmittingParticle(model,particleNode);
 		break;
 	case(model->NONE):
 		break;
@@ -55,7 +55,38 @@ void ParticleManager::createBoxEmittingParticle(ParticleModel* particleModel,IPa
 	boxEmitter->drop();
 }
 
-void ParticleManager::createPointEmittingParticle(ParticleModel* particleModel)
+void ParticleManager::createPointEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode)
+{
+	/*IParticlePointEmitter* pointEmitter = particleNode->createPointEmitter();
+	particleNode->setEmitter(pointEmitter);
+	pointEmitter->drop();*/
+}
+
+void ParticleManager::createAnimatedMeshEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode)
+{
+	/*scene::IParticleAnimatedMeshSceneNodeEmitter* animatedMeshEmitter = particleNode->createAnimatedMeshSceneNodeEmitter();
+	particleNode->setEmitter(animatedMeshEmitter);
+	animatedMeshEmitter->drop();*/
+}
+
+void ParticleManager::createCylinderEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode)
+{
+	/*scene::IParticleCylinderEmitter* cylinderEmitter = particleNode->createCylinderEmitter();
+	particleNode->setEmitter(cylinderEmitter);
+	cylinderEmitter->drop();*/
+}
+
+void ParticleManager::createMeshEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode)
+{
+
+}
+
+void ParticleManager::createRingEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode)
+{
+
+}
+
+void ParticleManager::createSphereEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode)
 {
 
 }

@@ -25,12 +25,12 @@ public:
 
 private:
 	void createBoxEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
-	void createPointEmittingParticle(ParticleModel* particleModel);
-	void createAnimatedMeshEmittingParticle();
-	void createCylinderEmittingParticle();
-	void createMeshEmittingParticle();
-	void createRingEmittingParticle();
-	void createSphereEmittingParticle();
+	void createPointEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
+	void createAnimatedMeshEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
+	void createCylinderEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
+	void createMeshEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
+	void createRingEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
+	void createSphereEmittingParticle(ParticleModel* particleModel,IParticleSystemSceneNode* particleNode);
 };
 
 #endif
