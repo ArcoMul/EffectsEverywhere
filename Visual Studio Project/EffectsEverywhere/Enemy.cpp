@@ -88,10 +88,10 @@ bool Enemy::collisionOccurred (core::vector3df* position)
  * Tell an object it should collide with this object
  * (we might want to move this function to that object, where we add the collision to instead of this object
  */
-void Enemy::addCollision (scene::IMeshSceneNode* collisionNode)
+void Enemy::addCollision (scene::ISceneNode* collisionNode, scene::IMesh* mesh)
 {
 	// Create an octree triangle selector for collision detection and attach it to our node.
-	scene::ITriangleSelector* selector = manager->createOctreeTriangleSelector(collisionNode->getMesh(), collisionNode, 12);
+	scene::ITriangleSelector* selector = manager->createOctreeTriangleSelector(mesh, collisionNode, 12);
 	collisionNode->setTriangleSelector(selector);
 
 	// Add an animator to the camera, a Collision Response Animator. This animator prevents

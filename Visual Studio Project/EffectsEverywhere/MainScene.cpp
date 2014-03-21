@@ -18,7 +18,7 @@ bool MainScene::init(void)
 
 	// Create robot actor
 	robot = new Robot ();
-	addMeshActor ((EffActor*) robot, "../../Media/robot.obj", core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
+	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 	
 	// Add floor to scene
@@ -76,7 +76,7 @@ bool MainScene::init(void)
 		this->addActor ((EffActor*) (*enemy));
 
 		// Add collision with the player and the enemies
-		(*enemy)->addCollision((scene::IMeshSceneNode*) robot->node);
+		(*enemy)->addCollision((scene::ISceneNode*) robot->node, ((scene::IMeshSceneNode*) robot->mesh->node)->getMesh());
 	}
 
 	// Set mouse Visible to false

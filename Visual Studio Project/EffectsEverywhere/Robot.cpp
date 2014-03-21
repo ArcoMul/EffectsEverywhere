@@ -9,18 +9,29 @@
 
 Robot::Robot(void)
 {
-
+	// Set some default values
+	floatDirection = 1;
+	restFloatSpeed = 0.005;
+	movingFloatSpeed = 0.0075;
+	floatSpeed = restFloatSpeed;
 }
 
 void Robot::start ()
 {
 	EffActor::start();
-	node->setMaterialFlag(video::EMF_LIGHTING, false);
+	
+	// Create the robot mesh
+	mesh = new EffActor();
+	scene->addMeshActor ((EffActor*) mesh, "../../Media/robot.obj", core::vector3df(0, 0, 0), core::vector3df(0, 0, 0));
+	mesh->node->setMaterialFlag(video::EMF_LIGHTING, false);
+	mesh->node->setParent(node);
 
+	// Create gun actor
 	gun = new Gun();
 	scene->addMeshActor ((EffActor*) gun, "../../Media/rock-gun.obj");
-	gun->node->setParent (node);
+	gun->node->setParent (mesh->node);
 
+	// Put the gun on the right position
 	core::matrix4 mat = node->getAbsoluteTransformation();
 	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
 	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
@@ -30,11 +41,12 @@ void Robot::update(float deltaTime)
 {
 	EffActor::update(deltaTime);
 
-	// Get the position of the robot
+	// Rotation and position of the robot
+	core::vector3df rot = node->getRotation();
 	core::vector3df pos = node->getPosition();
 
-	// Get the rotation of the robot
-	core::vector3df rot = node->getRotation();
+	// Rotation of the mesh
+	core::vector3df meshRotation = mesh->node->getRotation();
 
 	// Get the transformations done on this robot
 	core::matrix4 mat = node->getAbsoluteTransformation();
@@ -55,6 +67,7 @@ void Robot::update(float deltaTime)
 		pos += core::vector3df(mat[2] * speed * deltaTime,
 		 	0,
 			mat[0] * -speed * deltaTime);
+		meshRotation.X = -10;
 	}
 	// When the S key is down go back
 	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_S))
@@ -62,6 +75,10 @@ void Robot::update(float deltaTime)
 		pos += core::vector3df(mat[2] * -speed * deltaTime,
 			0,
 			mat[0] * speed * deltaTime);
+		meshRotation.X = 10;
+	}
+	else {
+		meshRotation.X = 0;
 	}
 	
 	// When the A key is down go right
@@ -70,6 +87,7 @@ void Robot::update(float deltaTime)
 		pos += core::vector3df(mat[0] * speed * deltaTime,
 			0,
 			mat[2] * speed * deltaTime);
+		meshRotation.Z = -10;
 	}
 	// When the D key is down go left
 	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_D))
@@ -77,7 +95,27 @@ void Robot::update(float deltaTime)
 		pos += core::vector3df(mat[0] * -speed * deltaTime,
 			0,
 			mat[2] * -speed * deltaTime);
+		meshRotation.Z = 10;
 	}
+	else {
+		meshRotation.Z = 0;
+	}
+
+	// When moving apply different speed for floating
+	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_W) || scene->getInput()->IsKeyDown(irr::KEY_KEY_S) || scene->getInput()->IsKeyDown(irr::KEY_KEY_A) || scene->getInput()->IsKeyDown(irr::KEY_KEY_D)) {
+		floatSpeed = movingFloatSpeed;
+	} else {
+		floatSpeed = restFloatSpeed;
+	}
+
+	// Get position of robot mesh
+	core::vector3df meshPosition = mesh->node->getPosition();
+	// Move it up or down based on floatSpeed
+	meshPosition.Y += deltaTime * floatSpeed * floatDirection;
+	// Reverse the float speed at the max-points
+	if (meshPosition.Y > 4 || meshPosition.Y < 0) floatDirection *= -1;
+	// Apply
+	mesh->node->setPosition (meshPosition);
 
 	// Add deltaMouse, the change of mouse position, to the rotation of the robot
     rot.Y += -.3 * scene->getDeltaMouse().X;
@@ -85,6 +123,7 @@ void Robot::update(float deltaTime)
 	// Set the newly calculated position and rotation
 	node->setPosition(pos);
 	node->setRotation(rot);
+	mesh->node->setRotation(meshRotation);
 
 	// Reduce the cooldown of shooting
 	if (shootCooldown > 0) {
