@@ -70,6 +70,7 @@
     <ClCompile Include="Bullet.cpp" />
     <ClCompile Include="EffEngine.cpp" />
     <ClCompile Include="EffScene.cpp" />
+    <ClCompile Include="Gun.cpp" />
     <ClCompile Include="InputReceiver.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
@@ -89,6 +90,7 @@
     <ClInclude Include="Bullet.h" />
     <ClInclude Include="EffEngine.h" />
     <ClInclude Include="EffScene.h" />
+    <ClInclude Include="Gun.h" />
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="ParticleManager.h" />

@@ -4,6 +4,8 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "TemporaryParticleEffect.h"
+#include "Gun.h"
+#include <iostream>
 
 Robot::Robot(void)
 {
@@ -14,6 +16,14 @@ void Robot::start ()
 {
 	EffActor::start();
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
+
+	gun = new Gun();
+	scene->addMeshActor ((EffActor*) gun, "../../Media/rock-gun.obj");
+	gun->node->setParent (node);
+
+	core::matrix4 mat = node->getAbsoluteTransformation();
+	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
+	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
 }
 
 void Robot::update(float deltaTime)
@@ -43,7 +53,7 @@ void Robot::update(float deltaTime)
 	{
 		// Multiply the already done transformations of the robot with the speed and deltaTime
 		pos += core::vector3df(mat[2] * speed * deltaTime,
-			0,
+		 	0,
 			mat[0] * -speed * deltaTime);
 	}
 	// When the S key is down go back
@@ -82,7 +92,7 @@ void Robot::update(float deltaTime)
 	}
 }
 
-void Robot::shoot (core::list<Enemy*> enemies)
+void Robot::shoot (core::list<Enemy*>* enemies)
 {
 	if (shootCooldown > 0) return;
 
@@ -90,32 +100,16 @@ void Robot::shoot (core::list<Enemy*> enemies)
 
 	// Calculate the start and end of the ray and pass the intersection variable to get the collision position
 	core::vector3df intersection;
-	core::vector3df forward = core::vector3df(mat[2], 0, mat[0] * -1);
-
-	// Set the beginning of the ray just a bit forward so that it doesnt hit the robot mesh
-	scene::ISceneNode* intersectionNode = scene->checkRayCastIntersection(node->getPosition() + (forward * 5), node->getPosition() + (forward * 1000.), intersection);
-	if (intersectionNode != nullptr)
-	{
-		// Spawn a particle effect at the position where we hit something with the bullet
-		TemporaryParticleEffect* p = new TemporaryParticleEffect(intersection, 250, "../../Media/fireball.bmp");
-		scene->addParticleActor ((EffActor*) p);
-
-		// Check which enemy was hit and tell the enemy it is hit, if the the hit function
-		// returns true, it has to die
-		for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
-		{
-			if ((*enemy)->node == intersectionNode) {
-				(*enemy)->hit();
-			}
-		}
-	}
+	core::vector3df forward = core::vector3df(mat[2], 0, -mat[0]);
 
 	// Reset the cooldown
 	shootCooldown = 350;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet();
-	scene->addMeshActor ((EffActor*) bullet, "../../Media/bullet.obj", node->getPosition(), node->getRotation());
+	Bullet* bullet = new Bullet(enemies);
+	scene->addMeshActor ((EffActor*) bullet, "../../Media/rock-bullet.obj", gun->node->getAbsolutePosition(), node->getRotation());
+
+	gun->shoot();
 }
 
 void Robot::hit (core::vector3df position)
