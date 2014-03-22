@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include "EffScene.h"
+#include <ParticleManager.h>
 
 using namespace irr;
 

@@ -10,12 +10,11 @@ EffScene::EffScene()
 }
 
 EffScene::EffScene(EffEngine* engine, bool particleManager) :
-	engine(engine),
-	pManager(pManager)
+	engine(engine)
 {
 	//error LNK2019
-	if(particleManager)
-		pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
+	//if(particleManager)
+		//pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 }
 
 bool EffScene::init(void)
