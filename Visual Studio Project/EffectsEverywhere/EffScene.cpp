@@ -3,14 +3,19 @@
 #include "InputReceiver.h"
 #include "EffActor.h"
 #include <iostream>
+#include <ParticleManager.h>
 
 EffScene::EffScene()
 {
 }
 
-EffScene::EffScene(EffEngine* engine) :
-	engine(engine)
+EffScene::EffScene(EffEngine* engine, bool particleManager) :
+	engine(engine),
+	pManager(pManager)
 {
+	//error LNK2019
+	if(particleManager)
+		pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 }
 
 bool EffScene::init(void)

@@ -7,6 +7,8 @@
 #include "Bullet.h"
 #include "Robot.h"
 #include "TemporaryParticleEffect.h"
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 MainScene::MainScene()
 {
@@ -15,7 +17,12 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
-
+	
+	//werkt nog niet error:LNK2019
+	/*ParticleModel* pModel = new ParticleModel();
+	pModel->emitterType = pModel->BOX;
+	std::cout << "emitterType: " << pModel->emitterType ;
+	pManager->spawnDataModelParticle(pModel,core::vector3df(1,1,1));*/
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
