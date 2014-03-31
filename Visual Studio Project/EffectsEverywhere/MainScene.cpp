@@ -18,11 +18,23 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 	
-	//werkt nog niet error:LNK2019
-	/*ParticleModel* pModel = new ParticleModel();
+	ParticleModel* pModel = new ParticleModel();
 	pModel->emitterType = pModel->BOX;
-	std::cout << "emitterType: " << pModel->emitterType ;
-	pManager->spawnDataModelParticle(pModel,core::vector3df(1,1,1));*/
+	pModel->setMinColor(video::SColor(0,0,0,255));
+	pModel->maxStartColor = video::SColor(0, 0, 0, 255);
+	pModel->minPPS = 50;
+	pModel->maxPPS = 200;
+	pModel->aabbox = core::aabbox3df(-3, 0, -3, 3, 1, 3 );
+	pModel->direction = core::vector3df(0.0f, 0.1f, 0.0f);
+	pModel->lifeTimeMax = 750;
+	pModel->lifeTimeMin = 500;
+	pModel->maxAngleDegrees = 0;
+	pModel->minStartSize = core::dimension2df(4.0f, 4.0f);
+	pModel->maxStartSize = core::dimension2df(8.0f, 8.0f);
+	pModel->pathNameTexture = "../../Media/portal1.bmp";
+
+	pManager->spawnDataModelParticle(pModel,core::vector3df(2,2,2),pModel->pathNameTexture);
+	
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));

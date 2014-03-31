@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include "EffScene.h"
 #include <ParticleManager.h>
+#include <ParticleModel.h>
 
 using namespace irr;
 
@@ -41,6 +42,8 @@ private:
 	 * The camera in the scene
 	 */
 	scene::ICameraSceneNode* camera;
+
+	ParticleModel* pModel;
 };
 
 #endif
