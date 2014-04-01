@@ -19,7 +19,7 @@ bool MainScene::init(void)
 	EffScene::init ();
 	
 	ParticleModel* pModel = new ParticleModel();
-	pModel->emitterType = pModel->BOX;
+	pModel->emitterType = ParticleModel::EmitterTypes::BOX;
 	pModel->setMinColor(video::SColor(0,0,0,255));
 	pModel->maxStartColor = video::SColor(0, 0, 0, 255);
 	pModel->minPPS = 50;
@@ -32,8 +32,7 @@ bool MainScene::init(void)
 	pModel->minStartSize = core::dimension2df(4.0f, 4.0f);
 	pModel->maxStartSize = core::dimension2df(8.0f, 8.0f);
 	pModel->pathNameTexture = "../../Media/portal1.bmp";
-
-	pManager->spawnDataModelParticle(pModel,core::vector3df(2,2,2),pModel->pathNameTexture);
+	pManager->spawnDataModelParticle(pModel ,core::vector3df(2,2,2),pModel->pathNameTexture);
 	
 	// Create robot actor
 	robot = new Robot ();

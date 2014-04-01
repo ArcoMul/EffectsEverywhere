@@ -18,7 +18,7 @@ class EffScene
 public:
 	EffScene();
 
-	EffScene(EffEngine* engine, bool particleManager);
+	EffScene(EffEngine* engine);
 
 	virtual bool init (void);
 
