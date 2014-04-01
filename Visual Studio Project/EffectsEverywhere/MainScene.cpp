@@ -21,7 +21,7 @@ bool MainScene::init(void)
 	ParticleModel* pModel = new ParticleModel();
 	pModel->emitterType = ParticleModel::EmitterTypes::BOX;
 	pModel->setMinColor(video::SColor(0,0,0,255));
-	pModel->maxStartColor = video::SColor(0, 0, 0, 255);
+	pModel->maxStartColor = video::SColor(0, 255, 255, 255);
 	pModel->minPPS = 50;
 	pModel->maxPPS = 200;
 	pModel->aabbox = core::aabbox3df(-3, 0, -3, 3, 1, 3 );
@@ -31,7 +31,7 @@ bool MainScene::init(void)
 	pModel->maxAngleDegrees = 0;
 	pModel->minStartSize = core::dimension2df(4.0f, 4.0f);
 	pModel->maxStartSize = core::dimension2df(8.0f, 8.0f);
-	pModel->pathNameTexture = "../../Media/portal1.bmp";
+	pModel->pathNameTexture = "../../Media/fireball.bmp";
 	pManager->spawnDataModelParticle(pModel ,core::vector3df(2,2,2),pModel->pathNameTexture);
 	
 	// Create robot actor
