@@ -15,7 +15,7 @@ class EffScene;
 class TemporaryParticleEffect : public EffActor
 {
 public:
-	TemporaryParticleEffect (core::vector3df position, float lifeTime, core::stringc texturePath);
+	TemporaryParticleEffect (float lifeTime, bool fade = true);
 
 	/**
 	 * Set some properties to the particle effect bound to its node
@@ -50,6 +50,8 @@ private:
 	 * Which texture the particle should have
 	 */
 	core::stringc texturePath;
+
+	bool fade;
 };
 
 #endif

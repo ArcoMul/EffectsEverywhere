@@ -14,6 +14,23 @@ Robot::Robot(void)
 	restFloatSpeed = 0.005;
 	movingFloatSpeed = 0.0075;
 	floatSpeed = restFloatSpeed;
+
+	// TODO: Fill in with right information for the shoot effect when point emitter is supported
+	// this is not used now
+	shootParticleModel = new ParticleModel();
+	shootParticleModel->emitterType = ParticleModel::EmitterTypes::BOX;
+	shootParticleModel->setMinColor(video::SColor(0,0,0,255));
+	shootParticleModel->maxStartColor = video::SColor(0, 255, 255, 255);
+	shootParticleModel->minPPS = 50;
+	shootParticleModel->maxPPS = 200;
+	shootParticleModel->aabbox = core::aabbox3df(-3, 0, -3, 3, 1, 3 );
+	shootParticleModel->direction = core::vector3df(0.0f, 0.0f, 0.0f);
+	shootParticleModel->lifeTimeMax = 750;
+	shootParticleModel->lifeTimeMin = 500;
+	shootParticleModel->maxAngleDegrees = 0;
+	shootParticleModel->minStartSize = core::dimension2df(4.0f, 4.0f);
+	shootParticleModel->maxStartSize = core::dimension2df(8.0f, 8.0f);
+	shootParticleModel->pathNameTexture = "../../Media/fireball.bmp";
 }
 
 void Robot::start ()
@@ -149,13 +166,37 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	scene->addMeshActor ((EffActor*) bullet, "../../Media/rock-bullet.obj", gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
+
+	// Create a shoot effect
+	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
+	scene->addPointParticleActor ((EffActor*) shootEffect, gun->node->getPosition() + core::vector3df(0,0,-7));
+
+	// Set some specific settings
+	// TODO: convert to particle model
+	scene::IParticleSystemSceneNode* particleNode = (scene::IParticleSystemSceneNode*) shootEffect->node;
+	particleNode->setScale(core::vector3df(2, 2, 2));
+	particleNode->setMaterialTexture(0, scene->getTexture("../../Media/smoke.png"));
+	particleNode->setMaterialFlag(video::EMF_LIGHTING, false);
+	particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
+
+	particleNode->setParent (mesh->node);
 }
 
 void Robot::hit (core::vector3df position)
 {
 	// Spawn a particle effect where the robot was hit
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(position, 500, "../../Media/portal1.bmp");
-	scene->addParticleActor ((EffActor*) p);
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
+	scene->addParticleActor ((EffActor*) p, position);
+
+	// Set some specific settings
+	// TODO: convert to particle model
+	scene::IParticleSystemSceneNode* particleNode = (scene::IParticleSystemSceneNode*) p->node;
+	particleNode->setScale(core::vector3df(0.5f, 0.5f,0.5f));
+	particleNode->setMaterialTexture(0, scene->getTexture("../../Media/portal1.bmp"));
+	particleNode->setMaterialFlag(video::EMF_LIGHTING, false);
+	particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 }
 
 Robot::~Robot(void)
