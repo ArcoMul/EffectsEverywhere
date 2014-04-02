@@ -43,7 +43,7 @@ private:
 	 */
 	scene::ICameraSceneNode* camera;
 
-	ParticleModel* pModel;
+	ParticleModel* pModel, pModel2;
 };
 
 #endif

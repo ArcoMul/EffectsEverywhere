@@ -32,7 +32,25 @@ bool MainScene::init(void)
 	pModel->minStartSize = core::dimension2df(4.0f, 4.0f);
 	pModel->maxStartSize = core::dimension2df(8.0f, 8.0f);
 	pModel->pathNameTexture = "../../Media/fireball.bmp";
-	pManager->spawnDataModelParticle(pModel ,core::vector3df(2,2,2),pModel->pathNameTexture);
+	pModel->position = core::vector3df(2,2,2);
+	pManager->spawnDataModelParticle(pModel ,pModel->position ,pModel->pathNameTexture);
+
+	ParticleModel* pModel2 = new ParticleModel();
+	pModel2->emitterType = ParticleModel::EmitterTypes::BOX;
+	pModel2->setMinColor(video::SColor(0,0,0,255));
+	pModel2->maxStartColor = video::SColor(0, 0, 0, 255);
+	pModel2->minPPS = 50;
+	pModel2->maxPPS = 200;
+	pModel2->aabbox = core::aabbox3df(-3, 0, -3, 3, 1, 3 );
+	pModel2->direction = core::vector3df(0.0f, 0.1f, 0.0f);
+	pModel2->lifeTimeMax = 750;
+	pModel2->lifeTimeMin = 500;
+	pModel2->maxAngleDegrees = 360;
+	pModel2->minStartSize = core::dimension2df(4.0f, 4.0f);
+	pModel2->maxStartSize = core::dimension2df(8.0f, 8.0f);
+	pModel2->pathNameTexture = "../../Media/portal1.bmp";
+	pModel2->setPosition(core::vector3df(4,2,2));
+	pManager->spawnDataModelParticle(pModel2 ,pModel2->position ,pModel2->pathNameTexture);
 	
 	// Create robot actor
 	robot = new Robot ();
