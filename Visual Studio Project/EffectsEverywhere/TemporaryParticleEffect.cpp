@@ -1,29 +1,17 @@
 #include "TemporaryParticleEffect.h"
 #include "EffScene.h"
 
-TemporaryParticleEffect::TemporaryParticleEffect (core::vector3df position, float lifeTime, core::stringc texturePath)
+TemporaryParticleEffect::TemporaryParticleEffect (float lifeTime, bool fade)
 {
 	// Save the properties for later use
-	this->spawnPosition = position;
 	this->lifeTime = lifeTime;
-	this->texturePath = texturePath;
+	this->fade = fade;
 }
 
 void TemporaryParticleEffect::start(void)
 {
-	// The node is set, set extra properties
-	scene::IParticleSystemSceneNode* particleNode = (scene::IParticleSystemSceneNode*) node;
-	particleNode->setScale(core::vector3df(0.5f, 0.5f,0.5f));
-	particleNode->setMaterialTexture(0, scene->getTexture(texturePath));
-	particleNode->setMaterialFlag(video::EMF_LIGHTING, false);
-	particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
-
 	// Save when the particle is spawned
 	aliveSince = scene->getTime();
-
-	// Put the node in the right position
-	node->setPosition(spawnPosition);
 }
 
 void TemporaryParticleEffect::update(float deltaTime)
@@ -37,7 +25,7 @@ void TemporaryParticleEffect::update(float deltaTime)
 		((scene::IParticleSystemSceneNode*) node)->setEmitter(0);
 
 		// Give the particles 2 extra seconds to dissapear after deleting the whole irrlicht node
-		if (scene->getTime() - aliveSince > lifeTime + 2000)
+		if (!fade || scene->getTime() - aliveSince > lifeTime + 2000)
 		{
 			scene->removeActor((EffActor*) this);
 		}
