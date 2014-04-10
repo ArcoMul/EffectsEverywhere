@@ -29,6 +29,11 @@ public:
 	/**
 	 * Shoot a bullet from the gun
 	 */
+	void weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyRffect);
+
+	/**
+	 * Shoot a bullet from the gun
+	 */
 	void shoot (core::list<Enemy*>* enemies);
 
 	/**
@@ -44,6 +49,25 @@ public:
 	EffActor* mesh;
 
 private:
+	/**
+	 * Weapon Cooldown
+	 */
+	float defshootCooldown;
+
+	/**
+	 * URL Bullet Mesh
+	 */
+	core::stringc defbulletMesh;
+
+	/**
+	 * Bullet Damage
+	 */
+	int defbulletDamage;
+
+	/**
+	 * Bullet speed
+	 */
+	float defbulletSpeed;
 
 	/**
 	 * Counter to keep track of the shoot cooldown

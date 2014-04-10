@@ -14,6 +14,7 @@ Robot::Robot(void)
 	restFloatSpeed = 0.005;
 	movingFloatSpeed = 0.0075;
 	floatSpeed = restFloatSpeed;
+	defbulletMesh ="null";
 }
 
 void Robot::start ()
@@ -26,15 +27,6 @@ void Robot::start ()
 	mesh->node->setMaterialFlag(video::EMF_LIGHTING, false);
 	mesh->node->setParent(node);
 
-	// Create gun actor
-	gun = new Gun();
-	scene->addMeshActor ((EffActor*) gun, "../../Media/rock-gun.obj");
-	gun->node->setParent (mesh->node);
-
-	// Put the gun on the right position
-	core::matrix4 mat = node->getAbsoluteTransformation();
-	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
-	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
 }
 
 void Robot::update(float deltaTime)
@@ -131,10 +123,36 @@ void Robot::update(float deltaTime)
 	}
 }
 
+void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyRffect)
+{
+	// Create gun actor
+	gun = new Gun();
+	scene->addMeshActor ((EffActor*) gun, gunMesh);
+	gun->node->setParent (mesh->node);
+
+	// Put the gun on the right position
+	core::matrix4 mat = node->getAbsoluteTransformation();
+	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
+	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
+	
+	// Set default cooldown
+	defshootCooldown = cooldown;
+
+	// Set default bulletMesh
+	defbulletMesh = bulletMesh;
+	
+	// Set default damage
+	defbulletDamage = damage;
+	
+	// Set default speed
+	defbulletSpeed = speed;
+}
+
 void Robot::shoot (core::list<Enemy*>* enemies)
 {
+	if (defbulletMesh == "null") return;
 	if (shootCooldown > 0) return;
-
+	
 	core::matrix4 mat = node->getAbsoluteTransformation();
 
 	// Calculate the start and end of the ray and pass the intersection variable to get the collision position
@@ -142,11 +160,11 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	core::vector3df forward = core::vector3df(mat[2], 0, -mat[0]);
 
 	// Reset the cooldown
-	shootCooldown = 350;
+	shootCooldown = defshootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies);
-	scene->addMeshActor ((EffActor*) bullet, "../../Media/rock-bullet.obj", gun->node->getAbsolutePosition(), node->getRotation());
+	Bullet* bullet = new Bullet(enemies, defbulletSpeed, defbulletDamage);
+	scene->addMeshActor ((EffActor*) bullet, defbulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
 }

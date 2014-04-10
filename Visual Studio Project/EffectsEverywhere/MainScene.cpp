@@ -20,6 +20,9 @@ bool MainScene::init(void)
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
+
+	// add Gun & Bullet
+	robot->weapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",3,0.6,250,"shoot.xml","enemy.xml","fly.xml");
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");

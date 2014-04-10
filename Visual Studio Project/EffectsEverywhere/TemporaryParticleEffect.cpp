@@ -1,6 +1,7 @@
 #include "TemporaryParticleEffect.h"
 #include "EffScene.h"
 
+
 TemporaryParticleEffect::TemporaryParticleEffect (core::vector3df position, float lifeTime, core::stringc texturePath)
 {
 	// Save the properties for later use
