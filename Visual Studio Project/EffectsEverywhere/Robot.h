@@ -50,6 +50,13 @@ public:
 
 private:
 	/**
+	 * URL XMLs of the weapon effects
+	 */
+	core::stringc shootEffectXML;
+	core::stringc enemyHitEffectXML;
+	core::stringc flyRffectXML;
+
+	/**
 	 * Weapon Cooldown
 	 */
 	float defshootCooldown;

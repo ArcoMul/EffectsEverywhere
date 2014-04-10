@@ -146,6 +146,11 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 	
 	// Set default speed
 	defbulletSpeed = speed;
+
+	// Set the effects
+	shootEffectXML = shootEffect;
+	enemyHitEffectXML = enemyHitEffect;
+	flyRffectXML = flyRffect;
 }
 
 void Robot::shoot (core::list<Enemy*>* enemies)
