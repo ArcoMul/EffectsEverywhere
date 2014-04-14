@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 #include "MainScene.h"
 #include "EffEngine.h"
 #include "EffScene.h"
@@ -21,8 +23,25 @@ bool MainScene::init(void)
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
+	
+
+	ParticleModel* pModel = new ParticleModel();
+	pModel->emitterType = ParticleModel::EmitterTypes::BOX;
+	pModel->setMinColor(video::SColor(0,0,0,255));
+	pModel->maxStartColor = video::SColor(0, 255, 255, 255);
+	pModel->minPPS = 50;
+	pModel->maxPPS = 200;
+	pModel->aabbox = core::aabbox3df(-3, 0, -3, 3, 1, 3 );
+	pModel->direction = core::vector3df(0.0f, 0.1f, 0.0f);
+	pModel->lifeTimeMax = 750;
+	pModel->lifeTimeMin = 500;
+	pModel->maxAngleDegrees = 0;
+	pModel->minStartSize = core::dimension2df(4.0f, 4.0f);
+	pModel->maxStartSize = core::dimension2df(8.0f, 8.0f);
+	pModel->pathNameTexture = "../../Media/fireball.bmp";
+
 	// add Gun & Bullet
-	robot->weapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",3,0.6,250,"shoot.xml","enemy.xml","fly.xml");
+	robot->weapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",3,0.6,250,pModel,pModel,pModel);
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");

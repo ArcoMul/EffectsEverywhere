@@ -4,12 +4,12 @@
 #include "TemporaryParticleEffect.h"
 #include <iostream>
 
-Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage)
+Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage)
 {
 	this->enemies = enemies;
 	this->speed = bulletSpeed;
 	this->lifeTime = 1000;
-	this->demage = demage;
+	this->damage = damage;
 }
 
 void Bullet::start ()
@@ -42,7 +42,7 @@ void Bullet::update (float deltaTime)
 			TemporaryParticleEffect* p = new TemporaryParticleEffect(node->getPosition(), 250, "../../Media/fireball.bmp");
 			scene->addParticleActor ((EffActor*) p);
 
-			(*enemy)->hit(demage);
+			(*enemy)->hit(damage);
 			scene->removeActor ((EffActor*) this);
 			return;
 		}

@@ -46,7 +46,7 @@ private:
 
 	int lifeTime;
 
-	int demage;
+	int damage;
 
 	core::list<Enemy*>* enemies;
 };

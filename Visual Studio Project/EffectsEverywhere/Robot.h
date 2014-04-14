@@ -3,6 +3,8 @@
 
 #include <irrlicht.h>
 #include "EffActor.h"
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 using namespace irr;
 
@@ -30,6 +32,7 @@ public:
 	 * Shoot a bullet from the gun
 	 */
 	void weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyRffect);
+	void weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect);
 
 	/**
 	 * Shoot a bullet from the gun
@@ -54,7 +57,11 @@ private:
 	 */
 	core::stringc shootEffectXML;
 	core::stringc enemyHitEffectXML;
-	core::stringc flyRffectXML;
+	core::stringc flyEffectXML;
+
+	ParticleModel* shootEffectModel;
+	ParticleModel* enemyHitEffectModel;
+	ParticleModel* flyEffectModel;
 
 	/**
 	 * Weapon Cooldown

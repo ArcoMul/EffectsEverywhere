@@ -6,6 +6,8 @@
 #include "TemporaryParticleEffect.h"
 #include "Gun.h"
 #include <iostream>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 Robot::Robot(void)
 {
@@ -123,7 +125,7 @@ void Robot::update(float deltaTime)
 	}
 }
 
-void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyRffect)
+void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
 {
 	// Create gun actor
 	gun = new Gun();
@@ -150,7 +152,37 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 	// Set the effects
 	shootEffectXML = shootEffect;
 	enemyHitEffectXML = enemyHitEffect;
-	flyRffectXML = flyRffect;
+	flyEffectXML = flyEffect;
+}
+
+void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
+{
+	// Create gun actor
+	gun = new Gun();
+	scene->addMeshActor ((EffActor*) gun, gunMesh);
+	gun->node->setParent (mesh->node);
+
+	// Put the gun on the right position
+	core::matrix4 mat = node->getAbsoluteTransformation();
+	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
+	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
+	
+	// Set default cooldown
+	defshootCooldown = cooldown;
+
+	// Set default bulletMesh
+	defbulletMesh = bulletMesh;
+	
+	// Set default damage
+	defbulletDamage = damage;
+	
+	// Set default speed
+	defbulletSpeed = speed;
+
+	// Set the effects
+	shootEffectModel = shootEffect;
+	enemyHitEffectModel = enemyHitEffect;
+	flyEffectModel = flyEffect;
 }
 
 void Robot::shoot (core::list<Enemy*>* enemies)

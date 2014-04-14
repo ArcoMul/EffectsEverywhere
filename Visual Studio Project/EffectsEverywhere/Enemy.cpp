@@ -109,9 +109,9 @@ void Enemy::addCollision (scene::ISceneNode* collisionNode, scene::IMesh* mesh)
 	collision->drop();
 }
 
-bool Enemy::hit (int demage)
+bool Enemy::hit (int damage)
 {
-	health -= demage;
+	health -= damage;
 	if (health <= 0) {
 		die ();
 		return true;
