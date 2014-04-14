@@ -12,6 +12,7 @@ class EffEngine;
 class Bullet;
 class Enemy;
 class Gun;
+class ParticleModel;
 
 class Robot : public EffActor
 {
@@ -112,6 +113,8 @@ private:
 	 * The current float speed
 	 */
 	float floatSpeed;
+
+	ParticleModel* shootParticleModel;
 };
 
 #endif

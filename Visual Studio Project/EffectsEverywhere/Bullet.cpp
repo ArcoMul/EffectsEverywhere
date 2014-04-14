@@ -45,6 +45,14 @@ void Bullet::update (float deltaTime)
 			//TemporaryParticleEffect* p = new TemporaryParticleEffect(node->getPosition(), 250, "../../Media/fireball.bmp");
 			//scene->addParticleActor ((EffActor*) p);
 			//pManager->spawnDataModelParticle(enemyHitEffectModel ,node->getPosition(),enemyHitEffectModel->pathNameTexture);
+			// Set some specific settings
+			// TODO: convert to particle model
+			scene::IParticleSystemSceneNode* particleNode = (scene::IParticleSystemSceneNode*) p->node;
+			particleNode->setScale(core::vector3df(0.5f, 0.5f,0.5f));
+			particleNode->setMaterialTexture(0, scene->getTexture("../../Media/fireball.bmp"));
+			particleNode->setMaterialFlag(video::EMF_LIGHTING, false);
+			particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
+			particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 			
 
 			(*enemy)->hit(damage);

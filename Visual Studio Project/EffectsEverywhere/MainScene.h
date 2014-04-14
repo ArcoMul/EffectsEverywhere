@@ -5,6 +5,8 @@
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 #include "EffScene.h"
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 using namespace irr;
 
@@ -43,7 +45,7 @@ private:
 	 */
 	scene::ICameraSceneNode* camera;
 
-	ParticleModel* pModel;
+	ParticleModel* pModel, pModel2;
 };
 
 #endif
