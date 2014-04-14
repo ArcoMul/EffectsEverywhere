@@ -192,7 +192,7 @@ EffActor* EffScene::addParticleActor(EffActor* actor, ParticleModel* model, core
 	actor = addActor(actor, false);
 
 	// Create the particle system scene node
-	scene::IParticleSystemSceneNode* particleNode = pManager->spawnDataModelParticle(model, position, model->pathNameTexture);
+	scene::IParticleSystemSceneNode* particleNode = pManager->spawnDataModelParticle(model, position, model->getPathNameTexture());
 	
 	// Tell the actor which irrlicht node belongs to him
 	actor->setNode ((scene::ISceneNode*) particleNode);

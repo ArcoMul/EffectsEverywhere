@@ -18,19 +18,19 @@ Robot::Robot(void)
 	// TODO: Fill in with right information for the shoot effect when point emitter is supported
 	// this is not used now
 	shootParticleModel = new ParticleModel();
-	shootParticleModel->emitterType = ParticleModel::EmitterTypes::BOX;
+	shootParticleModel->setEmitterType(ParticleModel::EmitterTypes::BOX);
 	shootParticleModel->setMinColor(video::SColor(0,0,0,255));
-	shootParticleModel->maxStartColor = video::SColor(0, 255, 255, 255);
-	shootParticleModel->minPPS = 50;
-	shootParticleModel->maxPPS = 200;
-	shootParticleModel->aabbox = core::aabbox3df(-3, 0, -3, 3, 1, 3 );
-	shootParticleModel->direction = core::vector3df(0.0f, 0.0f, 0.0f);
-	shootParticleModel->lifeTimeMax = 750;
-	shootParticleModel->lifeTimeMin = 500;
-	shootParticleModel->maxAngleDegrees = 0;
-	shootParticleModel->minStartSize = core::dimension2df(4.0f, 4.0f);
-	shootParticleModel->maxStartSize = core::dimension2df(8.0f, 8.0f);
-	shootParticleModel->pathNameTexture = "../../Media/fireball.bmp";
+	shootParticleModel->setMaxColor(video::SColor(0, 255, 255, 255));
+	shootParticleModel->setMinPPS(50);
+	shootParticleModel->setMaxPPS(200);
+	shootParticleModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
+	shootParticleModel->setDirection(core::vector3df(0.0f, 0.0f, 0.0f));
+	shootParticleModel->setLifeTimeMax(750);
+	shootParticleModel->setLifeTimeMin(500);
+	shootParticleModel->setMaxAngleDegrees(0);
+	shootParticleModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
+	shootParticleModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
+	shootParticleModel->setPathNameTexture("../../Media/fireball.bmp");
 }
 
 void Robot::start ()
