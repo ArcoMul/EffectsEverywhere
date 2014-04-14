@@ -2,12 +2,16 @@
 #define GAMESCENE_H_
 
 #include <irrlicht.h>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 using namespace irr;
 
 class EffEngine;
 class InputReceiver;
 class EffActor;
+class ParticleManager;
+class ParticleModel;
 
 class EffScene
 {
@@ -109,6 +113,7 @@ protected:
 	
 	// The Irrlicht scene manager used to spawn object in the scene
 	scene::ISceneManager* manager;
+	ParticleManager* pManager;
 
 private:
 

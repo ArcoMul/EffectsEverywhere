@@ -3,6 +3,7 @@
 #include "InputReceiver.h"
 #include "EffActor.h"
 #include <iostream>
+#include <ParticleManager.h>
 
 EffScene::EffScene()
 {
@@ -17,6 +18,7 @@ bool EffScene::init(void)
 {
 	actors = core::list<EffActor*>();
 	actorsToRemove = core::list<EffActor*>();
+	pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 	return true;
 }
 
