@@ -3,13 +3,16 @@
 #include "Enemy.h"
 #include "TemporaryParticleEffect.h"
 #include <iostream>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
-Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage)
+Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, ParticleModel* enemyHitEffectModel)
 {
 	this->enemies = enemies;
 	this->speed = bulletSpeed;
 	this->lifeTime = 1000;
 	this->damage = damage;
+	this->enemyHitEffectModel=enemyHitEffectModel;
 }
 
 void Bullet::start ()
@@ -41,6 +44,8 @@ void Bullet::update (float deltaTime)
 			// Spawn a particle effect at the position where we hit something with the bullet
 			TemporaryParticleEffect* p = new TemporaryParticleEffect(node->getPosition(), 250, "../../Media/fireball.bmp");
 			scene->addParticleActor ((EffActor*) p);
+			//pManager->spawnDataModelParticle(enemyHitEffectModel ,node->getPosition(),enemyHitEffectModel->pathNameTexture);
+			
 
 			(*enemy)->hit(damage);
 			scene->removeActor ((EffActor*) this);

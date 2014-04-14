@@ -33,8 +33,8 @@ bool MainScene::init(void)
 	pModel->maxPPS = 200;
 	pModel->aabbox = core::aabbox3df(-3, 0, -3, 3, 1, 3 );
 	pModel->direction = core::vector3df(0.0f, 0.1f, 0.0f);
-	pModel->lifeTimeMax = 750;
-	pModel->lifeTimeMin = 500;
+	pModel->lifeTimeMax = 250;
+	pModel->lifeTimeMin = 250;
 	pModel->maxAngleDegrees = 0;
 	pModel->minStartSize = core::dimension2df(4.0f, 4.0f);
 	pModel->maxStartSize = core::dimension2df(8.0f, 8.0f);

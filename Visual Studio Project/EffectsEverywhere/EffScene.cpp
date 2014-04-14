@@ -16,9 +16,9 @@ EffScene::EffScene(EffEngine* engine) :
 
 bool EffScene::init(void)
 {
+	pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 	actors = core::list<EffActor*>();
 	actorsToRemove = core::list<EffActor*>();
-	pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 	return true;
 }
 

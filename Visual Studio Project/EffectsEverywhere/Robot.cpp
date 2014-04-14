@@ -200,7 +200,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	shootCooldown = defshootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies, defbulletSpeed, defbulletDamage);
+	Bullet* bullet = new Bullet(enemies, defbulletSpeed, defbulletDamage, enemyHitEffectModel);
 	scene->addMeshActor ((EffActor*) bullet, defbulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
