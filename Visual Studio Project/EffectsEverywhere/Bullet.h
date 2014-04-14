@@ -53,6 +53,7 @@ private:
 	core::list<Enemy*>* enemies;
 
 	ParticleModel* enemyHitEffectModel;
+	ParticleManager* pManager;
 };
 
 #endif
