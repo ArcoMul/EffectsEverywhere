@@ -30,7 +30,7 @@ public:
 	virtual void update (float deltaTime);
 
 	/**
-	 * Shoot a bullet from the gun
+	 * Add gun and bullet 
 	 */
 	void weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect);
 	void weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect);
@@ -53,6 +53,10 @@ public:
 	EffActor* mesh;
 
 private:
+	/**
+	 * Add gun
+	 */
+	void addGun(core::stringc gunMesh);
 	/**
 	 * URL XMLs of the weapon effects
 	 */

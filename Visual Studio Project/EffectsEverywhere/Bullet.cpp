@@ -42,15 +42,11 @@ void Bullet::update (float deltaTime)
 		if((*enemy)->node != nullptr && node->getTransformedBoundingBox().intersectsWithBox((*enemy)->node->getTransformedBoundingBox()))
 		{
 			// Spawn a particle effect at the position where we hit something with the bullet
-			//TemporaryParticleEffect* p = new TemporaryParticleEffect(node->getPosition(), 250, "../../Media/fireball.bmp");
-			
-			//scene::IParticleSystemSceneNode* particleNode = (scene::IParticleSystemSceneNode*) p->node;
-			
-			//pManager->spawnDataModelParticle(enemyHitEffectModel ,node->getPosition(),enemyHitEffectModel->pathNameTexture);
-			
+			TemporaryParticleEffect* p = new TemporaryParticleEffect(enemyHitEffectModel->getLifeTimeMax(), false);
+			scene->addParticleActor(p,enemyHitEffectModel,node->getPosition());
+
 			// Set some specific settings
 			// TODO: convert to particle model
-			
 			//particleNode->setScale(core::vector3df(0.5f, 0.5f,0.5f));
 			//particleNode->setMaterialTexture(0, scene->getTexture("../../Media/fireball.bmp"));
 			//particleNode->setMaterialFlag(video::EMF_LIGHTING, false);

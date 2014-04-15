@@ -143,15 +143,8 @@ void Robot::update(float deltaTime)
 
 void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
 {
-	// Create gun actor
-	gun = new Gun();
-	scene->addMeshActor ((EffActor*) gun, gunMesh);
-	gun->node->setParent (mesh->node);
-
-	// Put the gun on the right position
-	core::matrix4 mat = node->getAbsoluteTransformation();
-	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
-	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
+	//Set gun
+	addGun(gunMesh);
 	
 	// Set default cooldown
 	defshootCooldown = cooldown;
@@ -173,16 +166,9 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 
 void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
 {
-	// Create gun actor
-	gun = new Gun();
-	scene->addMeshActor ((EffActor*) gun, gunMesh);
-	gun->node->setParent (mesh->node);
+	//Set gun
+	addGun(gunMesh);
 
-	// Put the gun on the right position
-	core::matrix4 mat = node->getAbsoluteTransformation();
-	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
-	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
-	
 	// Set default cooldown
 	defshootCooldown = cooldown;
 
@@ -199,6 +185,19 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 	shootEffectModel = shootEffect;
 	enemyHitEffectModel = enemyHitEffect;
 	flyEffectModel = flyEffect;
+}
+
+void Robot::addGun(core::stringc gunMesh)
+{
+	// Create gun actor
+	gun = new Gun();
+	scene->addMeshActor ((EffActor*) gun, gunMesh);
+	gun->node->setParent (mesh->node);
+
+	// Put the gun on the right position
+	core::matrix4 mat = node->getAbsoluteTransformation();
+	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
+	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
 }
 
 void Robot::shoot (core::list<Enemy*>* enemies)
