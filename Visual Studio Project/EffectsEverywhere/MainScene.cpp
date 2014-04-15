@@ -7,6 +7,8 @@
 #include "Bullet.h"
 #include "Robot.h"
 #include "TemporaryParticleEffect.h"
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 MainScene::MainScene()
 {
@@ -15,7 +17,41 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
+	
+	ParticleModel* pModel = new ParticleModel();
+	pModel->setEmitterType(ParticleModel::EmitterTypes::BOX);
+	pModel->setMinColor(video::SColor(0,0,0,255));
+	pModel->setMaxColor(video::SColor(0, 255, 255, 255));
+	pModel->setMinPPS(50);
+	pModel->setMaxPPS(200);
+	pModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
+	pModel->setDirection(core::vector3df(0.0f, 0.1f, 0.0f));
+	pModel->setLifeTimeMax(750);
+	pModel->setLifeTimeMin(500);
+	pModel->setMaxAngleDegrees(0);
+	pModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
+	pModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
+	pModel->setPathNameTexture("../../Media/fireball.bmp");
+	pModel->setPosition(core::vector3df(2,2,2));
+	pManager->spawnDataModelParticle(pModel ,pModel->getPosition() ,pModel->getPathNameTexture());
 
+	ParticleModel* pModel2 = new ParticleModel();
+	pModel2->setEmitterType(ParticleModel::EmitterTypes::BOX);
+	pModel2->setMinColor(video::SColor(0,0,0,255));
+	pModel2->setMaxColor(video::SColor(0, 0, 0, 255));
+	pModel2->setMinPPS(50);
+	pModel2->setMaxPPS(200);
+	pModel2->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
+	pModel2->setDirection(core::vector3df(0.0f, 0.1f, 0.0f));
+	pModel2->setLifeTimeMax(750);
+	pModel2->setLifeTimeMin(500);
+	pModel2->setMaxAngleDegrees(360);
+	pModel2->setMinStartSize(core::dimension2df(4.0f, 4.0f));
+	pModel2->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
+	pModel2->setPathNameTexture("../../Media/portal1.bmp");
+	pModel2->setPosition(core::vector3df(4,2,2));
+	pManager->spawnDataModelParticle(pModel2 ,pModel2->getPosition() ,pModel2->getPathNameTexture());
+	
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));

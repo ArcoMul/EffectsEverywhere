@@ -3,6 +3,7 @@
 #include "InputReceiver.h"
 #include "EffActor.h"
 #include <iostream>
+#include <ParticleManager.h>
 
 EffScene::EffScene()
 {
@@ -15,6 +16,7 @@ EffScene::EffScene(EffEngine* engine) :
 
 bool EffScene::init(void)
 {
+	pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 	actors = core::list<EffActor*>();
 	actorsToRemove = core::list<EffActor*>();
 	return true;
@@ -109,7 +111,7 @@ EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, core::
 	return actor;
 }
 
-EffActor* EffScene::addParticleActor(EffActor* actor)
+EffActor* EffScene::addParticleActor(EffActor* actor, core::vector3df position)
 {
 	// Add the actor to the current scene
 	actor = addActor(actor, false);
@@ -131,6 +133,9 @@ EffActor* EffScene::addParticleActor(EffActor* actor)
 	particleNode->setEmitter(emitter);
 	emitter->drop();
 
+	// Set it to the given position
+	particleNode->setPosition(position);
+
 	// Tell the actor which irrlicht node belongs to him
 	actor->setNode ((scene::ISceneNode*) particleNode);
 
@@ -140,6 +145,63 @@ EffActor* EffScene::addParticleActor(EffActor* actor)
 	return actor;
 }
 
+/**
+ * TODO: Temporary function to add a point particle effect. This should be replaced by the ParticleModel once it
+ * supports point emitters
+ */
+EffActor* EffScene::addPointParticleActor(EffActor* actor, core::vector3df position)
+{
+	// Add the actor to the current scene
+	actor = addActor(actor, false);
+
+	// Create the particle system scene node
+	scene::IParticleSystemSceneNode* particleNode = manager->addParticleSystemSceneNode(false);
+
+	// Add a particle affector to the node which causes the particles to fade out
+	// TODO: not every particle effect will have this, maybe not put this here...
+	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
+	particleNode->addAffector(affector);
+    affector->drop();
+
+	// Create the emitter so that the particle node actually emits the particles,
+	// In this case the emitter is a box
+	// TODO: not every particle has the same emitter, maybe not put this here...
+	scene::IParticlePointEmitter* emitter = particleNode->createPointEmitter(core::vector3df(.08,0,0), 200, 200, SColor(255, 255, 255, 255), SColor(255,255,255,255), 500, 500, 360);
+	particleNode->setEmitter(emitter);
+	emitter->drop();
+
+	// Set it to the given position
+	particleNode->setPosition(position);
+
+	// Tell the actor which irrlicht node belongs to him
+	actor->setNode ((scene::ISceneNode*) particleNode);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
+	return actor;
+}
+
+
+/**
+ * Creates a particle actor based on a ParticleModel
+ */
+EffActor* EffScene::addParticleActor(EffActor* actor, ParticleModel* model, core::vector3df position)
+{
+	// Add the actor to the current scene
+	actor = addActor(actor, false);
+
+	// Create the particle system scene node
+	scene::IParticleSystemSceneNode* particleNode = pManager->spawnDataModelParticle(model, position, model->getPathNameTexture());
+	
+	// Tell the actor which irrlicht node belongs to him
+	actor->setNode ((scene::ISceneNode*) particleNode);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
+	return actor;
+}
 void EffScene::addActorList (core::list<EffActor*>* list)
 {
 	actorLists.push_back(list);

@@ -2,12 +2,16 @@
 #define GAMESCENE_H_
 
 #include <irrlicht.h>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 using namespace irr;
 
 class EffEngine;
 class InputReceiver;
 class EffActor;
+class ParticleManager;
+class ParticleModel;
 
 class EffScene
 {
@@ -41,7 +45,13 @@ public:
 	/**
 	 * Add an actor to the scene where we add a emitter to and set a IParticleSystemSceneNode
 	 */
-	EffActor* addParticleActor(EffActor* actor);
+	EffActor* addParticleActor(EffActor* actor, core::vector3df position);
+
+	// TODO: temporary, see .cpp file
+	EffActor* addPointParticleActor(EffActor* actor, core::vector3df position);
+
+	// new way
+	EffActor* addParticleActor(EffActor* actor, ParticleModel* model, core::vector3df position);
 
 	/**
 	 * Public function to record that an actors has to be removed, this
@@ -109,6 +119,7 @@ protected:
 	
 	// The Irrlicht scene manager used to spawn object in the scene
 	scene::ISceneManager* manager;
+	ParticleManager* pManager;
 
 private:
 

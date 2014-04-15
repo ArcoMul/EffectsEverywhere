@@ -2,6 +2,7 @@
 #define GAMEENGINE_H_
 
 #include <irrlicht.h>
+#include <ParticleManager.h>
 
 using namespace irr;
 using namespace core;
