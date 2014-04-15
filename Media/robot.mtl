@@ -1,5 +1,5 @@
 # Blender MTL File: 'robot.blend'
-# Material Count: 6
+# Material Count: 4
 
 newmtl Black
 Ns 96.078431
@@ -21,15 +21,6 @@ d 1.000000
 illum 1
 map_Kd robot-uv.png
 
-newmtl DarkIron_NONE
-Ns 92.156863
-Ka 0.000000 0.000000 0.000000
-Kd 0.121860 0.121860 0.121860
-Ks 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 1
-
 newmtl Iron
 Ns 96.078431
 Ka 0.000000 0.000000 0.000000
@@ -39,15 +30,6 @@ Ni 1.000000
 d 1.000000
 illum 1
 map_Kd robot-uv.png
-
-newmtl Iron_NONE
-Ns 96.078431
-Ka 0.000000 0.000000 0.000000
-Kd 0.321575 0.321575 0.321575
-Ks 0.000000 0.000000 0.000000
-Ni 1.000000
-d 1.000000
-illum 1
 
 newmtl Red
 Ns 96.078431
