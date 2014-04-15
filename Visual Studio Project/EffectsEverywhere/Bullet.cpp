@@ -45,15 +45,6 @@ void Bullet::update (float deltaTime)
 			TemporaryParticleEffect* p = new TemporaryParticleEffect(enemyHitEffectModel->getLifeTimeMax(), false);
 			scene->addParticleActor(p,enemyHitEffectModel,node->getPosition());
 
-			// Set some specific settings
-			// TODO: convert to particle model
-			//particleNode->setScale(core::vector3df(0.5f, 0.5f,0.5f));
-			//particleNode->setMaterialTexture(0, scene->getTexture("../../Media/fireball.bmp"));
-			//particleNode->setMaterialFlag(video::EMF_LIGHTING, false);
-			//particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-			//particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
-			
-
 			(*enemy)->hit(damage);
 			scene->removeActor ((EffActor*) this);
 			return;

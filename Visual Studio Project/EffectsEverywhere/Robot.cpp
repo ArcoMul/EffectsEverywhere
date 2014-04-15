@@ -141,7 +141,7 @@ void Robot::update(float deltaTime)
 	}
 }
 
-void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
+void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
 {
 	//Set gun/edit gun
 	if(this->bulletMesh == "null"){
@@ -170,7 +170,7 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 	this->flyEffectXML = flyEffect;
 }
 
-void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
+void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
 {
 	//Set gun/edit gun
 	if(this->bulletMesh == "null"){

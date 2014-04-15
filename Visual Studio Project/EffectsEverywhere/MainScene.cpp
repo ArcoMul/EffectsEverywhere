@@ -60,7 +60,7 @@ bool MainScene::init(void)
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->weapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",3,0.6,250,pModel,pModel,pModel);
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",3,0.6,250,pModel,pModel,pModel);
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
