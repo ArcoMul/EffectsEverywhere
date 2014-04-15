@@ -6,6 +6,8 @@
 #include "TemporaryParticleEffect.h"
 #include "Gun.h"
 #include <iostream>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 Robot::Robot(void)
 {
@@ -14,7 +16,7 @@ Robot::Robot(void)
 	restFloatSpeed = 0.005;
 	movingFloatSpeed = 0.0075;
 	floatSpeed = restFloatSpeed;
-
+	bulletMesh ="null";
 	// TODO: Fill in with right information for the shoot effect when point emitter is supported
 	// this is not used now
 	shootParticleModel = new ParticleModel();
@@ -43,15 +45,6 @@ void Robot::start ()
 	mesh->node->setMaterialFlag(video::EMF_LIGHTING, false);
 	mesh->node->setParent(node);
 
-	// Create gun actor
-	gun = new Gun();
-	scene->addMeshActor ((EffActor*) gun, "../../Media/rock-gun.obj");
-	gun->node->setParent (mesh->node);
-
-	// Put the gun on the right position
-	core::matrix4 mat = node->getAbsoluteTransformation();
-	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
-	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
 }
 
 void Robot::update(float deltaTime)
@@ -143,15 +136,87 @@ void Robot::update(float deltaTime)
 	mesh->node->setRotation(meshRotation);
 
 	// Reduce the cooldown of shooting
-	if (shootCooldown > 0) {
-		shootCooldown -= deltaTime;
+	if (countShootCooldown > 0) {
+		countShootCooldown -= deltaTime;
 	}
+}
+
+void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
+{
+	//Set gun/edit gun
+	if(this->bulletMesh == "null"){
+		addGun(gunMesh);
+	}else
+	{
+		scene->removeActor((EffActor*) gun);
+		addGun(gunMesh);
+	}
+	
+	// Set default cooldown
+	this->shootCooldown = cooldown;
+
+	// Set default bulletMesh
+	this->bulletMesh = bulletMesh;
+	
+	// Set default damage
+	this->bulletDamage = damage;
+	
+	// Set default speed
+	this->bulletSpeed = speed;
+
+	// Set the effects
+	this->shootEffectXML = shootEffect;
+	this->enemyHitEffectXML = enemyHitEffect;
+	this->flyEffectXML = flyEffect;
+}
+
+void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
+{
+	//Set gun/edit gun
+	if(this->bulletMesh == "null"){
+		addGun(gunMesh);
+	}else
+	{
+		scene->removeActor((EffActor*) gun);
+		addGun(gunMesh);
+	}
+
+	// Set default cooldown
+	this->shootCooldown = cooldown;
+
+	// Set default bulletMesh
+	this->bulletMesh = bulletMesh;
+	
+	// Set default damage
+	this->bulletDamage = damage;
+	
+	// Set default speed
+	this->bulletSpeed = speed;
+
+	// Set the effects
+	this->shootEffectModel = shootEffect;
+	this->enemyHitEffectModel = enemyHitEffect;
+	this->flyEffectModel = flyEffect;
+}
+
+void Robot::addGun(core::stringc gunMesh)
+{
+	// Create gun actor
+	gun = new Gun();
+	scene->addMeshActor ((EffActor*) gun, gunMesh);
+	gun->node->setParent (mesh->node);
+
+	// Put the gun on the right position
+	core::matrix4 mat = node->getAbsoluteTransformation();
+	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
+	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
 }
 
 void Robot::shoot (core::list<Enemy*>* enemies)
 {
-	if (shootCooldown > 0) return;
-
+	if (bulletMesh == "null") return;
+	if (countShootCooldown > 0) return;
+	
 	core::matrix4 mat = node->getAbsoluteTransformation();
 
 	// Calculate the start and end of the ray and pass the intersection variable to get the collision position
@@ -159,11 +224,11 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	core::vector3df forward = core::vector3df(mat[2], 0, -mat[0]);
 
 	// Reset the cooldown
-	shootCooldown = 350;
+	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies);
-	scene->addMeshActor ((EffActor*) bullet, "../../Media/rock-bullet.obj", gun->node->getAbsolutePosition(), node->getRotation());
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectModel);
+	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
 

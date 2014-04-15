@@ -3,6 +3,8 @@
 
 #include <irrlicht.h>
 #include "EffActor.h"
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 
 using namespace irr;
 
@@ -28,6 +30,12 @@ public:
 	virtual void update (float deltaTime);
 
 	/**
+	 * Add gun and bullet 
+	 */
+	void setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect);
+	void setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect);
+
+	/**
 	 * Shoot a bullet from the gun
 	 */
 	void shoot (core::list<Enemy*>* enemies);
@@ -45,11 +53,45 @@ public:
 	EffActor* mesh;
 
 private:
+	/**
+	 * Add gun
+	 */
+	void addGun(core::stringc gunMesh);
+	/**
+	 * URL XMLs of the weapon effects
+	 */
+	core::stringc shootEffectXML;
+	core::stringc enemyHitEffectXML;
+	core::stringc flyEffectXML;
+
+	ParticleModel* shootEffectModel;
+	ParticleModel* enemyHitEffectModel;
+	ParticleModel* flyEffectModel;
+
+	/**
+	 * Weapon Cooldown
+	 */
+	float shootCooldown;
+
+	/**
+	 * URL Bullet Mesh
+	 */
+	core::stringc bulletMesh;
+
+	/**
+	 * Bullet Damage
+	 */
+	int bulletDamage;
+
+	/**
+	 * Bullet speed
+	 */
+	float bulletSpeed;
 
 	/**
 	 * Counter to keep track of the shoot cooldown
 	 */
-	float shootCooldown;
+	float countShootCooldown;
 
 	/**
 	 * Gun actor

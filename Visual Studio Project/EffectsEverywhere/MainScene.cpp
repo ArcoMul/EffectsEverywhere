@@ -1,4 +1,6 @@
 #include <iostream>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 #include "MainScene.h"
 #include "EffEngine.h"
 #include "EffScene.h"
@@ -56,6 +58,9 @@ bool MainScene::init(void)
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
+
+	// add Gun & Bullet
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",3,0.6,250,pModel,pModel,pModel);
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");

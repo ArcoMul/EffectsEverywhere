@@ -2,6 +2,8 @@
 #define BULLET_H_
 
 #include <irrlicht.h>
+#include <ParticleManager.h>
+#include <ParticleModel.h>
 #include "EffActor.h"
 
 using namespace irr;
@@ -16,7 +18,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	Bullet (core::list<Enemy*>* enemies);
+	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, ParticleModel* enemyHitEffectModel);
 
 	/**
 	 * When the actor is ready apply some material settings to the node
@@ -46,7 +48,12 @@ private:
 
 	int lifeTime;
 
+	int damage;
+
 	core::list<Enemy*>* enemies;
+
+	ParticleModel* enemyHitEffectModel;
+	
 };
 
 #endif

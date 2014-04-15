@@ -36,7 +36,7 @@ public:
 	/**
 	 * When the enemy gets hit by a bullet
 	 */
-	bool hit (void);
+	bool hit (int demage);
 
 	/**
 	 * When the enemy hits the robot
