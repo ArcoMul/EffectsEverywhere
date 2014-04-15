@@ -71,27 +71,27 @@ private:
 	/**
 	 * Weapon Cooldown
 	 */
-	float defshootCooldown;
+	float shootCooldown;
 
 	/**
 	 * URL Bullet Mesh
 	 */
-	core::stringc defbulletMesh;
+	core::stringc bulletMesh;
 
 	/**
 	 * Bullet Damage
 	 */
-	int defbulletDamage;
+	int bulletDamage;
 
 	/**
 	 * Bullet speed
 	 */
-	float defbulletSpeed;
+	float bulletSpeed;
 
 	/**
 	 * Counter to keep track of the shoot cooldown
 	 */
-	float shootCooldown;
+	float countShootCooldown;
 
 	/**
 	 * Gun actor

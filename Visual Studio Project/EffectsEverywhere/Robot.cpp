@@ -16,7 +16,7 @@ Robot::Robot(void)
 	restFloatSpeed = 0.005;
 	movingFloatSpeed = 0.0075;
 	floatSpeed = restFloatSpeed;
-	defbulletMesh ="null";
+	bulletMesh ="null";
 	// TODO: Fill in with right information for the shoot effect when point emitter is supported
 	// this is not used now
 	shootParticleModel = new ParticleModel();
@@ -136,8 +136,8 @@ void Robot::update(float deltaTime)
 	mesh->node->setRotation(meshRotation);
 
 	// Reduce the cooldown of shooting
-	if (shootCooldown > 0) {
-		shootCooldown -= deltaTime;
+	if (countShootCooldown > 0) {
+		countShootCooldown -= deltaTime;
 	}
 }
 
@@ -147,21 +147,21 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 	addGun(gunMesh);
 	
 	// Set default cooldown
-	defshootCooldown = cooldown;
+	this->shootCooldown = cooldown;
 
 	// Set default bulletMesh
-	defbulletMesh = bulletMesh;
+	this->bulletMesh = bulletMesh;
 	
 	// Set default damage
-	defbulletDamage = damage;
+	this->bulletDamage = damage;
 	
 	// Set default speed
-	defbulletSpeed = speed;
+	this->bulletSpeed = speed;
 
 	// Set the effects
-	shootEffectXML = shootEffect;
-	enemyHitEffectXML = enemyHitEffect;
-	flyEffectXML = flyEffect;
+	this->shootEffectXML = shootEffect;
+	this->enemyHitEffectXML = enemyHitEffect;
+	this->flyEffectXML = flyEffect;
 }
 
 void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
@@ -170,21 +170,21 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 	addGun(gunMesh);
 
 	// Set default cooldown
-	defshootCooldown = cooldown;
+	this->shootCooldown = cooldown;
 
 	// Set default bulletMesh
-	defbulletMesh = bulletMesh;
+	this->bulletMesh = bulletMesh;
 	
 	// Set default damage
-	defbulletDamage = damage;
+	this->bulletDamage = damage;
 	
 	// Set default speed
-	defbulletSpeed = speed;
+	this->bulletSpeed = speed;
 
 	// Set the effects
-	shootEffectModel = shootEffect;
-	enemyHitEffectModel = enemyHitEffect;
-	flyEffectModel = flyEffect;
+	this->shootEffectModel = shootEffect;
+	this->enemyHitEffectModel = enemyHitEffect;
+	this->flyEffectModel = flyEffect;
 }
 
 void Robot::addGun(core::stringc gunMesh)
@@ -202,8 +202,8 @@ void Robot::addGun(core::stringc gunMesh)
 
 void Robot::shoot (core::list<Enemy*>* enemies)
 {
-	if (defbulletMesh == "null") return;
-	if (shootCooldown > 0) return;
+	if (bulletMesh == "null") return;
+	if (countShootCooldown > 0) return;
 	
 	core::matrix4 mat = node->getAbsoluteTransformation();
 
@@ -212,11 +212,11 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	core::vector3df forward = core::vector3df(mat[2], 0, -mat[0]);
 
 	// Reset the cooldown
-	shootCooldown = defshootCooldown;
+	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies, defbulletSpeed, defbulletDamage, enemyHitEffectModel);
-	scene->addMeshActor ((EffActor*) bullet, defbulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectModel);
+	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
 
