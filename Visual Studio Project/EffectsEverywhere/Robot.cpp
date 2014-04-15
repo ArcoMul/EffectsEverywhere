@@ -143,8 +143,14 @@ void Robot::update(float deltaTime)
 
 void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
 {
-	//Set gun
-	addGun(gunMesh);
+	//Set gun/edit gun
+	if(this->bulletMesh == "null"){
+		addGun(gunMesh);
+	}else
+	{
+		scene->removeActor((EffActor*) gun);
+		addGun(gunMesh);
+	}
 	
 	// Set default cooldown
 	this->shootCooldown = cooldown;
@@ -166,8 +172,14 @@ void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
 
 void Robot::weapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
 {
-	//Set gun
-	addGun(gunMesh);
+	//Set gun/edit gun
+	if(this->bulletMesh == "null"){
+		addGun(gunMesh);
+	}else
+	{
+		scene->removeActor((EffActor*) gun);
+		addGun(gunMesh);
+	}
 
 	// Set default cooldown
 	this->shootCooldown = cooldown;
