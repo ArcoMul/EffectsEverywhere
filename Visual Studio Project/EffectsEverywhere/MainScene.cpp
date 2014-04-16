@@ -20,6 +20,7 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 	
+	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
 	pModel->setEmitterType(ParticleModel::EmitterTypes::BOX);
 	pModel->setMinColor(video::SColor(0,0,0,255));
@@ -35,28 +36,10 @@ bool MainScene::init(void)
 	pModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
 	pModel->setPathNameTexture("../../Media/fireball.bmp");
 	pModel->setPosition(core::vector3df(2,2,2));
-	pManager->spawnDataModelParticle(pModel ,pModel->getPosition() ,pModel->getPathNameTexture());
-
-	ParticleModel* pModel2 = new ParticleModel();
-	pModel2->setEmitterType(ParticleModel::EmitterTypes::BOX);
-	pModel2->setMinColor(video::SColor(0,0,0,255));
-	pModel2->setMaxColor(video::SColor(0, 0, 0, 255));
-	pModel2->setMinPPS(50);
-	pModel2->setMaxPPS(200);
-	pModel2->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	pModel2->setDirection(core::vector3df(0.0f, 0.1f, 0.0f));
-	pModel2->setLifeTimeMax(750);
-	pModel2->setLifeTimeMin(500);
-	pModel2->setMaxAngleDegrees(360);
-	pModel2->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	pModel2->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	pModel2->setPathNameTexture("../../Media/portal1.bmp");
-	pModel2->setPosition(core::vector3df(4,2,2));
-	pManager->spawnDataModelParticle(pModel2 ,pModel2->getPosition() ,pModel2->getPathNameTexture());
 	
 	// Create robot actor
 	robot = new Robot ();
-	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
+	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
 	// add Gun & Bullet
@@ -67,6 +50,26 @@ bool MainScene::init(void)
 	scene::IMeshSceneNode* floor = manager->addMeshSceneNode(floorMesh);
 	if (!floor) return false;
 	floor->setMaterialFlag(EMF_LIGHTING, false);
+
+	// WARNING: we are just spawning a really big particle field,
+	// this is because we cant spawn less than 1 particle per second
+	// a really big particle effect has the same effect though
+	ParticleModel* levelParticles = new ParticleModel();
+	levelParticles->setEmitterType(ParticleModel::EmitterTypes::BOX);
+	levelParticles->setMinColor(video::SColor(0, 255, 255, 255));
+	levelParticles->setMaxColor(video::SColor(0, 255, 210, 0));
+	levelParticles->setMinPPS(0);
+	levelParticles->setMaxPPS(1);
+	levelParticles->setAabbox(core::aabbox3df(-5000, 0, -5000, 5000, 1, 5000 ));
+	levelParticles->setDirection(core::vector3df(0.0f, 0.01f, 0.0f));
+	levelParticles->setLifeTimeMax(10000);
+	levelParticles->setLifeTimeMin(5000);
+	levelParticles->setMaxAngleDegrees(0);
+	levelParticles->setMinStartSize(core::dimension2df(1.0f, 1.0f));
+	levelParticles->setMaxStartSize(core::dimension2df(6.0f, 6.0f));
+	levelParticles->setPathNameTexture("../../Media/portal1.bmp");
+	levelParticles->setPosition(core::vector3df(4,2,2));
+	pManager->spawnDataModelParticle(levelParticles ,levelParticles->getPosition() ,levelParticles->getPathNameTexture());
 
 	// Create a Triangle selector for the level
 	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
@@ -85,17 +88,6 @@ bool MainScene::init(void)
 	robot->node->addAnimator(collisionLevel);
 	levelSelector->drop();
 	collisionLevel->drop();
-
-	// create a hilleplanemesh to simulate height so we can create waves for the water particle
-	scene::IMesh* watermesh = manager->addHillPlaneMesh("watermesh",dimension2d<f32>(20, 20),dimension2d<u32>(2.5f,2.5f),0,0,dimension2d<f32>(0,0),dimension2d<f32>(10,10));
-	scene::ISceneNode* waternode = manager->addWaterSurfaceSceneNode(manager->getMesh("watermesh"),2.0f,300.0f,30.0f);
-	if (!waternode) return false;
-
-	waternode->setPosition(vector3df(-60, 5, 60));
-	waternode->setMaterialTexture(0, getTexture("../../Media/water.jpg"));
-	waternode->setMaterialTexture(1, getTexture("../../Media/water.jpg"));
-	waternode->setMaterialType(video::EMT_REFLECTION_2_LAYER);
-	waternode->setMaterialFlag(video::EMF_LIGHTING,false);
 
 	// Set a jump of 3 units per second, which gives a fairly realistic jump
 	// when used with the gravity of (0, -10, 0) in the collision response animator.

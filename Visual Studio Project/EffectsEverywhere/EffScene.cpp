@@ -111,78 +111,6 @@ EffActor* EffScene::addMeshActor(EffActor* actor, core::stringc meshPath, core::
 	return actor;
 }
 
-EffActor* EffScene::addParticleActor(EffActor* actor, core::vector3df position)
-{
-	// Add the actor to the current scene
-	actor = addActor(actor, false);
-
-	// Create the particle system scene node
-	scene::IParticleSystemSceneNode* particleNode = manager->addParticleSystemSceneNode(false);
-
-	// Add a particle affector to the node which causes the particles to fade out
-	// TODO: not every particle effect will have this, maybe not put this here...
-	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
-	particleNode->addAffector(affector);
-    affector->drop();
-
-	// Create the emitter so that the particle node actually emits the particles,
-	// In this case the emitter is a box
-	// TODO: not every particle has the same emitter, maybe not put this here...
-	scene::IParticleBoxEmitter* emitter = particleNode->createBoxEmitter(aabbox3df(-3, 0, -3, 3, 1, 3 ),vector3df(0.0f, 0.1f, 0.0f),50,200,SColor(0, 0, 0, 255),
-		SColor(0,255,255,255),500,750,0,dimension2df(4.0f, 4.0f), dimension2df(8.0f, 8.0f));
-	particleNode->setEmitter(emitter);
-	emitter->drop();
-
-	// Set it to the given position
-	particleNode->setPosition(position);
-
-	// Tell the actor which irrlicht node belongs to him
-	actor->setNode ((scene::ISceneNode*) particleNode);
-
-	// Done, tell the actor everything is set and ready
-	actor->start ();
-
-	return actor;
-}
-
-/**
- * TODO: Temporary function to add a point particle effect. This should be replaced by the ParticleModel once it
- * supports point emitters
- */
-EffActor* EffScene::addPointParticleActor(EffActor* actor, core::vector3df position)
-{
-	// Add the actor to the current scene
-	actor = addActor(actor, false);
-
-	// Create the particle system scene node
-	scene::IParticleSystemSceneNode* particleNode = manager->addParticleSystemSceneNode(false);
-
-	// Add a particle affector to the node which causes the particles to fade out
-	// TODO: not every particle effect will have this, maybe not put this here...
-	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
-	particleNode->addAffector(affector);
-    affector->drop();
-
-	// Create the emitter so that the particle node actually emits the particles,
-	// In this case the emitter is a box
-	// TODO: not every particle has the same emitter, maybe not put this here...
-	scene::IParticlePointEmitter* emitter = particleNode->createPointEmitter(core::vector3df(.08,0,0), 200, 200, SColor(255, 255, 255, 255), SColor(255,255,255,255), 500, 500, 360);
-	particleNode->setEmitter(emitter);
-	emitter->drop();
-
-	// Set it to the given position
-	particleNode->setPosition(position);
-
-	// Tell the actor which irrlicht node belongs to him
-	actor->setNode ((scene::ISceneNode*) particleNode);
-
-	// Done, tell the actor everything is set and ready
-	actor->start ();
-
-	return actor;
-}
-
-
 /**
  * Creates a particle actor based on a ParticleModel
  */
@@ -202,6 +130,7 @@ EffActor* EffScene::addParticleActor(EffActor* actor, ParticleModel* model, core
 
 	return actor;
 }
+
 void EffScene::addActorList (core::list<EffActor*>* list)
 {
 	actorLists.push_back(list);
