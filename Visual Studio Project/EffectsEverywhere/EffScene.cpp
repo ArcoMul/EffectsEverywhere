@@ -22,11 +22,14 @@ bool EffScene::init(void)
 	pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 	actors = core::list<EffActor*>();
 	actorsToRemove = core::list<EffActor*>();
+	isStopped = false;
 	return true;
 }
 
 void EffScene::update(float deltaTime)
 {
+	if (isStopped) return;
+
 	// Call the update function of each actor
 	for(core::list<EffActor*>::Iterator actor = actors.begin(); actor != actors.end(); actor++)
 	{
@@ -37,6 +40,11 @@ void EffScene::update(float deltaTime)
 
 	// Some actors are saved to be removed, remove these now after we updated all the actors
 	cleanupActors ();
+}
+
+void EffScene::stop(void)
+{
+	isStopped = true;
 }
 
 EffActor* EffScene::addActor (EffActor* actor, bool start)

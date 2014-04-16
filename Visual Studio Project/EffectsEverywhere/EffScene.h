@@ -25,6 +25,8 @@ public:
 
 	virtual void update (float deltaTime);
 
+	virtual void stop ();
+
 	/**
 	 * Add a default actor to the scene
 	 */
@@ -151,6 +153,8 @@ private:
 	 * delete deleted actors from these lists too
 	 */
 	core::list<core::list<EffActor*>*> actorLists;
+
+	bool isStopped;
 };
 
 #endif

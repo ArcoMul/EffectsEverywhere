@@ -35,6 +35,7 @@ Robot::Robot(void)
 	bulletMesh ="null";
 	maxAcceleration = .1;
 	damping = .0005;
+	health = 10;
 }
 
 void Robot::start ()
@@ -301,8 +302,10 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	affector->drop();
 }
 
-void Robot::hit (core::vector3df position)
+void Robot::hit (int damage, core::vector3df position)
 {
+	health -= damage;
+
 	ParticleModel* hitEffect = new ParticleModel();
 	hitEffect->setEmitterType(ParticleModel::EmitterTypes::BOX);
 	hitEffect->setMinColor(video::SColor(0, 255, 255, 255));
@@ -323,6 +326,14 @@ void Robot::hit (core::vector3df position)
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
 	particleNode->addAffector(affector);
 	affector->drop();
+
+	// Remove the player and stop the scene when the player dies
+	// (not a beautiful way, but is serves the purpose)
+	if (health <= 0) {
+		scene->stop();
+		mesh->node->remove();
+		scene->removeActor((EffActor*) this);
+	}
 }
 
 Robot::~Robot(void)
