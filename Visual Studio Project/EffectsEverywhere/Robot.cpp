@@ -281,6 +281,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 
 	// Set some specific settings
 	// TODO: convert to particle model
+	/*
 	scene::IParticleSystemSceneNode* particleNode = (scene::IParticleSystemSceneNode*) shootEffect->node;
 	particleNode->setScale(core::vector3df(2, 2, 2));
 	particleNode->setMaterialTexture(0, scene->getTexture("../../Media/smoke.png"));
@@ -288,7 +289,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
 	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 
-	particleNode->setParent (mesh->node);
+	particleNode->setParent (mesh->node);*/
 }
 
 void Robot::hit (core::vector3df position)
