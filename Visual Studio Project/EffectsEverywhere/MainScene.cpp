@@ -22,21 +22,21 @@ bool MainScene::init(void)
 	
 	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
-	pModel->setEmitterType(ParticleModel::EmitterTypes::BOX);
-	pModel->setMinColor(video::SColor(0,0,0,255));
+	pModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
+	pModel->setMinColor(video::SColor(0,180,180,180));
 	pModel->setMaxColor(video::SColor(0, 255, 255, 255));
 	pModel->setMinPPS(50);
 	pModel->setMaxPPS(200);
 	pModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	pModel->setDirection(core::vector3df(0.0f, 0.1f, 0.0f));
-	pModel->setLifeTimeMax(750);
-	pModel->setLifeTimeMin(500);
-	pModel->setMaxAngleDegrees(0);
-	pModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	pModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	pModel->setPathNameTexture("../../Media/fireball.bmp");
+	pModel->setDirection(core::vector3df(0.02f, 0.0f, 0.0f));
+	pModel->setLifeTimeMax(400);
+	pModel->setLifeTimeMin(350);
+	pModel->setMaxAngleDegrees(360);
+	pModel->setMinStartSize(core::dimension2df(4.5f, 4.5f));
+	pModel->setMaxStartSize(core::dimension2df(9.0f, 9.0f));
+	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
-	
+
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
@@ -51,19 +51,17 @@ bool MainScene::init(void)
 	if (!floor) return false;
 	floor->setMaterialFlag(EMF_LIGHTING, false);
 
-	// WARNING: we are just spawning a really big particle field,
-	// this is because we cant spawn less than 1 particle per second
-	// a really big particle effect has the same effect though
+	// Random particles in the level
 	ParticleModel* levelParticles = new ParticleModel();
 	levelParticles->setEmitterType(ParticleModel::EmitterTypes::BOX);
 	levelParticles->setMinColor(video::SColor(0, 255, 255, 255));
 	levelParticles->setMaxColor(video::SColor(0, 255, 210, 0));
-	levelParticles->setMinPPS(0);
-	levelParticles->setMaxPPS(1);
-	levelParticles->setAabbox(core::aabbox3df(-5000, 0, -5000, 5000, 1, 5000 ));
+	levelParticles->setMinPPS(1);
+	levelParticles->setMaxPPS(1.5);
+	levelParticles->setAabbox(core::aabbox3df(-250, 0, -250, 250, 1, 250 ));
 	levelParticles->setDirection(core::vector3df(0.0f, 0.01f, 0.0f));
 	levelParticles->setLifeTimeMax(10000);
-	levelParticles->setLifeTimeMin(5000);
+	levelParticles->setLifeTimeMin(10000);
 	levelParticles->setMaxAngleDegrees(0);
 	levelParticles->setMinStartSize(core::dimension2df(1.0f, 1.0f));
 	levelParticles->setMaxStartSize(core::dimension2df(6.0f, 6.0f));
