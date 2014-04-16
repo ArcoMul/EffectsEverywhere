@@ -36,7 +36,7 @@ bool MainScene::init(void)
 	pModel->setMaxStartSize(core::dimension2df(7.0f, 7.0f));
 	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
-	
+
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
