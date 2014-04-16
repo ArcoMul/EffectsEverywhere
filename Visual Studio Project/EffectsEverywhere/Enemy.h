@@ -51,11 +51,6 @@ public:
 	~Enemy(void);
 
 	/**
-	 * Only start following the set target when this is true
-	 */
-	bool followTarget;
-
-	/**
 	 * True if the player is death
 	 */
 	bool isDeath;

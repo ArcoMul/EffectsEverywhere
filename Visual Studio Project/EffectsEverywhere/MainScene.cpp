@@ -8,12 +8,14 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Robot.h"
+#include "EffTimer.h"
 #include "TemporaryParticleEffect.h"
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
 MainScene::MainScene()
 {
+	
 }
 
 bool MainScene::init(void)
@@ -97,19 +99,6 @@ bool MainScene::init(void)
 	// Tell the scene about this list of actors, so that removed actors also gets removed from this list
 	addActorList((core::list<EffActor*>*) &enemies);
 
-	// Creating an enemy and give it the parameters from the Enemy.cpp class
-	enemies.push_back(new Enemy(manager, core::vector3df(-30, 0, -55), robot->node, .05));
-	enemies.push_back(new Enemy(manager, core::vector3df(30, 0, -55), robot->node, .03));
-
-	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
-	{
-		// Add the actor to the scene
-		this->addActor ((EffActor*) (*enemy));
-
-		// Add collision with the player and the enemies
-		(*enemy)->addCollision((scene::ISceneNode*) robot->node, ((scene::IMeshSceneNode*) robot->mesh->node)->getMesh());
-	}
-
 	// Set mouse Visible to false
 	setMouseVisible(false);
 	
@@ -122,7 +111,27 @@ bool MainScene::init(void)
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->node->addChild(camera);
 
+	spawnEnemy ();
+	timer->repeat(std::bind(&MainScene::spawnEnemy, this), 2);
+
 	return true;
+}
+
+void MainScene::spawnEnemy (void)
+{
+	std::cout << "Spawn enemy" << std::endl;
+
+	// Create enemy
+	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.04 * (rand() / (float) RAND_MAX)));
+
+	// Add to enemy list
+	enemies.push_back(enemy);
+
+	// Add the actor to the scene
+	this->addActor ((EffActor*) enemy);
+
+	// Add collision with the player and the enemies
+	enemy->addCollision((scene::ISceneNode*) robot->node, ((scene::IMeshSceneNode*) robot->mesh->node)->getMesh());
 }
 
 void MainScene::update(float deltaTime)

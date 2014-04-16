@@ -27,6 +27,8 @@ public:
 	virtual void update (float deltaTime);
 
 	~MainScene(void);
+
+	void spawnEnemy(void);
 	
 private:
 

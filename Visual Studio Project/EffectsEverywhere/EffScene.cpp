@@ -2,6 +2,7 @@
 #include "EffEngine.h"
 #include "InputReceiver.h"
 #include "EffActor.h"
+#include "EffTimer.h"
 #include <iostream>
 #include <ParticleManager.h>
 
@@ -12,10 +13,12 @@ EffScene::EffScene()
 EffScene::EffScene(EffEngine* engine) :
 	engine(engine)
 {
+	
 }
 
 bool EffScene::init(void)
 {
+	timer = new EffTimer(this);
 	pManager = new ParticleManager(engine->driver, engine->device, engine->smgr);
 	actors = core::list<EffActor*>();
 	actorsToRemove = core::list<EffActor*>();
@@ -29,6 +32,8 @@ void EffScene::update(float deltaTime)
 	{
 		(*actor)->update(deltaTime);
 	}
+
+	timer->update(deltaTime);
 
 	// Some actors are saved to be removed, remove these now after we updated all the actors
 	cleanupActors ();
