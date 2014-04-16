@@ -11,7 +11,6 @@ Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISc
 	this->target = target;
 	this->speed = speed;
 	this->health = 5;
-	this->followTarget = false;
 	this->isDeath = false;
 	this->spawnPosition = position;
 	this->cooldown = 0;
@@ -38,14 +37,8 @@ void Enemy::update(float deltaTime)
 {
 	EffActor::update(deltaTime);
 
-	// Someting goes wrong when the target is set from the start of the game
-	// so we set it when W is pressed once
-	if (!followTarget && scene->getInput()->IsKeyDown(irr::KEY_KEY_W)) {
-		followTarget = true;
-	}
-	
 	// When there is no target, we don't want to follow the target, or the enemy is death; stop
-	if (target == nullptr || !followTarget || isDeath) return;
+	if (target == nullptr || isDeath) return;
 
 	core::vector3df pos = node->getPosition();
 

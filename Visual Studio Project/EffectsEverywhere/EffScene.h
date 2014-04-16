@@ -12,6 +12,7 @@ class InputReceiver;
 class EffActor;
 class ParticleManager;
 class ParticleModel;
+class EffTimer;
 
 class EffScene
 {
@@ -120,6 +121,8 @@ protected:
 	// The Irrlicht scene manager used to spawn object in the scene
 	scene::ISceneManager* manager;
 	ParticleManager* pManager;
+
+	EffTimer* timer;
 
 private:
 
