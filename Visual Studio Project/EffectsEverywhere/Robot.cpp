@@ -294,7 +294,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 void Robot::hit (core::vector3df position)
 {
 	// Spawn a particle effect where the robot was hit
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
+	/*TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
 	scene->addParticleActor ((EffActor*) p, position);
 
 	// Set some specific settings
@@ -304,7 +304,26 @@ void Robot::hit (core::vector3df position)
 	particleNode->setMaterialTexture(0, scene->getTexture("../../Media/portal1.bmp"));
 	particleNode->setMaterialFlag(video::EMF_LIGHTING, false);
 	particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
+	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);*/
+
+	ParticleModel* hitEffect = new ParticleModel();
+	hitEffect->setEmitterType(ParticleModel::EmitterTypes::BOX);
+	hitEffect->setMinColor(video::SColor(0, 255, 255, 255));
+	hitEffect->setMaxColor(video::SColor(0, 255, 255, 255));
+	hitEffect->setMinPPS(50);
+	hitEffect->setMaxPPS(200);
+	hitEffect->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
+	hitEffect->setDirection(core::vector3df(0.0f, 0.1f, 0.0f));
+	hitEffect->setLifeTimeMax(750);
+	hitEffect->setLifeTimeMin(500);
+	hitEffect->setMaxAngleDegrees(0);
+	hitEffect->setMinStartSize(core::dimension2df(4.0f, 4.0f));
+	hitEffect->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
+	hitEffect->setPathNameTexture("../../Media/portal1.bmp");
+	//hitEffect->setPosition(position);
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
+	scene->addParticleActor((EffActor*) p, hitEffect, position);
+	p->node->setParent(mesh->node);
 }
 
 Robot::~Robot(void)

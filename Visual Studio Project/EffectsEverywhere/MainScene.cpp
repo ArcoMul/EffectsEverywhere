@@ -35,7 +35,7 @@ bool MainScene::init(void)
 	pModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
 	pModel->setPathNameTexture("../../Media/fireball.bmp");
 	pModel->setPosition(core::vector3df(2,2,2));
-	pManager->spawnDataModelParticle(pModel ,pModel->getPosition() ,pModel->getPathNameTexture());
+	//pManager->spawnDataModelParticle(pModel ,pModel->getPosition() ,pModel->getPathNameTexture());
 
 	ParticleModel* pModel2 = new ParticleModel();
 	pModel2->setEmitterType(ParticleModel::EmitterTypes::BOX);
@@ -52,7 +52,7 @@ bool MainScene::init(void)
 	pModel2->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
 	pModel2->setPathNameTexture("../../Media/portal1.bmp");
 	pModel2->setPosition(core::vector3df(4,2,2));
-	pManager->spawnDataModelParticle(pModel2 ,pModel2->getPosition() ,pModel2->getPathNameTexture());
+	//pManager->spawnDataModelParticle(pModel2 ,pModel2->getPosition() ,pModel2->getPathNameTexture());
 	
 	// Create robot actor
 	robot = new Robot ();
