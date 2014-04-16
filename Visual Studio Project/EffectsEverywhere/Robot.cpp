@@ -67,13 +67,13 @@ void Robot::start ()
 	// TODO: base rotation of effect on rotation of robot
 	ParticleModel* floatEffect = new ParticleModel();
 	floatEffect->setEmitterType(ParticleModel::EmitterTypes::BOX);
-	floatEffect->setMinColor(video::SColor(0, 255, 255, 255));
-	floatEffect->setMaxColor(video::SColor(0, 255, 255, 255));
-	floatEffect->setMinPPS(100);
+	floatEffect->setMinColor(video::SColor(255, 69, 183, 255));
+	floatEffect->setMaxColor(video::SColor(255, 69, 183, 255));
+	floatEffect->setMinPPS(150);
 	floatEffect->setMaxPPS(200);
 	floatEffect->setAabbox(core::aabbox3df(-1.5, 0, -1.5, 1.5, 1.5, 1.5 ));
 	floatEffect->setDirection(core::vector3df(0.0f, -0.05f, 0.0f));
-	floatEffect->setLifeTimeMax(30);
+	floatEffect->setLifeTimeMax(25);
 	floatEffect->setLifeTimeMin(10);
 	floatEffect->setMaxAngleDegrees(0);
 	floatEffect->setMinStartSize(core::dimension2df(4.0f, 4.0f));
