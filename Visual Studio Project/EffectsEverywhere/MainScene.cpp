@@ -20,6 +20,7 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 	
+	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
 	pModel->setEmitterType(ParticleModel::EmitterTypes::BOX);
 	pModel->setMinColor(video::SColor(0,0,0,255));
