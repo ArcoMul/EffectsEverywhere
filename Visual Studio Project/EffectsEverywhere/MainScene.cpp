@@ -45,7 +45,7 @@ bool MainScene::init(void)
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",3,0.6,250,pModel,pModel,pModel);
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",2,0.6,600,pModel,pModel,pModel);
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
@@ -122,7 +122,7 @@ void MainScene::spawnEnemy (void)
 	std::cout << "Spawn enemy" << std::endl;
 
 	// Create enemy
-	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.04 * (rand() / (float) RAND_MAX)));
+	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
 
 	// Add to enemy list
 	enemies.push_back(enemy);
