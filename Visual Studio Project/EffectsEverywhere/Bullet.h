@@ -54,6 +54,7 @@ private:
 
 	ParticleModel* enemyHitEffectModel;
 	ParticleModel* enemyTriangleHitEffectModel;
+
 	
 };
 

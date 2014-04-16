@@ -71,18 +71,18 @@ void Robot::start ()
 	// This is the Triangle Effect
 	enemyTriangleHitEffectModel = new ParticleModel();
 	enemyTriangleHitEffectModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
-	enemyTriangleHitEffectModel->setMinColor(video::SColor(255,139,69,19));
-	enemyTriangleHitEffectModel->setMaxColor(video::SColor(255, 139, 69, 19));
-	enemyTriangleHitEffectModel->setMinPPS(50);
-	enemyTriangleHitEffectModel->setMaxPPS(200);
+	enemyTriangleHitEffectModel->setMinColor(video::SColor(0,0,0,0));
+	enemyTriangleHitEffectModel->setMaxColor(video::SColor(0, 0, 0, 0));
+	enemyTriangleHitEffectModel->setMinPPS(20);
+	enemyTriangleHitEffectModel->setMaxPPS(80);
 	enemyTriangleHitEffectModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	enemyTriangleHitEffectModel->setDirection(core::vector3df(0.01f, 0.0f, 0.03f));
+	enemyTriangleHitEffectModel->setDirection(core::vector3df(0.01f, 0.0f, 0.02f));
 	enemyTriangleHitEffectModel->setLifeTimeMax(750);
 	enemyTriangleHitEffectModel->setLifeTimeMin(550);
 	enemyTriangleHitEffectModel->setMaxAngleDegrees(360);
 	enemyTriangleHitEffectModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
 	enemyTriangleHitEffectModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	enemyTriangleHitEffectModel->setPathNameTexture("../../Media/floatingRobot.png");
+	enemyTriangleHitEffectModel->setPathNameTexture("../../Media/triangleEffect.png");
 	enemyTriangleHitEffectModel->setPosition(core::vector3df(2,2,2));
 }
 

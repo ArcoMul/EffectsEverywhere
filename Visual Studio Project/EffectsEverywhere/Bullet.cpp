@@ -47,8 +47,13 @@ void Bullet::update (float deltaTime)
 			scene->addParticleActor(p,enemyHitEffectModel,node->getPosition());
 
 			// Spawn a second particle effect at the position where we hit something with the bullet
-			TemporaryParticleEffect* pTriangle = new TemporaryParticleEffect(enemyTriangleHitEffectModel->getLifeTimeMax(), false);
+			/*TemporaryParticleEffect* pTriangle = new TemporaryParticleEffect(enemyTriangleHitEffectModel->getLifeTimeMax(), false);
 			scene->addParticleActor(pTriangle,enemyTriangleHitEffectModel, node->getPosition());
+
+			IParticleSystemSceneNode* triangleParticleNode = (IParticleSystemSceneNode*)
+			pTriangle->node;
+			triangleParticleNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
+			*/
 
 			(*enemy)->hit(damage);
 			scene->removeActor ((EffActor*) this);
