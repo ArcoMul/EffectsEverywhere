@@ -35,21 +35,6 @@ Robot::Robot(void)
 	bulletMesh ="null";
 	maxAcceleration = .1;
 	damping = .0005;
-	// TODO: Fill in with right information for the shoot effect when point emitter is supported
-	// this is not used now
-	/*shootParticleModel = new ParticleModel();
-	shootParticleModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
-	shootParticleModel->setMinColor(video::SColor(0,0,0,255));
-	shootParticleModel->setMaxColor(video::SColor(0, 255, 255, 255));
-	shootParticleModel->setMinPPS(50);
-	shootParticleModel->setMaxPPS(200);
-	shootParticleModel->setDirection(core::vector3df(0.0f, 0.0f, 0.0f));
-	shootParticleModel->setLifeTimeMax(750);
-	shootParticleModel->setLifeTimeMin(500);
-	shootParticleModel->setMaxAngleDegrees(0);
-	shootParticleModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	shootParticleModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	shootParticleModel->setPathNameTexture("../../Media/fireball.bmp");*/
 }
 
 void Robot::start ()
@@ -273,17 +258,6 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
-
-	// Set some specific settings
-	// TODO: convert to particle model
-	/*scene::IParticleSystemSceneNode* particleNode = (scene::IParticleSystemSceneNode*) shootEffect->node;
-	particleNode->setScale(core::vector3df(2, 2, 2));
-	particleNode->setMaterialTexture(0, scene->getTexture("../../Media/smoke.png"));
-	particleNode->setMaterialFlag(video::EMF_LIGHTING, false);
-	particleNode->setMaterialFlag(video::EMF_ZWRITE_ENABLE, false);
-	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
-
-	particleNode->setParent (mesh->node);*/
 
 	// Create a shoot effect
 	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
