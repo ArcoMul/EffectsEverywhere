@@ -28,12 +28,12 @@ bool MainScene::init(void)
 	pModel->setMinPPS(50);
 	pModel->setMaxPPS(200);
 	pModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	pModel->setDirection(core::vector3df(0.01f, 0.0f, 0.0f));
-	pModel->setLifeTimeMax(900);
-	pModel->setLifeTimeMin(700);
+	pModel->setDirection(core::vector3df(0.02f, 0.0f, 0.0f));
+	pModel->setLifeTimeMax(700);
+	pModel->setLifeTimeMin(500);
 	pModel->setMaxAngleDegrees(360);
-	pModel->setMinStartSize(core::dimension2df(3.5f, 3.5f));
-	pModel->setMaxStartSize(core::dimension2df(7.0f, 7.0f));
+	pModel->setMinStartSize(core::dimension2df(4.5f, 4.5f));
+	pModel->setMaxStartSize(core::dimension2df(9.0f, 9.0f));
 	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
 
