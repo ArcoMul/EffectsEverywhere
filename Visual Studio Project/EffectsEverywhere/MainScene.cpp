@@ -22,19 +22,19 @@ bool MainScene::init(void)
 	
 	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
-	pModel->setEmitterType(ParticleModel::EmitterTypes::BOX);
-	pModel->setMinColor(video::SColor(0,0,0,255));
+	pModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
+	pModel->setMinColor(video::SColor(0,180,180,180));
 	pModel->setMaxColor(video::SColor(0, 255, 255, 255));
 	pModel->setMinPPS(50);
 	pModel->setMaxPPS(200);
 	pModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	pModel->setDirection(core::vector3df(0.0f, 0.1f, 0.0f));
-	pModel->setLifeTimeMax(750);
-	pModel->setLifeTimeMin(500);
-	pModel->setMaxAngleDegrees(0);
-	pModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	pModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	pModel->setPathNameTexture("../../Media/fireball.bmp");
+	pModel->setDirection(core::vector3df(0.01f, 0.0f, 0.0f));
+	pModel->setLifeTimeMax(900);
+	pModel->setLifeTimeMin(700);
+	pModel->setMaxAngleDegrees(360);
+	pModel->setMinStartSize(core::dimension2df(3.5f, 3.5f));
+	pModel->setMaxStartSize(core::dimension2df(7.0f, 7.0f));
+	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
 	
 	// Create robot actor
