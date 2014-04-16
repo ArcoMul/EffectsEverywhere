@@ -260,23 +260,20 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	gun->shoot();
 
 	// Create a shoot effect
-	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
-	//scene->addPointParticleActor ((EffActor*) shootEffect, gun->node->getPosition() + core::vector3df(0,0,-7));
-
 	shootParticleModel = new ParticleModel();
 	shootParticleModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
-	shootParticleModel->setMinColor(video::SColor(0,0,0,255));
+	shootParticleModel->setMinColor(video::SColor(0,180,180,180));
 	shootParticleModel->setMaxColor(video::SColor(0, 255, 255, 255));
 	shootParticleModel->setMinPPS(50);
 	shootParticleModel->setMaxPPS(200);
-	shootParticleModel->setDirection(core::vector3df(0.0f, 0.0f, 0.0f));
+	shootParticleModel->setDirection(core::vector3df(0.05f, 0.0f, 0.0f));
 	shootParticleModel->setLifeTimeMax(750);
 	shootParticleModel->setLifeTimeMin(500);
-	shootParticleModel->setMaxAngleDegrees(0);
-	shootParticleModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	shootParticleModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
+	shootParticleModel->setMaxAngleDegrees(360);
+	shootParticleModel->setMinStartSize(core::dimension2df(3.0f, 3.0f));
+	shootParticleModel->setMaxStartSize(core::dimension2df(6.0f, 6.0f));
 	shootParticleModel->setPathNameTexture("../../Media/smoke.png");
-
+	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
 	scene->addParticleActor((EffActor*) shootEffect, shootParticleModel, gun->node->getPosition() + core::vector3df(0,0,-7));
 	shootEffect->node->setParent(mesh->node);
 
