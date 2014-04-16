@@ -39,7 +39,7 @@ bool MainScene::init(void)
 	
 	// Create robot actor
 	robot = new Robot ();
-	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.2f, 0), core::vector3df(0, 0, 0));
+	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
 	// add Gun & Bullet
