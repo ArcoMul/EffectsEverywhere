@@ -37,6 +37,7 @@ Robot::Robot(void)
 	damping = .0005;
 	// TODO: Fill in with right information for the shoot effect when point emitter is supported
 	// this is not used now
+	/*
 	shootParticleModel = new ParticleModel();
 	shootParticleModel->setEmitterType(ParticleModel::EmitterTypes::BOX);
 	shootParticleModel->setMinColor(video::SColor(0,0,0,255));
@@ -50,7 +51,7 @@ Robot::Robot(void)
 	shootParticleModel->setMaxAngleDegrees(0);
 	shootParticleModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
 	shootParticleModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	shootParticleModel->setPathNameTexture("../../Media/fireball.bmp");
+	shootParticleModel->setPathNameTexture("../../Media/fireball.bmp");*/
 }
 
 void Robot::start ()
@@ -275,10 +276,6 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 
 	gun->shoot();
 
-	// Create a shoot effect
-	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
-	scene->addPointParticleActor ((EffActor*) shootEffect, gun->node->getPosition() + core::vector3df(0,0,-7));
-
 	// Set some specific settings
 	// TODO: convert to particle model
 	/*
@@ -290,6 +287,33 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	particleNode->setMaterialType(video::EMT_TRANSPARENT_ADD_COLOR);
 
 	particleNode->setParent (mesh->node);*/
+
+	// Create a shoot effect
+	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
+	//scene->addPointParticleActor ((EffActor*) shootEffect, gun->node->getPosition() + core::vector3df(0,0,-7));
+
+	shootParticleModel = new ParticleModel();
+	shootParticleModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
+	shootParticleModel->setMinColor(video::SColor(0,0,0,255));
+	shootParticleModel->setMaxColor(video::SColor(0, 255, 255, 255));
+	shootParticleModel->setMinPPS(50);
+	shootParticleModel->setMaxPPS(200);
+	shootParticleModel->setDirection(core::vector3df(0.0f, 0.0f, 0.0f));
+	shootParticleModel->setLifeTimeMax(750);
+	shootParticleModel->setLifeTimeMin(500);
+	shootParticleModel->setMaxAngleDegrees(0);
+	shootParticleModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
+	shootParticleModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
+	shootParticleModel->setPathNameTexture("../../Media/smoke.png");
+
+	scene->addParticleActor((EffActor*) shootEffect, shootParticleModel, gun->node->getPosition() + core::vector3df(0,0,-7));
+	shootEffect->node->setParent(mesh->node);
+
+	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) shootEffect->node;
+	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
+	particleNode->addAffector(affector);
+	affector->drop();
+
 }
 
 void Robot::hit (core::vector3df position)
