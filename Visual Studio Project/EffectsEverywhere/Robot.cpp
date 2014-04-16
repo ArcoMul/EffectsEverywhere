@@ -9,6 +9,22 @@
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
+float damp (float acc, float damp)
+{
+	acc += acc > 0 ? -damp : damp;
+	if (abs(acc) <= damp) {
+		acc = 0;
+	}
+	return acc;
+}
+
+float limit (float value, float max)
+{
+	value = value > max ? max : value;
+	value = value < -max ? -max : value;
+	return value;
+}
+
 Robot::Robot(void)
 {
 	// Set some default values
@@ -17,6 +33,8 @@ Robot::Robot(void)
 	movingFloatSpeed = 0.0075;
 	floatSpeed = restFloatSpeed;
 	bulletMesh ="null";
+	maxAcceleration = .1;
+	damping = .0005;
 	// TODO: Fill in with right information for the shoot effect when point emitter is supported
 	// this is not used now
 	shootParticleModel = new ParticleModel();
@@ -45,6 +63,25 @@ void Robot::start ()
 	mesh->node->setMaterialFlag(video::EMF_LIGHTING, false);
 	mesh->node->setParent(node);
 
+	// Effect of fire beneath robot
+	// TODO: base rotation of effect on rotation of robot
+	ParticleModel* floatEffect = new ParticleModel();
+	floatEffect->setEmitterType(ParticleModel::EmitterTypes::BOX);
+	floatEffect->setMinColor(video::SColor(255, 69, 183, 255));
+	floatEffect->setMaxColor(video::SColor(255, 69, 183, 255));
+	floatEffect->setMinPPS(150);
+	floatEffect->setMaxPPS(200);
+	floatEffect->setAabbox(core::aabbox3df(-1.5, 0, -1.5, 1.5, 1.5, 1.5 ));
+	floatEffect->setDirection(core::vector3df(0.0f, -0.05f, 0.0f));
+	floatEffect->setLifeTimeMax(25);
+	floatEffect->setLifeTimeMin(10);
+	floatEffect->setMaxAngleDegrees(0);
+	floatEffect->setMinStartSize(core::dimension2df(4.0f, 4.0f));
+	floatEffect->setMaxStartSize(core::dimension2df(4.0f, 4.0f));
+	floatEffect->setPathNameTexture("../../Media/floatingRobot.png");
+	floatEffect->setPosition(core::vector3df(0,-4,0));
+	EffActor* a = scene->addParticleActor(new EffActor(), floatEffect, floatEffect->getPosition());
+	a->node->setParent(mesh->node);
 }
 
 void Robot::update(float deltaTime)
@@ -60,56 +97,62 @@ void Robot::update(float deltaTime)
 
 	// Get the transformations done on this robot
 	core::matrix4 mat = node->getAbsoluteTransformation();
+ 
+	// When the W key is down
+	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_W)) {
+		velocity.Z = -.0006;
+	}
+	// When the S key is down go back
+	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_S)) {
+		velocity.Z = .0006;
+	} else {
+		velocity.Z = 0;
+	}
+	
+	// When the A key is down go right
+	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_A)) {
+		velocity.X = .0006;
+	}
+	// When the D key is down go left
+	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_D)) {
+		velocity.X = -.0006;
+	} else {
+		velocity.X = 0;
+	}
+
+	// Change acceleration based on velocity
+	acceleration.X += velocity.X;
+	acceleration.Z += velocity.Z;
+	if ( velocity.X == 0 && acceleration.X != 0) {
+		acceleration.X = damp (acceleration.X, damping);
+	}
+	if ( velocity.Z == 0 && acceleration.Z != 0) {
+		acceleration.Z = damp (acceleration.Z, damping);
+	}
 
 	// Movement speed
- 	float speed = .1;
-
+ 	bool goingLeftAndRight = false;
  	// WARNING HACKY: When both a front/back key and a right/left key is pressed reduce the speed,
  	// so that it doesn't move twice as fast when going in a diagonal line
  	if ((scene->getInput()->IsKeyDown(irr::KEY_KEY_W) || scene->getInput()->IsKeyDown(irr::KEY_KEY_S))
  	&& (scene->getInput()->IsKeyDown(irr::KEY_KEY_A) || scene->getInput()->IsKeyDown(irr::KEY_KEY_D)))
- 	speed *= 0.667; // 0.667 is sort of the factor of the distance you move when you go in a 45 degree angle
- 
-	// When the W key is down
-	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_W))
-	{
-		// Multiply the already done transformations of the robot with the speed and deltaTime
-		pos += core::vector3df(mat[2] * speed * deltaTime,
-		 	0,
-			mat[0] * -speed * deltaTime);
-		meshRotation.X = -10;
-	}
-	// When the S key is down go back
-	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_S))
-	{
-		pos += core::vector3df(mat[2] * -speed * deltaTime,
+ 	goingLeftAndRight = true;
+
+	// Limit the speed on the X and Z axis if the player is moving on both of these axis
+	acceleration.X = limit (acceleration.X, (goingLeftAndRight ? maxAcceleration * 0.667 : maxAcceleration));
+	acceleration.Z = limit (acceleration.Z, (goingLeftAndRight ? maxAcceleration * 0.667 : maxAcceleration));
+
+	// Change the position based on the acceleration
+	pos += core::vector3df(mat[0] * acceleration.X * deltaTime,
 			0,
-			mat[0] * speed * deltaTime);
-		meshRotation.X = 10;
-	}
-	else {
-		meshRotation.X = 0;
-	}
-	
-	// When the A key is down go right
-	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_A))
-	{
-		pos += core::vector3df(mat[0] * speed * deltaTime,
+			mat[2] * acceleration.X * deltaTime);
+	pos += core::vector3df(mat[2] * -acceleration.Z * deltaTime,
 			0,
-			mat[2] * speed * deltaTime);
-		meshRotation.Z = -10;
-	}
-	// When the D key is down go left
-	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_D))
-	{
-		pos += core::vector3df(mat[0] * -speed * deltaTime,
-			0,
-			mat[2] * -speed * deltaTime);
-		meshRotation.Z = 10;
-	}
-	else {
-		meshRotation.Z = 0;
-	}
+			mat[0] * acceleration.Z * deltaTime);
+
+	// Change the rotation based on the acceleration
+	meshRotation.Z = -10 * acceleration.X / maxAcceleration;
+	meshRotation.X = 10 * acceleration.Z / maxAcceleration;
 
 	// When moving apply different speed for floating
 	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_W) || scene->getInput()->IsKeyDown(irr::KEY_KEY_S) || scene->getInput()->IsKeyDown(irr::KEY_KEY_A) || scene->getInput()->IsKeyDown(irr::KEY_KEY_D)) {
@@ -123,7 +166,7 @@ void Robot::update(float deltaTime)
 	// Move it up or down based on floatSpeed
 	meshPosition.Y += deltaTime * floatSpeed * floatDirection;
 	// Reverse the float speed at the max-points
-	if (meshPosition.Y > 4 || meshPosition.Y < 0) floatDirection *= -1;
+	if ((meshPosition.Y >= 4 && floatDirection > 0) || (meshPosition.Y <= 0 && floatDirection < 0)) floatDirection *= -1;
 	// Apply
 	mesh->node->setPosition (meshPosition);
 

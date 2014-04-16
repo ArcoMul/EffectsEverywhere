@@ -53,10 +53,12 @@ public:
 	EffActor* mesh;
 
 private:
+
 	/**
 	 * Add gun
 	 */
 	void addGun(core::stringc gunMesh);
+
 	/**
 	 * URL XMLs of the weapon effects
 	 */
@@ -119,6 +121,11 @@ private:
 	float floatSpeed;
 
 	ParticleModel* shootParticleModel;
+
+	core::vector3df acceleration;
+	float maxAcceleration;
+	float damping;
+	core::vector3df velocity;
 };
 
 #endif
