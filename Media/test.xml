@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="1"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Direction X="0" Y="0.1" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="0"/>
+    <LifeTime Max="75" Min="50"/>
+    <PPS Max="200" Min="50"/>
+    <StartColor>
+        <Max Alpha="0" Red="255" Blue="255" Green="255"/>
+        <Min Alpha="0" Red="0" Blue="255" Green="0"/>
+    </StartColor>
+    <StartSize>
+        <Max Height="8" Width="8"/>
+        <Min Height="4" Width="4"/>
+    </StartSize>
+    <Texture PathName="TODO: Set PathNameTexture"/>
+    <Rest MbNumber="0" NormalDirectionModifier="-0.00132704" Radius="-0.00132704" LengthCylinder="-0.00132704" RingThickness="-0.00132704" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
+</Particle>

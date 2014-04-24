@@ -21,6 +21,9 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
+
+	// Test for xml reader
+	ParticleParser* xmlTest = new ParticleParser();
 	
 	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();

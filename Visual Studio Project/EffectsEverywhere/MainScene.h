@@ -7,6 +7,7 @@
 #include "EffScene.h"
 #include <ParticleManager.h>
 #include <ParticleModel.h>
+#include <ParticleParser.h>
 
 using namespace irr;
 
@@ -48,6 +49,7 @@ private:
 	scene::ICameraSceneNode* camera;
 
 	ParticleModel* pModel, pModel2;
+	ParticleParser* xmlTest;
 };
 
 #endif
