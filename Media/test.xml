@@ -1,22 +1,18 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Particle>
-    <Emitter Type="1"/>
-    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
-    <Direction X="0" Y="0.1" Z="0"/>
-    <Position X="0" Y="0" Z="0"/>
+    <Emitter Type="2"/>
+    <Aabbox MaxX="-3" MaxY="0" MaxZ="-3" MinX="3" MinY="1" MinZ="3"/>
+    <Direction X="0.02" Y="0.0" Z="0.0"/>
+    <Position X="2" Y="2" Z="2"/>
     <Center X="0" Y="0" Z="0"/>
     <Normal X="0" Y="0" Z="0"/>
-    <AngleDegrees Max="0"/>
-    <LifeTime Max="75" Min="50"/>
+    <AngleDegrees Max="360"/>
+    <LifeTime Max="400" Min="350"/>
     <PPS Max="200" Min="50"/>
-    <StartColor>
-        <Max Alpha="0" Red="255" Blue="255" Green="255"/>
-        <Min Alpha="0" Red="0" Blue="255" Green="0"/>
-    </StartColor>
-    <StartSize>
-        <Max Height="8" Width="8"/>
-        <Min Height="4" Width="4"/>
-    </StartSize>
-    <Texture PathName="TODO: Set PathNameTexture"/>
-    <Rest MbNumber="0" NormalDirectionModifier="-0.00132704" Radius="-0.00132704" LengthCylinder="-0.00132704" RingThickness="-0.00132704" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
+    <MaxStartColor Alpha="0" Red="255" Blue="255" Green="255"/>
+    <MinStartColor Alpha="0" Red="180" Blue="180" Green="180"/>
+    <MaxStartSize Height="9.0" Width="9.0"/>
+    <MinStartSize Height="4.5" Width="4.5"/>
+    <Texture PathName="particle.bmp"/>
+    <Rest MbNumber="0" NormalDirectionModifier="1.82246e-27" Radius="1.82235e-27" LengthCylinder="1.82229e-27" RingThickness="1.8224e-27" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
 </Particle>

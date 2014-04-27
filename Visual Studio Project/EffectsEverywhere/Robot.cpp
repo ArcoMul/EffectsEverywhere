@@ -85,6 +85,22 @@ void Robot::start ()
 	enemyTriangleHitEffectModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
 	enemyTriangleHitEffectModel->setPathNameTexture("../../Media/triangleEffect.png");
 	enemyTriangleHitEffectModel->setPosition(core::vector3df(2,2,2));
+
+	ParticleModel* testModel = new ParticleModel();
+	testModel->getEmitterType();
+	testModel->getMinStartColor();
+	testModel->getMaxStartColor();
+	testModel->getMinPPS();
+	testModel->getMaxPPS();
+	testModel->getAabbox();
+	testModel->getDirection();
+	testModel->getLifeTimeMax();
+	testModel->getLifeTimeMin();
+	testModel->getMaxAngleDegrees();
+	testModel->getMinStartSize();
+	testModel->getMaxStartSize();
+	testModel->setPathNameTexture("../../Media/triangleEffect.png");
+	testModel->getPosition();
 }
 
 void Robot::update(float deltaTime)

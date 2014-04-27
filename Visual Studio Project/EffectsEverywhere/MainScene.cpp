@@ -42,6 +42,24 @@ bool MainScene::init(void)
 	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
 
+	/*//Created a particle to test if you can create a particle with the values from the XML reader.
+	ParticleModel* pModel = new ParticleModel();
+	pModel->getEmitterType();
+	pModel->getMinStartColor();
+	pModel->getMaxStartColor();
+	pModel->getMinPPS();
+	pModel->getMaxPPS();
+	pModel->getAabbox();
+	pModel->getDirection();
+	pModel->getLifeTimeMax();
+	pModel->getLifeTimeMin();
+	pModel->getMaxAngleDegrees();
+	pModel->getMinStartSize();
+	pModel->getMaxStartSize();
+	pModel->setPathNameTexture("../../Media/smoke.png");
+	pModel->getPosition();*/
+
+
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
