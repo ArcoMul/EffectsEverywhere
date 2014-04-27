@@ -25,7 +25,7 @@ bool MainScene::init(void)
 	// Test for xml reader
 	ParticleParser* xmlTest = new ParticleParser();
 	
-	// Hit effect on the robot it is passed to the robot and then to the bullet
+	/*// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
 	pModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
 	pModel->setMinColor(video::SColor(0,180,180,180));
@@ -41,8 +41,9 @@ bool MainScene::init(void)
 	pModel->setMaxStartSize(core::dimension2df(9.0f, 9.0f));
 	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
+	*/
 
-	/*//Created a particle to test if you can create a particle with the values from the XML reader.
+	//Created a particle to test if you can create a particle with the values from the XML reader.
 	ParticleModel* pModel = new ParticleModel();
 	pModel->getEmitterType();
 	pModel->getMinStartColor();
@@ -57,7 +58,7 @@ bool MainScene::init(void)
 	pModel->getMinStartSize();
 	pModel->getMaxStartSize();
 	pModel->setPathNameTexture("../../Media/smoke.png");
-	pModel->getPosition();*/
+	pModel->getPosition();
 
 
 	// Create robot actor
