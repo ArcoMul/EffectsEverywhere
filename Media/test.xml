@@ -13,7 +13,7 @@
     <MinStartColor Alpha="0" Red="180" Blue="180" Green="180"/>
     <MaxStartSize Height="9.0" Width="9.0"/>
     <MinStartSize Height="4.5" Width="4.5"/>
-    <Texture PathName="../../Media/smoke.png"/>
+    <Texture PathName="smoke.png"/>
     <Rest MbNumber="0" NormalDirectionModifier="1.82246e-27" Radius="1.82235e-27" LengthCylinder="1.82229e-27" RingThickness="1.8224e-27" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
 </Particle>
 
