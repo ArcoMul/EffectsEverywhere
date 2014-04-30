@@ -10,8 +10,6 @@
 #include "Robot.h"
 #include "EffTimer.h"
 #include "TemporaryParticleEffect.h"
-#include <ParticleManager.h>
-#include <ParticleModel.h>
 
 MainScene::MainScene()
 {
@@ -22,10 +20,10 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 
-	// Test for xml reader
-	ParticleParser* xmlTest = new ParticleParser();
+	// Showcase particle to show that particle spawning by xml is working
+	scene::IParticleSystemSceneNode* node = this->pManager->spawnXMLParticle("../../Media/test.xml", core::vector3df(0,0,0));
 	
-	/*// Hit effect on the robot it is passed to the robot and then to the bullet
+	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
 	pModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
 	pModel->setMinColor(video::SColor(0,180,180,180));
@@ -41,25 +39,6 @@ bool MainScene::init(void)
 	pModel->setMaxStartSize(core::dimension2df(9.0f, 9.0f));
 	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
-	*/
-
-	//Created a particle to test if you can create a particle with the values from the XML reader.
-	ParticleModel* pModel = new ParticleModel();
-	pModel->getEmitterType();
-	pModel->getMinStartColor();
-	pModel->getMaxStartColor();
-	pModel->getMinPPS();
-	pModel->getMaxPPS();
-	pModel->getAabbox();
-	pModel->getDirection();
-	pModel->getLifeTimeMax();
-	pModel->getLifeTimeMin();
-	pModel->getMaxAngleDegrees();
-	pModel->getMinStartSize();
-	pModel->getMaxStartSize();
-	pModel->setPathNameTexture("../../Media/smoke.png");
-	pModel->getPosition();
-
 
 	// Create robot actor
 	robot = new Robot ();
@@ -67,7 +46,7 @@ bool MainScene::init(void)
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",2,0.6,600,pModel,pModel,pModel);
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, pModel, pModel, pModel);
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
