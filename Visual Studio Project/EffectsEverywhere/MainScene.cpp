@@ -21,7 +21,7 @@ bool MainScene::init(void)
 	EffScene::init ();
 
 	// Showcase particle to show that particle spawning by xml is working
-	scene::IParticleSystemSceneNode* node = this->pManager->spawnXMLParticle("../../Media/test.xml", core::vector3df(0,0,0));
+	//scene::IParticleSystemSceneNode* node = this->pManager->spawnXMLParticle("../../Media/test.xml", core::vector3df(0,0,0));
 	
 	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
@@ -55,6 +55,7 @@ bool MainScene::init(void)
 	floor->setMaterialFlag(EMF_LIGHTING, false);
 
 	// Random particles in the level
+	/*
 	ParticleModel* levelParticles = new ParticleModel();
 	levelParticles->setEmitterType(ParticleModel::EmitterTypes::BOX);
 	levelParticles->setMinColor(video::SColor(0, 255, 255, 255));
@@ -71,6 +72,8 @@ bool MainScene::init(void)
 	levelParticles->setPathNameTexture("../../Media/portal1.bmp");
 	levelParticles->setPosition(core::vector3df(4,2,2));
 	pManager->spawnDataModelParticle(levelParticles ,levelParticles->getPosition() ,levelParticles->getPathNameTexture());
+	**/
+	pManager->spawnXMLParticle("../../Media/levelParticles.xml", core::vector3df(4,2,2));
 
 	// Create a Triangle selector for the level
 	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
