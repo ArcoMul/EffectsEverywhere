@@ -49,7 +49,6 @@ private:
 	scene::ICameraSceneNode* camera;
 
 	ParticleModel* pModel, pModel2;
-	ParticleParser* xmlTest;
 };
 
 #endif
