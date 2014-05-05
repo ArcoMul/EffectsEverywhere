@@ -19,9 +19,6 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
-
-	// Showcase particle to show that particle spawning by xml is working
-	//scene::IParticleSystemSceneNode* node = this->pManager->spawnXMLParticle("../../Media/test.xml", core::vector3df(0,0,0));
 	
 	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();

@@ -6,14 +6,13 @@
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
-Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, ParticleModel* enemyHitEffectModel, ParticleModel* enemyTriangleHitEffectModel)
+Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, ParticleModel* enemyHitEffectModel)
 {
 	this->enemies = enemies;
 	this->speed = bulletSpeed;
 	this->lifeTime = 1000;
 	this->damage = damage;
 	this->enemyHitEffectModel = enemyHitEffectModel;
-	this->enemyTriangleHitEffectModel = enemyTriangleHitEffectModel;
 }
 
 void Bullet::start ()

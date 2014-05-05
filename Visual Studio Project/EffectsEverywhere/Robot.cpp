@@ -67,40 +67,6 @@ void Robot::start ()
 	floatEffect->setPosition(core::vector3df(0,-4,0));
 	EffActor* a = scene->addParticleActor(new EffActor(), floatEffect, floatEffect->getPosition());
 	a->node->setParent(mesh->node);
-
-	// Second effect when the enemy gets hit by a bullet
-	// This is the Triangle Effect
-	enemyTriangleHitEffectModel = new ParticleModel();
-	enemyTriangleHitEffectModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
-	enemyTriangleHitEffectModel->setMinColor(video::SColor(0,0,0,0));
-	enemyTriangleHitEffectModel->setMaxColor(video::SColor(0, 0, 0, 0));
-	enemyTriangleHitEffectModel->setMinPPS(20);
-	enemyTriangleHitEffectModel->setMaxPPS(80);
-	enemyTriangleHitEffectModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	enemyTriangleHitEffectModel->setDirection(core::vector3df(0.01f, 0.0f, 0.02f));
-	enemyTriangleHitEffectModel->setLifeTimeMax(750);
-	enemyTriangleHitEffectModel->setLifeTimeMin(550);
-	enemyTriangleHitEffectModel->setMaxAngleDegrees(360);
-	enemyTriangleHitEffectModel->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	enemyTriangleHitEffectModel->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	enemyTriangleHitEffectModel->setPathNameTexture("../../Media/triangleEffect.png");
-	enemyTriangleHitEffectModel->setPosition(core::vector3df(2,2,2));
-
-	ParticleModel* testModel = new ParticleModel();
-	testModel->getEmitterType();
-	testModel->getMinStartColor();
-	testModel->getMaxStartColor();
-	testModel->getMinPPS();
-	testModel->getMaxPPS();
-	testModel->getAabbox();
-	testModel->getDirection();
-	testModel->getLifeTimeMax();
-	testModel->getLifeTimeMin();
-	testModel->getMaxAngleDegrees();
-	testModel->getMinStartSize();
-	testModel->getMaxStartSize();
-	testModel->setPathNameTexture("../../Media/triangleEffect.png");
-	testModel->getPosition();
 }
 
 void Robot::update(float deltaTime)
@@ -289,7 +255,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectModel, enemyTriangleHitEffectModel);
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectModel);
 	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
