@@ -56,6 +56,8 @@ public:
 	// new way
 	EffActor* addParticleActor(EffActor* actor, ParticleModel* model, core::vector3df position);
 
+	EffActor* addXMLParticleActor(EffActor* actor, const char* filename, core::vector3df position);
+
 	/**
 	 * Public function to record that an actors has to be removed, this
 	 * actors will be removed from the scene at the end of the execution

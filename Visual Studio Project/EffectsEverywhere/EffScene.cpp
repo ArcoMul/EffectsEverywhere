@@ -144,6 +144,26 @@ EffActor* EffScene::addParticleActor(EffActor* actor, ParticleModel* model, core
 	return actor;
 }
 
+/**
+ * Creates a particle actor based on a XML ParticleModel
+ */
+EffActor* EffScene::addXMLParticleActor(EffActor* actor, const char* filename, core::vector3df position)
+{
+	// Add the actor to the current scene
+	actor = addActor(actor, false);
+
+	// Create the particle system scene node
+	scene::IParticleSystemSceneNode* particleNode = pManager->spawnXMLParticle(filename, position);
+	
+	// Tell the actor which irrlicht node belongs to him
+	actor->setNode ((scene::ISceneNode*) particleNode);
+
+	// Done, tell the actor everything is set and ready
+	actor->start ();
+
+	return actor;
+}
+
 void EffScene::addActorList (core::list<EffActor*>* list)
 {
 	actorLists.push_back(list);
