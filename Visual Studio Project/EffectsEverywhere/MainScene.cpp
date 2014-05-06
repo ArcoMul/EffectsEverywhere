@@ -20,6 +20,7 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 	
+	/*
 	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
 	pModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
@@ -36,6 +37,7 @@ bool MainScene::init(void)
 	pModel->setMaxStartSize(core::dimension2df(9.0f, 9.0f));
 	pModel->setPathNameTexture("../../Media/smoke.png");
 	pModel->setPosition(core::vector3df(2,2,2));
+	*/
 
 	// Create robot actor
 	robot = new Robot ();
@@ -43,7 +45,7 @@ bool MainScene::init(void)
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, pModel, pModel, pModel);
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/levelParticles.xml", "../../Media/Hit_effect.xml", "../../Media/levelParticles.xml");
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");

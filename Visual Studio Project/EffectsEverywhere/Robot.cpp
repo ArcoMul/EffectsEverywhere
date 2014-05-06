@@ -255,7 +255,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectModel);
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML);
 	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
@@ -274,6 +274,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	shootParticleModel->setMinStartSize(core::dimension2df(3.0f, 3.0f));
 	shootParticleModel->setMaxStartSize(core::dimension2df(6.0f, 6.0f));
 	shootParticleModel->setPathNameTexture("../../Media/smoke.png");
+
 	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
 	scene->addParticleActor((EffActor*) shootEffect, shootParticleModel, gun->node->getPosition() + core::vector3df(0,0,-7));
 	shootEffect->node->setParent(mesh->node);
