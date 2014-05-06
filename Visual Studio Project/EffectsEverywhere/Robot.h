@@ -121,7 +121,6 @@ private:
 	float floatSpeed;
 
 	ParticleModel* shootParticleModel;
-	ParticleModel* enemyTriangleHitEffectModel;
 
 	core::vector3df acceleration;
 	float maxAcceleration;

@@ -10,8 +10,6 @@
 #include "Robot.h"
 #include "EffTimer.h"
 #include "TemporaryParticleEffect.h"
-#include <ParticleManager.h>
-#include <ParticleModel.h>
 
 MainScene::MainScene()
 {
@@ -45,7 +43,7 @@ bool MainScene::init(void)
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj",2,0.6,600,pModel,pModel,pModel);
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, pModel, pModel, pModel);
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
@@ -54,22 +52,7 @@ bool MainScene::init(void)
 	floor->setMaterialFlag(EMF_LIGHTING, false);
 
 	// Random particles in the level
-	ParticleModel* levelParticles = new ParticleModel();
-	levelParticles->setEmitterType(ParticleModel::EmitterTypes::BOX);
-	levelParticles->setMinColor(video::SColor(0, 255, 255, 255));
-	levelParticles->setMaxColor(video::SColor(0, 255, 210, 0));
-	levelParticles->setMinPPS(1);
-	levelParticles->setMaxPPS(1.5);
-	levelParticles->setAabbox(core::aabbox3df(-250, 0, -250, 250, 1, 250 ));
-	levelParticles->setDirection(core::vector3df(0.0f, 0.01f, 0.0f));
-	levelParticles->setLifeTimeMax(10000);
-	levelParticles->setLifeTimeMin(10000);
-	levelParticles->setMaxAngleDegrees(0);
-	levelParticles->setMinStartSize(core::dimension2df(1.0f, 1.0f));
-	levelParticles->setMaxStartSize(core::dimension2df(6.0f, 6.0f));
-	levelParticles->setPathNameTexture("../../Media/portal1.bmp");
-	levelParticles->setPosition(core::vector3df(4,2,2));
-	pManager->spawnDataModelParticle(levelParticles ,levelParticles->getPosition() ,levelParticles->getPathNameTexture());
+	pManager->spawnXMLParticle("../../Media/levelParticles.xml", core::vector3df(4,2,2));
 
 	// Create a Triangle selector for the level
 	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);

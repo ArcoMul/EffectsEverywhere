@@ -18,7 +18,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, ParticleModel* enemyHitEffectModel, ParticleModel* enemyTriangleHitEffectModel);
+	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, ParticleModel* enemyHitEffectModel);
 
 	/**
 	 * When the actor is ready apply some material settings to the node
