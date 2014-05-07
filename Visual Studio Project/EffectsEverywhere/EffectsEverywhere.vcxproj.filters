@@ -61,7 +61,9 @@
     <ClInclude Include="EffRepeatable.h">
       <Filter>EffEngine\Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TemporaryParticleEffect.h" />
+    <ClInclude Include="TemporaryParticleEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
