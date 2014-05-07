@@ -77,8 +77,8 @@ bool MainScene::init(void)
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->node->addChild(camera);
 
-	//spawnEnemy ();
-	//timer->repeat(std::bind(&MainScene::spawnEnemy, this), 2);
+	spawnEnemy ();
+	timer->repeat(std::bind(&MainScene::spawnEnemy, this), 2);
 
 	return true;
 }

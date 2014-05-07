@@ -191,8 +191,7 @@ void Robot::addGun(core::stringc gunMesh)
 	gun->node->setParent (mesh->node);
 
 	// Put the gun on the right position
-	// TODO: set right position of the gun
-	gun->node->setPosition(core::vector3df(-6.5, -4, 0));
+	gun->node->setPosition(core::vector3df(-8.5, 7, 0));
 }
 
 void Robot::shoot (core::list<Enemy*>* enemies)
