@@ -6,7 +6,7 @@
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
-Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core::stringc enemyHitEffectXML, core::stringc flyEffectXML)
+Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core::stringc enemyHitEffectXML,float enemyHitEffectLifeTime, core::stringc flyEffectXML, float flyEffectLifeTime)
 {
 	this->enemies = enemies;
 	this->speed = bulletSpeed;
@@ -14,6 +14,8 @@ Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core
 	this->damage = damage;
 	this->enemyHitEffectXML = enemyHitEffectXML;
 	this->flyEffectXML = flyEffectXML;
+	this->enemyHitEffectLifeTime = enemyHitEffectLifeTime;
+	this->flyEffectLifeTime = flyEffectLifeTime;
 }
 
 void Bullet::start ()
@@ -37,7 +39,7 @@ void Bullet::update (float deltaTime)
 		scene->removeActor((EffActor*) this);
 		return;
 	}
-	TemporaryParticleEffect* fly = new TemporaryParticleEffect(200, false);
+	TemporaryParticleEffect* fly = new TemporaryParticleEffect(flyEffectLifeTime, false);
 	scene->addXMLParticleActor(fly,flyEffectXML.c_str(),node->getPosition());
 
 	for(core::list<Enemy*>::Iterator enemy = enemies->begin(); enemy != enemies->end(); enemy++)
@@ -45,7 +47,7 @@ void Bullet::update (float deltaTime)
 		if((*enemy)->node != nullptr && node->getTransformedBoundingBox().intersectsWithBox((*enemy)->node->getTransformedBoundingBox()))
 		{
 			// Spawn a particle effect at the position where we hit something with the bullet
-			TemporaryParticleEffect* p = new TemporaryParticleEffect(400, false);
+			TemporaryParticleEffect* p = new TemporaryParticleEffect(enemyHitEffectLifeTime, false);
 			scene->addXMLParticleActor(p,enemyHitEffectXML.c_str(),node->getPosition());
 
 			// Spawn a second particle effect at the position where we hit something with the bullet

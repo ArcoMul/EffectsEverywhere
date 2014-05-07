@@ -18,7 +18,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, core::stringc enemyHitEffectXML, core::stringc flyEffectXML);
+	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, core::stringc enemyHitEffectXML, float enemyHitEffectLifeTime, core::stringc flyEffectXML, float flyEffectLifeTime);
 
 	/**
 	 * When the actor is ready apply some material settings to the node
@@ -52,11 +52,11 @@ private:
 
 	core::list<Enemy*>* enemies;
 
+
 	core::stringc enemyHitEffectXML;
 	core::stringc flyEffectXML;
-	ParticleModel* enemyTriangleHitEffectModel;
-
-	
+	float enemyHitEffectLifeTime;
+	float flyEffectLifeTime;
 };
 
 #endif

@@ -154,7 +154,9 @@ void Robot::update(float deltaTime)
 	}
 }
 
-void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
+void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, 
+	int damage, float speed, float cooldown, 
+	core::stringc shootEffect, float shootEffectLifeTime, core::stringc enemyHitEffect, float enemyHitEffectLifeTime, core::stringc flyEffect, float flyEffectLifeTime)
 {
 	//Set gun/edit gun
 	if(this->bulletMesh == "null"){
@@ -181,6 +183,10 @@ void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int dama
 	this->shootEffectXML = shootEffect;
 	this->enemyHitEffectXML = enemyHitEffect;
 	this->flyEffectXML = flyEffect;
+	// Set Lifetime
+	this->shootEffectLifeTime = shootEffectLifeTime;
+	this->enemyHitEffectLifeTime = enemyHitEffectLifeTime;
+	this->flyEffectLifeTime = flyEffectLifeTime;
 }
 
 void Robot::addGun(core::stringc gunMesh)
@@ -209,12 +215,12 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML, flyEffectXML);
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML, enemyHitEffectLifeTime, flyEffectXML, flyEffectLifeTime);
 	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
 
-	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
+	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(shootEffectLifeTime, false);
 	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7));
 	shootEffect->node->setParent(mesh->node);
 
