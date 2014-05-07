@@ -6,13 +6,14 @@
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
-Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core::stringc enemyHitEffectModel)
+Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core::stringc enemyHitEffectXML, core::stringc flyEffectXML)
 {
 	this->enemies = enemies;
 	this->speed = bulletSpeed;
 	this->lifeTime = 1000;
 	this->damage = damage;
-	this->enemyHitEffectModel = enemyHitEffectModel;
+	this->enemyHitEffectXML = enemyHitEffectXML;
+	this->flyEffectXML = flyEffectXML;
 }
 
 void Bullet::start ()
@@ -36,6 +37,8 @@ void Bullet::update (float deltaTime)
 		scene->removeActor((EffActor*) this);
 		return;
 	}
+	TemporaryParticleEffect* fly = new TemporaryParticleEffect(200, false);
+	scene->addXMLParticleActor(fly,flyEffectXML.c_str(),node->getPosition());
 
 	for(core::list<Enemy*>::Iterator enemy = enemies->begin(); enemy != enemies->end(); enemy++)
 	{
@@ -43,7 +46,7 @@ void Bullet::update (float deltaTime)
 		{
 			// Spawn a particle effect at the position where we hit something with the bullet
 			TemporaryParticleEffect* p = new TemporaryParticleEffect(400, false);
-			scene->addXMLParticleActor(p,enemyHitEffectModel.c_str(),node->getPosition());
+			scene->addXMLParticleActor(p,enemyHitEffectXML.c_str(),node->getPosition());
 
 			// Spawn a second particle effect at the position where we hit something with the bullet
 			/*TemporaryParticleEffect* pTriangle = new TemporaryParticleEffect(enemyTriangleHitEffectModel->getLifeTimeMax(), false);
@@ -68,6 +71,7 @@ void Bullet::update (float deltaTime)
 		-.015 * deltaTime,
 		mat[0] * -speed * deltaTime);
 	node->setPosition(pos);
+
 }
 
 Bullet::~Bullet(void)
