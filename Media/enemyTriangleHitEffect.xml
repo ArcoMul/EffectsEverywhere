@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="2"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Direction X="0.01" Y="0" Z="0.02"/>
+    <Position X="2" Y="2" Z="2"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="360"/>
+    <LifeTime Max="750" Min="550"/>
+    <PPS Max="80" Min="20"/>
+    <MaxStartColor Alpha="0" Red="0" Blue="0" Green="0"/>
+    <MinStartColor Alpha="0" Red="0" Blue="0" Green="0"/>
+    <MaxStartSize Height="8" Width="8"/>
+    <MinStartSize Height="4" Width="4"/>
+    <Texture PathName="triangleEffect.png"/>
+    <Rest MbNumber="0" NormalDirectionModifier="1.82246e-27" Radius="1.82235e-27" LengthCylinder="1.82229e-27" RingThickness="1.8224e-27" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
+</Particle>
