@@ -228,7 +228,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 
 void Robot::hit (int damage, core::vector3df position)
 {
-	//health -= damage;
+	health -= damage;
 	
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
 	scene->addXMLParticleActor((EffActor*) p, "../../Media/HitEffectR.xml", position);
