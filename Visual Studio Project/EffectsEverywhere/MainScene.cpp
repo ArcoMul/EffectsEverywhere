@@ -12,10 +12,11 @@
 #include "TemporaryParticleEffect.h"
 #include <ParticleManager.h>
 #include <ParticleModel.h>
+#include <StartTime.h>
 
 MainScene::MainScene()
 {
-	
+
 }
 
 bool MainScene::init(void)

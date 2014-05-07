@@ -7,6 +7,7 @@
 #include "EffScene.h"
 #include <ParticleManager.h>
 #include <ParticleModel.h>
+#include <StartTime.h>
 
 using namespace irr;
 
