@@ -9,10 +9,10 @@
     <AngleDegrees Max="15"/>
     <LifeTime Max="1400" Min="1000"/>
     <PPS Max="200" Min="50"/>
-    <MaxStartColor Alpha="255" Red="77" Blue="3" Green="50"/>
+    <MaxStartColor Alpha="255" Red="61" Blue="0" Green="30"/>
     <MinStartColor Alpha="255" Red="140" Blue="140" Green="140"/>
-    <MaxStartSize Height="1.5" Width="1.5"/>
-    <MinStartSize Height="1" Width="1"/>
+    <MaxStartSize Height="3" Width="3"/>
+    <MinStartSize Height="2" Width="2"/>
     <Texture PathName="smoke3.jpg"/>
-    <Rest MbNumber="-842150451" NormalDirectionModifier="-4.31602e+08" Radius="-4.31602e+08" LengthCylinder="-4.31602e+08" RingThickness="-4.31602e+08" UseNormalDirection="205" EveryMeshVertex="205" OutLineOnly="205"/>
+    <Rest MbNumber="-842150451" NormalDirectionModifier="-4.31602e+08" Radius="-4.31602e+08" LengthCylinder="-4.31602e+08" RingThickness="-4.31602e+08" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
 </Particle>
