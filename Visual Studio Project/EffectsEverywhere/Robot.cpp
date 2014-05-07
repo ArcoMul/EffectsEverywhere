@@ -183,35 +183,6 @@ void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int dama
 	this->flyEffectXML = flyEffect;
 }
 
-void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
-{
-	//Set gun/edit gun
-	if(this->bulletMesh == "null"){
-		addGun(gunMesh);
-	}else
-	{
-		scene->removeActor((EffActor*) gun);
-		addGun(gunMesh);
-	}
-
-	// Set default cooldown
-	this->shootCooldown = cooldown;
-
-	// Set default bulletMesh
-	this->bulletMesh = bulletMesh;
-	
-	// Set default damage
-	this->bulletDamage = damage;
-	
-	// Set default speed
-	this->bulletSpeed = speed;
-
-	// Set the effects
-	this->shootEffectModel = shootEffect;
-	this->enemyHitEffectModel = enemyHitEffect;
-	this->flyEffectModel = flyEffect;
-}
-
 void Robot::addGun(core::stringc gunMesh)
 {
 	// Create gun actor
