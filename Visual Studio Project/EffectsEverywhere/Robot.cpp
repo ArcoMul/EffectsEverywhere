@@ -193,7 +193,8 @@ void Robot::addGun(core::stringc gunMesh)
 	// Put the gun on the right position
 	core::matrix4 mat = node->getAbsoluteTransformation();
 	core::vector3df right = core::vector3df(-mat[0], 0, -mat[2]);
-	gun->node->setPosition(node->getPosition() + (right * 8.5) - core::vector3df(0, 4, 0));
+	gun->node->setPosition(node->getPosition() + (right * 8.5)- core::vector3df(0, 4, 0));
+	
 }
 
 void Robot::shoot (core::list<Enemy*>* enemies)

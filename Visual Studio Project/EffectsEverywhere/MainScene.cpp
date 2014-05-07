@@ -77,8 +77,8 @@ bool MainScene::init(void)
 	camera->setRotation(vector3df(0, 180, 0));
 	robot->node->addChild(camera);
 
-	spawnEnemy ();
-	timer->repeat(std::bind(&MainScene::spawnEnemy, this), 2);
+	//spawnEnemy ();
+	//timer->repeat(std::bind(&MainScene::spawnEnemy, this), 2);
 
 	return true;
 }
@@ -111,6 +111,15 @@ void MainScene::update(float deltaTime)
 	if (getInput()->IsKeyDown(irr::KEY_SPACE))
 	{
 		robot->shoot(&enemies);
+	}
+
+	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
+	{
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml", "../../Media/HitEffectE.xml", "../../Media/levelParticles.xml");
+	}
+	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
+	{
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml", "../../Media/HitEffectE2.xml", "../../Media/levelParticles.xml");
 	}
 
 	// Check if there was collision with an enemy
