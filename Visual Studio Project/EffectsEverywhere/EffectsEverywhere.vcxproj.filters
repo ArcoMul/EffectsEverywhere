@@ -52,9 +52,6 @@
     <ClInclude Include="Robot.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TemporaryParticleEffect.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="Gun.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -64,6 +61,7 @@
     <ClInclude Include="EffRepeatable.h">
       <Filter>EffEngine\Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="TemporaryParticleEffect.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

@@ -120,8 +120,6 @@ private:
 	 */
 	float floatSpeed;
 
-	ParticleModel* shootParticleModel;
-
 	core::vector3df acceleration;
 	float maxAcceleration;
 	float damping;

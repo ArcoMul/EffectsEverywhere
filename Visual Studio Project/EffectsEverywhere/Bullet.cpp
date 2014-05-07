@@ -42,7 +42,7 @@ void Bullet::update (float deltaTime)
 		if((*enemy)->node != nullptr && node->getTransformedBoundingBox().intersectsWithBox((*enemy)->node->getTransformedBoundingBox()))
 		{
 			// Spawn a particle effect at the position where we hit something with the bullet
-			TemporaryParticleEffect* p = new TemporaryParticleEffect(2, false);
+			TemporaryParticleEffect* p = new TemporaryParticleEffect(400, false);
 			scene->addXMLParticleActor(p,enemyHitEffectModel.c_str(),node->getPosition());
 
 			// Spawn a second particle effect at the position where we hit something with the bullet

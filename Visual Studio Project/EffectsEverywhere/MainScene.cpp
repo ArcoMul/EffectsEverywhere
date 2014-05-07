@@ -20,32 +20,13 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 	
-	/*
-	// Hit effect on the robot it is passed to the robot and then to the bullet
-	ParticleModel* pModel = new ParticleModel();
-	pModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
-	pModel->setMinColor(video::SColor(0,180,180,180));
-	pModel->setMaxColor(video::SColor(0, 255, 255, 255));
-	pModel->setMinPPS(50);
-	pModel->setMaxPPS(200);
-	pModel->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	pModel->setDirection(core::vector3df(0.02f, 0.0f, 0.0f));
-	pModel->setLifeTimeMax(400);
-	pModel->setLifeTimeMin(350);
-	pModel->setMaxAngleDegrees(360);
-	pModel->setMinStartSize(core::dimension2df(4.5f, 4.5f));
-	pModel->setMaxStartSize(core::dimension2df(9.0f, 9.0f));
-	pModel->setPathNameTexture("../../Media/smoke.png");
-	pModel->setPosition(core::vector3df(2,2,2));
-	*/
-
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/levelParticles.xml", "../../Media/Hit_effect.xml", "../../Media/levelParticles.xml");
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml", "../../Media/HitEffectE.xml", "../../Media/levelParticles.xml");
 	
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
