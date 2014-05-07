@@ -6,7 +6,7 @@
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
-Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, ParticleModel* enemyHitEffectModel)
+Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core::stringc enemyHitEffectModel)
 {
 	this->enemies = enemies;
 	this->speed = bulletSpeed;
@@ -42,8 +42,8 @@ void Bullet::update (float deltaTime)
 		if((*enemy)->node != nullptr && node->getTransformedBoundingBox().intersectsWithBox((*enemy)->node->getTransformedBoundingBox()))
 		{
 			// Spawn a particle effect at the position where we hit something with the bullet
-			TemporaryParticleEffect* p = new TemporaryParticleEffect(enemyHitEffectModel->getLifeTimeMax(), false);
-			scene->addParticleActor(p,enemyHitEffectModel,node->getPosition());
+			TemporaryParticleEffect* p = new TemporaryParticleEffect(400, false);
+			scene->addXMLParticleActor(p,enemyHitEffectModel.c_str(),node->getPosition());
 
 			// Spawn a second particle effect at the position where we hit something with the bullet
 			/*TemporaryParticleEffect* pTriangle = new TemporaryParticleEffect(enemyTriangleHitEffectModel->getLifeTimeMax(), false);

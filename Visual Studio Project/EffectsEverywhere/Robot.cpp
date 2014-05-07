@@ -50,22 +50,7 @@ void Robot::start ()
 
 	// Effect of fire beneath robot
 	// TODO: base rotation of effect on rotation of robot
-	ParticleModel* floatEffect = new ParticleModel();
-	floatEffect->setEmitterType(ParticleModel::EmitterTypes::BOX);
-	floatEffect->setMinColor(video::SColor(255, 69, 183, 255));
-	floatEffect->setMaxColor(video::SColor(255, 69, 183, 255));
-	floatEffect->setMinPPS(150);
-	floatEffect->setMaxPPS(200);
-	floatEffect->setAabbox(core::aabbox3df(-1.5, 0, -1.5, 1.5, 1.5, 1.5 ));
-	floatEffect->setDirection(core::vector3df(0.0f, -0.05f, 0.0f));
-	floatEffect->setLifeTimeMax(25);
-	floatEffect->setLifeTimeMin(10);
-	floatEffect->setMaxAngleDegrees(0);
-	floatEffect->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	floatEffect->setMaxStartSize(core::dimension2df(4.0f, 4.0f));
-	floatEffect->setPathNameTexture("../../Media/floatingRobot.png");
-	floatEffect->setPosition(core::vector3df(0,-4,0));
-	EffActor* a = scene->addParticleActor(new EffActor(), floatEffect, floatEffect->getPosition());
+	EffActor* a = scene->addXMLParticleActor(new EffActor(),"../../Media/floatEffect.xml", core::vector3df(0,-4,0));
 	a->node->setParent(mesh->node);
 }
 
@@ -198,35 +183,6 @@ void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int dama
 	this->flyEffectXML = flyEffect;
 }
 
-void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage, float speed, float cooldown,ParticleModel* shootEffect, ParticleModel* enemyHitEffect, ParticleModel* flyEffect)
-{
-	//Set gun/edit gun
-	if(this->bulletMesh == "null"){
-		addGun(gunMesh);
-	}else
-	{
-		scene->removeActor((EffActor*) gun);
-		addGun(gunMesh);
-	}
-
-	// Set default cooldown
-	this->shootCooldown = cooldown;
-
-	// Set default bulletMesh
-	this->bulletMesh = bulletMesh;
-	
-	// Set default damage
-	this->bulletDamage = damage;
-	
-	// Set default speed
-	this->bulletSpeed = speed;
-
-	// Set the effects
-	this->shootEffectModel = shootEffect;
-	this->enemyHitEffectModel = enemyHitEffect;
-	this->flyEffectModel = flyEffect;
-}
-
 void Robot::addGun(core::stringc gunMesh)
 {
 	// Create gun actor
@@ -255,27 +211,13 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectModel);
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML);
 	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
 
-	// Create a shoot effect
-	shootParticleModel = new ParticleModel();
-	shootParticleModel->setEmitterType(ParticleModel::EmitterTypes::POINT);
-	shootParticleModel->setMinColor(video::SColor(0,180,180,180));
-	shootParticleModel->setMaxColor(video::SColor(0, 255, 255, 255));
-	shootParticleModel->setMinPPS(50);
-	shootParticleModel->setMaxPPS(200);
-	shootParticleModel->setDirection(core::vector3df(0.05f, 0.0f, 0.0f));
-	shootParticleModel->setLifeTimeMax(750);
-	shootParticleModel->setLifeTimeMin(500);
-	shootParticleModel->setMaxAngleDegrees(360);
-	shootParticleModel->setMinStartSize(core::dimension2df(3.0f, 3.0f));
-	shootParticleModel->setMaxStartSize(core::dimension2df(6.0f, 6.0f));
-	shootParticleModel->setPathNameTexture("../../Media/smoke.png");
 	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(130, false);
-	scene->addParticleActor((EffActor*) shootEffect, shootParticleModel, gun->node->getPosition() + core::vector3df(0,0,-7));
+	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7));
 	shootEffect->node->setParent(mesh->node);
 
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) shootEffect->node;
@@ -287,23 +229,10 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 void Robot::hit (int damage, core::vector3df position)
 {
 	health -= damage;
-
-	ParticleModel* hitEffect = new ParticleModel();
-	hitEffect->setEmitterType(ParticleModel::EmitterTypes::BOX);
-	hitEffect->setMinColor(video::SColor(0, 255, 255, 255));
-	hitEffect->setMaxColor(video::SColor(0, 255, 255, 255));
-	hitEffect->setMinPPS(50);
-	hitEffect->setMaxPPS(200);
-	hitEffect->setAabbox(core::aabbox3df(-3, 0, -3, 3, 1, 3 ));
-	hitEffect->setDirection(core::vector3df(0.0f, 0.1f, 0.0f));
-	hitEffect->setLifeTimeMax(750);
-	hitEffect->setLifeTimeMin(500);
-	hitEffect->setMaxAngleDegrees(0);
-	hitEffect->setMinStartSize(core::dimension2df(4.0f, 4.0f));
-	hitEffect->setMaxStartSize(core::dimension2df(8.0f, 8.0f));
-	hitEffect->setPathNameTexture("../../Media/portal1.bmp");
+	
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
-	scene->addParticleActor((EffActor*) p, hitEffect, position);
+	scene->addXMLParticleActor((EffActor*) p, "../../Media/HitEffectR.xml", position);
+
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) p->node;
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
 	particleNode->addAffector(affector);
