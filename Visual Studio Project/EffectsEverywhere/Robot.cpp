@@ -211,7 +211,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
-	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML);
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML, flyEffectXML);
 	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
 
 	gun->shoot();
@@ -228,7 +228,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 
 void Robot::hit (int damage, core::vector3df position)
 {
-	health -= damage;
+	//health -= damage;
 	
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
 	scene->addXMLParticleActor((EffActor*) p, "../../Media/HitEffectR.xml", position);
