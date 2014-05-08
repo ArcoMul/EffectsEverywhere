@@ -9,6 +9,7 @@
 using namespace irr;
 
 class Enemy;
+class TemporaryParticleEffect;
 
 class Bullet : public EffActor
 {
@@ -56,7 +57,7 @@ private:
 	core::stringc flyEffectXML;
 	ParticleModel* enemyTriangleHitEffectModel;
 
-	
+	TemporaryParticleEffect* trailEffect;
 };
 
 #endif
