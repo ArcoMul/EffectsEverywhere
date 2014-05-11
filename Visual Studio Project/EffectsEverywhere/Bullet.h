@@ -9,6 +9,7 @@
 using namespace irr;
 
 class Enemy;
+class TemporaryParticleEffect;
 
 class Bullet : public EffActor
 {
@@ -18,7 +19,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, ParticleModel* enemyHitEffectModel, ParticleModel* enemyTriangleHitEffectModel);
+	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, core::stringc enemyHitEffectXML, core::stringc flyEffectXML);
 
 	/**
 	 * When the actor is ready apply some material settings to the node
@@ -52,10 +53,11 @@ private:
 
 	core::list<Enemy*>* enemies;
 
-	ParticleModel* enemyHitEffectModel;
+	core::stringc enemyHitEffectXML;
+	core::stringc flyEffectXML;
 	ParticleModel* enemyTriangleHitEffectModel;
 
-	
+	TemporaryParticleEffect* trailEffect;
 };
 
 #endif

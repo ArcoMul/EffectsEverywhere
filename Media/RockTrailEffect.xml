@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="1"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Direction X="0" Y="0" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="0"/>
+    <LifeTime Max="500" Min="500"/>
+    <PPS Max="200" Min="50"/>
+    <MaxStartColor Alpha="255" Red="0" Green="0" Blue="0"/>
+    <MinStartColor Alpha="255" Red="195" Green="195" Blue="195"/>
+    <MaxStartSize Height="3" Width="3"/>
+    <MinStartSize Height="2" Width="2"/>
+    <Texture PathName="bullet-trail.png"/>
+    <Rest MbNumber="-842150451" NormalDirectionModifier="-4.31602e+08" Radius="-4.31602e+08" LengthCylinder="-4.31602e+08" RingThickness="-4.31602e+08" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
+    <Affectors/>
+</Particle>

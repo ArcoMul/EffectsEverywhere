@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="1"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Direction X="0" Y="0.01" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="360"/>
+    <LifeTime Max="290" Min="300"/>
+    <PPS Max="90" Min="100"/>
+    <MaxStartColor Alpha="255" Red="0" Blue="0" Green="173"/>
+    <MinStartColor Alpha="255" Red="85" Blue="0" Green="255"/>
+    <MaxStartSize Height="1.5" Width="1.5"/>
+    <MinStartSize Height="1" Width="1"/>
+    <Texture PathName="portal3.bmp"/>
+    <Rest MbNumber="-842150451" NormalDirectionModifier="-4.31602e+08" Radius="-4.31602e+08" LengthCylinder="-4.31602e+08" RingThickness="-4.31602e+08" UseNormalDirection="205" EveryMeshVertex="205" OutLineOnly="205"/>
+</Particle>
