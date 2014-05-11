@@ -20,9 +20,9 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 
-	ParticleModel* testAffectorModel = new ParticleModel();
-	testAffectorModel->setPathNameTexture("../../Media/smoke.png");
-	pManager->spawnDataModelParticle(testAffectorModel ,testAffectorModel->getPosition() ,testAffectorModel->getPathNameTexture());
+	
+	//pManager->spawnXMLParticle("../../Media/affectortest.xml", core::vector3df(0,0,0));
+
 	
 	// Create robot actor
 	robot = new Robot ();
