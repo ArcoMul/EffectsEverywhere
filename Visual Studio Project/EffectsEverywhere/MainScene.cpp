@@ -12,7 +12,6 @@
 #include "TemporaryParticleEffect.h"
 #include <ParticleManager.h>
 #include <ParticleModel.h>
-#include <StartTime.h>
 
 MainScene::MainScene()
 {
@@ -22,6 +21,10 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
+
+	ParticleModel* testAffectorModel = new ParticleModel();
+	testAffectorModel->setPathNameTexture("../../Media/smoke.png");
+	pManager->spawnDataModelParticle(testAffectorModel ,testAffectorModel->getPosition() ,testAffectorModel->getPathNameTexture());
 	
 	// Hit effect on the robot it is passed to the robot and then to the bullet
 	ParticleModel* pModel = new ParticleModel();
