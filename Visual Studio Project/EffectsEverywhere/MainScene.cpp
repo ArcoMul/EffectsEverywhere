@@ -30,8 +30,8 @@ bool MainScene::init(void)
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml", "../../Media/HitEffectE.xml", "../../Media/RockTrailEffect.xml");
-	
+	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",130 , "../../Media/HitEffectE.xml",400 , "../../Media/RockTrailEffect.xml",200 );
+
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
 	scene::IMeshSceneNode* floor = manager->addMeshSceneNode(floorMesh);
@@ -115,6 +115,15 @@ void MainScene::update(float deltaTime)
 	if (getInput()->IsKeyDown(irr::KEY_SPACE))
 	{
 		robot->shoot(&enemies);
+	}
+
+	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
+	{
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
+	}
+	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
+	{
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/ToxicTrailEffect.xml",4000, "../../Media/RockTrailEffect.xml",200);
 	}
 
 	// Check if there was collision with an enemy
