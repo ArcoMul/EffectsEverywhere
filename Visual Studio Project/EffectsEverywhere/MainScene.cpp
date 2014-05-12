@@ -20,10 +20,6 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 
-	
-	//pManager->spawnXMLParticle("../../Media/affectortest.xml", core::vector3df(0,0,0));
-
-	
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
@@ -123,7 +119,7 @@ void MainScene::update(float deltaTime)
 	}
 	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/ToxicTrailEffect.xml",4000, "../../Media/RockTrailEffect.xml",200);
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 800, "../../Media/ToxicShootEffect.xml",800, "../../Media/ToxicHitEffect.xml",250, "../../Media/ToxicTrailEffect.xml",400);
 	}
 
 	// Check if there was collision with an enemy
