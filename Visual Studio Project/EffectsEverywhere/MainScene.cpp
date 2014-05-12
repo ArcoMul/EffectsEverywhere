@@ -119,7 +119,7 @@ void MainScene::update(float deltaTime)
 	}
 	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 800, "../../Media/ToxicShootEffect.xml",800, "../../Media/ToxicHitEffect.xml",250, "../../Media/ToxicTrailEffect.xml",400);
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 800, "../../Media/ToxicShootEffect.xml",800, "../../Media/ToxicHitEffect.xml",250, "../../Media/ToxicTrailEffect.xml",200);
 	}
 
 	// Check if there was collision with an enemy

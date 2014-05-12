@@ -223,9 +223,9 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(shootEffectLifeTime, false);
 	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7));
 	shootEffect->node->setParent(mesh->node);
-	//shootEffect->node->setMaterialType(video::EMT_ONETEXTURE_BLEND);
-	//shootEffect->node->getMaterial(0).MaterialTypeParam = video::pack_textureBlendFunc (video::EBF_SRC_ALPHA, video::EBF_ONE_MINUS_SRC_ALPHA,
-                                                 //   video::EMFN_MODULATE_1X, video::EAS_TEXTURE | video::EAS_VERTEX_COLOR);
+	/*shootEffect->node->setMaterialType(video::EMT_ONETEXTURE_BLEND);
+	shootEffect->node->getMaterial(0).MaterialTypeParam = video::pack_textureBlendFunc (video::EBF_SRC_ALPHA, video::EBF_ONE_MINUS_SRC_ALPHA,
+                                                    video::EMFN_MODULATE_1X, video::EAS_TEXTURE | video::EAS_VERTEX_COLOR);*/
 
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) shootEffect->node;
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
