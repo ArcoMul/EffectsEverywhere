@@ -115,7 +115,7 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",200, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
 	}
 	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
