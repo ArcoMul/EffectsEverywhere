@@ -89,6 +89,8 @@ void MainScene::spawnEnemy (void)
 
 	// Create enemy
 	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
+	this->addXMLParticleActor((EffActor*) p, "../../Media/enemySpawnParticle.xml", core::vector3df(120, 0, -113));
 
 	// Add to enemy list
 	enemies.push_back(enemy);
