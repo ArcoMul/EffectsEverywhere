@@ -240,8 +240,8 @@ void Robot::hit (int damage, core::vector3df position)
 {
 	health -= damage;
 	
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
-	scene->addXMLParticleActor((EffActor*) p, "../../Media/HitEffectR.xml", position);
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(400);
+	scene->addXMLParticleActor((EffActor*) p, "../../Media/playerHitEffect.xml", position + core::vector3df(0,12,-5));
 
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) p->node;
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
