@@ -225,6 +225,21 @@ void EffScene::setManager(scene::ISceneManager* manager)
 	this->manager = manager;
 }
 
+void EffScene::setGUI (gui::IGUIEnvironment* gui)
+{
+	this->gui = gui;
+}
+
+float EffScene::getDriverWidth()
+{
+	return engine->driver->getViewPort().getWidth();
+}
+
+float EffScene::getDriverHeight()
+{
+	return engine->driver->getViewPort().getHeight();
+}
+
 video::ITexture* EffScene::getTexture (core::stringc pathname)
 {
 	return engine->driver->getTexture(pathname);

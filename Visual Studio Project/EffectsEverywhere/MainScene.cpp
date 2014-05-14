@@ -37,6 +37,16 @@ bool MainScene::init(void)
 	// Random particles in the level
 	pManager->spawnXMLParticle("../../Media/levelParticles.xml", core::vector3df(4,2,2));
 
+	IGUISkin* skin = gui->getSkin();
+	IGUIFont* font = gui->getFont("../../media/fonthaettenschweiler.bmp");
+	if (font)
+		skin->setFont(font);
+
+	skin->setFont(gui->getBuiltInFont(), EGDF_TOOLTIP);
+	gui->addImage(this->getTexture("../../Media/irrlichtlogo2.png"),
+		core::position2d<int>(this->getDriverWidth()- 200, this->getDriverHeight()-200));
+	gui->addStaticText(L"Yolo Swaggerino:", rect<s32>(150,20,350,40), true);
+
 	// Create a Triangle selector for the level
 	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
 	floor->setTriangleSelector(levelSelector);

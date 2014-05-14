@@ -39,6 +39,7 @@ public:
 
 	IVideoDriver* driver;
 	IrrlichtDevice* device;
+	IGUIEnvironment* gui;
 
 private:
 
