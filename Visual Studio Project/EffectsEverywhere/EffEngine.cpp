@@ -135,18 +135,9 @@ void EffEngine::switchScene (EffScene* scene)
 {
 	delete activeEffScene;
 	smgr->clear();
-
-	// Keep track of the active scene
-	activeEffScene = scene;
-
-	activeEffScene->setEngine (this);
-	activeEffScene->setManager (smgr);
-
-	// Initialize the new scene
-	activeEffScene->init ();
+	gui->clear();
+    setScene (scene);
 }
-
-
 
 EffEngine::~EffEngine(void)
 {
