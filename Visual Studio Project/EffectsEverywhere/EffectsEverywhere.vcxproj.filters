@@ -26,6 +26,7 @@
     <ClCompile Include="EffRepeatable.cpp">
       <Filter>EffEngine</Filter>
     </ClCompile>
+    <ClCompile Include="StartScene.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -62,6 +63,9 @@
       <Filter>EffEngine\Header Files</Filter>
     </ClInclude>
     <ClInclude Include="TemporaryParticleEffect.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="StartScene.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
