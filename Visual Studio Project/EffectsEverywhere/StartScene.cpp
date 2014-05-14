@@ -25,7 +25,22 @@ bool StartScene::init(void)
 	// Set mouse Visible to false
 	setMouseVisible(true);
 	
+	IGUISkin* skin = gui->getSkin();
+	IGUIFont* font = gui->getFont("../../media/fonthaettenschweiler.bmp");
+	if (font)
+		skin->setFont(font);
+	skin->setFont(gui->getBuiltInFont(), EGDF_TOOLTIP);
 	
+	gui->addStaticText(L"Yolo Swaggerino:", rect<s32>(150,20,350,40), false);
+
+	//gui->addImage(this->getTexture("../../Media/irrlichtlogo2.png"),
+	//	core::position2d<int>(this->getDriverWidth()- 200, this->getDriverHeight()-200));
+
+	gui->addButton(rect<s32>(300,300,500,350));
+	gui->addButton(rect<s32>(300,400,500,450));
+	gui->addButton(rect<s32>(300,500,500,550), 0, GUI_ID_QUIT_BUTTON,
+            L"Quit", L"Exits Program");
+
 	// Add the camera node to the scene
 	camera = manager->addCameraSceneNode();
 
