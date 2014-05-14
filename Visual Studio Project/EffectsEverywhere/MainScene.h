@@ -30,6 +30,8 @@ public:
 	~MainScene(void);
 
 	void spawnEnemy(void);
+
+	void createHUD(void);
 	
 private:
 
