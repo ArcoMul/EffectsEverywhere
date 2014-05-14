@@ -154,19 +154,18 @@ void Robot::update(float deltaTime)
 	}
 }
 
-void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh, 
+void Robot::setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core::stringc bulletMesh, core::vector3df bulletOffset,
 	int damage, float speed, float cooldown, 
 	core::stringc shootEffect, float shootEffectLifeTime, core::stringc enemyHitEffect, float enemyHitEffectLifeTime, core::stringc flyEffect, float flyEffectLifeTime)
 {
 	//Set gun/edit gun
-	if(this->bulletMesh == "null"){
-		addGun(gunMesh);
-	}else
-	{
+	if(this->bulletMesh != "null") {
 		scene->removeActor((EffActor*) gun);
-		addGun(gunMesh);
 	}
+	addGun(gunMesh, gunPosition);
 	
+	this->bulletOffset = bulletOffset;
+
 	// Set default cooldown
 	this->shootCooldown = cooldown;
 
@@ -189,7 +188,7 @@ void Robot::setWeapon (core::stringc gunMesh, core::stringc bulletMesh,
 	this->flyEffectLifeTime = flyEffectLifeTime;
 }
 
-void Robot::addGun(core::stringc gunMesh)
+void Robot::addGun(core::stringc gunMesh, core::vector3df position)
 {
 	// Create gun actor
 	gun = new Gun();
@@ -197,7 +196,7 @@ void Robot::addGun(core::stringc gunMesh)
 	gun->node->setParent (mesh->node);
 
 	// Put the gun on the right position
-	gun->node->setPosition(core::vector3df(-8.5, 7, 0));
+	gun->node->setPosition(position);
 }
 
 void Robot::shoot (core::list<Enemy*>* enemies)
@@ -216,12 +215,12 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 
 	// Create bullet actor with the right position and rotation
 	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML, enemyHitEffectLifeTime, flyEffectXML, flyEffectLifeTime);
-	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition(), node->getRotation());
+	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition() + bulletOffset, node->getRotation());
 
 	gun->shoot();
 
 	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(shootEffectLifeTime, false);
-	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7));
+	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7) + bulletOffset);
 	shootEffect->node->setParent(mesh->node);
 	
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) shootEffect->node;

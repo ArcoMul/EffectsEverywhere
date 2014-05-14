@@ -32,7 +32,7 @@ public:
 	/**
 	 * Add gun and bullet 
 	 */
-	void setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
+	void setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core::stringc bulletMesh, core::vector3df bulletOffset, int damage,
 		float speed, float cooldown, core::stringc shootEffect,float shootEffectLifeTime,
 		core::stringc enemyHitEffect,float enemyHitEffectLifeTime, core::stringc flyEffect, float flyEffectLifeTime);
 	
@@ -59,7 +59,7 @@ private:
 	/**
 	 * Add gun
 	 */
-	void addGun(core::stringc gunMesh);
+	void addGun(core::stringc gunMesh, core::vector3df position);
 
 	/**
 	 * URL XMLs of the weapon effects
@@ -94,6 +94,8 @@ private:
 	 * Bullet speed
 	 */
 	float bulletSpeed;
+
+	core::vector3df bulletOffset;
 
 	/**
 	 * Counter to keep track of the shoot cooldown
