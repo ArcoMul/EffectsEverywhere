@@ -31,6 +31,10 @@ bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, boo
 	smgr = device->getSceneManager();
 	if (!smgr) return false;
 
+	// create the gui
+	gui = device->getGUIEnvironment();
+	if(!gui) return false;
+
 	// Get the start time of the engine
 	this->startTime = device->getTimer()->getTime();
 	this->lastFrameTime = device->getTimer()->getTime();
@@ -111,6 +115,7 @@ void EffEngine::draw (void)
 {
 	// Draw all objects in the Irrlicht Scene Manager
 	smgr->drawAll();
+	gui->drawAll();
 }
 
 void EffEngine::setScene (EffScene* scene)
@@ -120,6 +125,7 @@ void EffEngine::setScene (EffScene* scene)
 
 	activeEffScene->setEngine (this);
 	activeEffScene->setManager (smgr);
+	activeEffScene->setGUI (gui);
 
 	// Initialize the new scene
 	activeEffScene->init ();

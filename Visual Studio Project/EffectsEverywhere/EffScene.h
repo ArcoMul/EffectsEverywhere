@@ -87,6 +87,16 @@ public:
 	 */
 	void setManager (scene::ISceneManager* manager);
 
+	/**
+	 * Sets the irrlicht gui manager to this scene
+	 */
+	void setGUI (gui::IGUIEnvironment* gui);
+
+
+	float getDriverWidth();
+
+	float getDriverHeight();
+
 	// Get which keys are pressed
 	// TODO: make special input class, done use the code from the engine
 	InputReceiver* getInput(void);
@@ -127,6 +137,7 @@ protected:
 	// The Irrlicht scene manager used to spawn object in the scene
 	scene::ISceneManager* manager;
 	ParticleManager* pManager;
+	gui::IGUIEnvironment* gui;
 
 	EffTimer* timer;
 

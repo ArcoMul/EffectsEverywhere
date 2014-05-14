@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="7"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Direction X="0.005" Y="0" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="360"/>
+    <LifeTime Max="1000" Min="600"/>
+    <PPS Max="200" Min="50"/>
+    <MaxStartColor Alpha="255" Red="5" Green="255" Blue="1"/>
+    <MinStartColor Alpha="255" Red="30" Green="255" Blue="5"/>
+    <MaxStartSize Height="3" Width="3"/>
+    <MinStartSize Height="2" Width="2"/>
+    <Texture PathName="smoke2.jpg"/>
+    <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="10" LengthCylinder="10" RingThickness="0" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
+    <Affectors>
+        <SCALE>
+            <ScaleAffectorScaleTo Height="4" Width="4"/>
+        </SCALE>
+        <FADE_OUT>
+            <FadeOutAffectorTargetColor Alpha="255" Red="102" Green="253" Blue="1"/>
+            <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="500"/>
+        </FADE_OUT>
+    </Affectors>
+</Particle>

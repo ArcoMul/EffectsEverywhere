@@ -13,13 +13,13 @@
 
 MainScene::MainScene()
 {
-	
+
 }
 
 bool MainScene::init(void)
 {
 	EffScene::init ();
-	
+
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
@@ -36,6 +36,16 @@ bool MainScene::init(void)
 
 	// Random particles in the level
 	pManager->spawnXMLParticle("../../Media/levelParticles.xml", core::vector3df(4,2,2));
+
+	IGUISkin* skin = gui->getSkin();
+	IGUIFont* font = gui->getFont("../../media/fonthaettenschweiler.bmp");
+	if (font)
+		skin->setFont(font);
+
+	skin->setFont(gui->getBuiltInFont(), EGDF_TOOLTIP);
+	gui->addImage(this->getTexture("../../Media/irrlichtlogo2.png"),
+		core::position2d<int>(this->getDriverWidth()- 200, this->getDriverHeight()-200));
+	gui->addStaticText(L"Yolo Swaggerino:", rect<s32>(150,20,350,40), true);
 
 	// Create a Triangle selector for the level
 	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
@@ -90,6 +100,10 @@ void MainScene::spawnEnemy (void)
 	// Create enemy
 	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
 
+	// Create spawn particle effect
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
+	this->addXMLParticleActor((EffActor*) p, "../../Media/purpleEnemySpawnEffect.xml", core::vector3df(120, 0, -113));
+
 	// Add to enemy list
 	enemies.push_back(enemy);
 
@@ -115,11 +129,11 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",200, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
 	}
 	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/ToxicTrailEffect.xml",4000, "../../Media/RockTrailEffect.xml",200);
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 800, "../../Media/ToxicShootEffect.xml",800, "../../Media/ToxicHitEffect.xml",250, "../../Media/ToxicTrailEffect.xml",200);
 	}
 
 	// Check if there was collision with an enemy
