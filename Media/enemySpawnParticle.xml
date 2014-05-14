@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="6"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Direction X="0" Y="0.01" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="0"/>
+    <LifeTime Max="150" Min="130"/>
+    <PPS Max="30" Min="50"/>
+    <MaxStartColor Alpha="255" Red="255" Green="170" Blue="33"/>
+    <MinStartColor Alpha="255" Red="251" Green="255" Blue="0"/>
+    <MaxStartSize Height="2" Width="2"/>
+    <MinStartSize Height="1" Width="1"/>
+    <Texture PathName="smoke.png"/>
+    <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="20" LengthCylinder="0" RingThickness="2" UseNormalDirection="244" EveryMeshVertex="246" OutLineOnly="1"/>
+    <Affectors>
+        <FADE_OUT>
+            <FadeOutAffectorTargetColor Alpha="255" Red="250" Green="0" Blue="4"/>
+            <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="300"/>
+        </FADE_OUT>
+        <SCALE>
+            <ScaleAffectorScaleTo Height="4" Width="1.5"/>
+        </SCALE>
+        <GRAVITY>
+            <GravityAffectorGravity X="0" Y="3" Z="0"/>
+            <GRAVITY_Rest GravityAffectorTimeForceLost="1000"/>
+        </GRAVITY>
+    </Affectors>
+</Particle>

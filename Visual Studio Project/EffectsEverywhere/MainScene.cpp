@@ -13,13 +13,13 @@
 
 MainScene::MainScene()
 {
-	
+
 }
 
 bool MainScene::init(void)
 {
 	EffScene::init ();
-	
+
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
@@ -90,6 +90,10 @@ void MainScene::spawnEnemy (void)
 	// Create enemy
 	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
 
+	// Create spawn particle effect
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
+	this->addXMLParticleActor((EffActor*) p, "../../Media/purpleEnemySpawnEffect.xml", core::vector3df(120, 0, -113));
+
 	// Add to enemy list
 	enemies.push_back(enemy);
 
@@ -115,11 +119,11 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",200, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
 	}
 	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 600, "../../Media/shootParticle.xml",130, "../../Media/ToxicTrailEffect.xml",4000, "../../Media/RockTrailEffect.xml",200);
+		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 800, "../../Media/ToxicShootEffect.xml",800, "../../Media/ToxicHitEffect.xml",250, "../../Media/ToxicTrailEffect.xml",200);
 	}
 
 	// Check if there was collision with an enemy

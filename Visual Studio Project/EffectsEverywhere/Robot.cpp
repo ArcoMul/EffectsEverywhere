@@ -223,7 +223,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(shootEffectLifeTime, false);
 	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7));
 	shootEffect->node->setParent(mesh->node);
-
+	
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) shootEffect->node;
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
 	particleNode->addAffector(affector);
@@ -234,8 +234,8 @@ void Robot::hit (int damage, core::vector3df position)
 {
 	health -= damage;
 	
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(500);
-	scene->addXMLParticleActor((EffActor*) p, "../../Media/HitEffectR.xml", position);
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(400);
+	scene->addXMLParticleActor((EffActor*) p, "../../Media/playerHitEffect.xml", position + core::vector3df(0,12,-5));
 
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) p->node;
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
