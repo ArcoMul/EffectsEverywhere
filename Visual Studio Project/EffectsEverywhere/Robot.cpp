@@ -204,29 +204,23 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	if (bulletMesh == "null") return;
 	if (countShootCooldown > 0) return;
 	
-	core::matrix4 mat = node->getAbsoluteTransformation();
 
-	// Calculate the start and end of the ray and pass the intersection variable to get the collision position
-	core::vector3df intersection;
-	core::vector3df forward = core::vector3df(mat[2], 0, -mat[0]);
 
 	// Reset the cooldown
 	countShootCooldown = shootCooldown;
 
 	// Create bullet actor with the right position and rotation
+	core::matrix4 mat = gun->node->getAbsoluteTransformation();
+	core::vector3df right = core::vector3df(mat[0], 0, mat[2]);
 	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML, enemyHitEffectLifeTime, flyEffectXML, flyEffectLifeTime);
-	scene->addMeshActor ((EffActor*) bullet, bulletMesh, gun->node->getAbsolutePosition() + bulletOffset, node->getRotation());
+	core::vector3df bulletPosition = gun->node->getAbsolutePosition() + (right * bulletOffset.X) + core::vector3df(0, bulletOffset.Y, 0);
+	scene->addMeshActor ((EffActor*) bullet, bulletMesh, bulletPosition, node->getRotation());
 
 	gun->shoot();
 
 	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(shootEffectLifeTime, false);
 	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7) + bulletOffset);
 	shootEffect->node->setParent(mesh->node);
-	
-	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) shootEffect->node;
-	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
-	particleNode->addAffector(affector);
-	affector->drop();
 }
 
 void Robot::hit (int damage, core::vector3df position)
