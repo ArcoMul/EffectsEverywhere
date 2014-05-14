@@ -235,6 +235,11 @@ void EffScene::setMouseVisible (bool mouseVisible)
 	engine->setMouseVisible(mouseVisible);
 }
 
+void EffScene::switchScene (EffScene* scene)
+{
+	engine->switchScene (scene);
+}
+
 InputReceiver* EffScene::getInput ()
 {
 	return engine->inputReceiver;
@@ -287,4 +292,7 @@ void EffScene::spawnDebugMesh (core::vector3df position)
 
 EffScene::~EffScene(void)
 {
+	for(auto actor = actors.begin(); actor != actors.end(); ++actor){
+		this->removeActor(*actor);
+	}
 }

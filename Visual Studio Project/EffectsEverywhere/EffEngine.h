@@ -22,6 +22,7 @@ public:
 		bool stencilbuffer = false, bool vsyncenabled = false); 
 	void run();
 	void setScene (EffScene* scene);
+	void switchScene (EffScene* scene);
 	void setMouseVisible (bool mouseVisible);
 	~EffEngine(void);
 	

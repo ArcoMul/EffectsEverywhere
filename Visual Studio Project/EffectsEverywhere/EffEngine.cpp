@@ -103,6 +103,8 @@ void EffEngine::setMouseVisible (bool mouseVisible)
 {
 	// Set mouse visible
 	device->getCursorControl()->setVisible(mouseVisible);
+	// Set mouse lock off / on
+	mouseLock = !mouseVisible;
 }
 
 void EffEngine::draw (void)
@@ -122,6 +124,23 @@ void EffEngine::setScene (EffScene* scene)
 	// Initialize the new scene
 	activeEffScene->init ();
 }
+
+void EffEngine::switchScene (EffScene* scene)
+{
+	delete activeEffScene;
+	smgr->clear();
+
+	// Keep track of the active scene
+	activeEffScene = scene;
+
+	activeEffScene->setEngine (this);
+	activeEffScene->setManager (smgr);
+
+	// Initialize the new scene
+	activeEffScene->init ();
+}
+
+
 
 EffEngine::~EffEngine(void)
 {

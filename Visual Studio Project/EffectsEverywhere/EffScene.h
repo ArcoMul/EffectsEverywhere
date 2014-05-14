@@ -114,6 +114,8 @@ public:
 	 */
 	video::ITexture* getTexture (core::stringc pathname);
 
+	void switchScene (EffScene* scene);
+
 	~EffScene(void);
 
 protected:
