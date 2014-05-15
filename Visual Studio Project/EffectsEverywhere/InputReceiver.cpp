@@ -19,6 +19,7 @@ bool InputReceiver::OnEvent(const SEvent& event)
         // store mouse X and Y coords
         cursor = core::position2di(event.MouseInput.X, event.MouseInput.Y);
     }
+	// Mouse click on button
 	if (event.EventType == EET_GUI_EVENT)
     {
         s32 id = event.GUIEvent.Caller->getID();

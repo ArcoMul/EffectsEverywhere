@@ -7,6 +7,7 @@
 #include "InputReceiver.h"
 #include "EffTimer.h"
 #include "MainScene.h"
+#include "TemporaryParticleEffect.h"
 
 StartScene::StartScene()
 {
@@ -36,7 +37,7 @@ bool StartScene::init(void)
 	//gui->addImage(this->getTexture("../../Media/irrlichtlogo2.png"),
 	//	core::position2d<int>(this->getDriverWidth()- 200, this->getDriverHeight()-200));
 
-	IGUIButton *startButton = gui->addButton(rect<s32>(300,300,500,350), 0, GUI_ID_START_BUTTON,
+	IGUIButton *startButton = gui->addButton(rect<s32>(300,300,500,375), 0, GUI_ID_START_BUTTON,
             L"Start");
 	
 	//ITexture *startButton1 = getTexture("../../media/stones.jpg");
@@ -85,8 +86,8 @@ void StartScene::update(float deltaTime)
 	// When the spacebar is pressed and the cooldown is low enough, shoot!
 	if (getInput()->IsKeyDown(irr::KEY_SPACE))
 	{
-		std::cout << "Start" << std::endl;
-		switchScene (new MainScene());
+		TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
+		this->addXMLParticleActor((EffActor*) p, "../../Media/Start.xml", core::vector3df(50, 0 , 180));
 	}
 	
 }

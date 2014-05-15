@@ -10,6 +10,7 @@
 #include "Robot.h"
 #include "EffTimer.h"
 #include "TemporaryParticleEffect.h"
+#include "StartScene.h"
 
 MainScene::MainScene()
 {
@@ -126,7 +127,7 @@ void MainScene::update(float deltaTime)
 	{
 		robot->shoot(&enemies);
 	}
-
+	//Switch weapon
 	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
 	{
 		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",200, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
@@ -136,6 +137,11 @@ void MainScene::update(float deltaTime)
 		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 800, "../../Media/ToxicShootEffect.xml",800, "../../Media/ToxicHitEffect.xml",250, "../../Media/ToxicTrailEffect.xml",200);
 	}
 
+	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))
+	{
+		switchScene(new StartScene());
+		return;
+	}
 	// Check if there was collision with an enemy
 	core::vector3df collisionPosition;
 	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
