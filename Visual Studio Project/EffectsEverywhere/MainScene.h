@@ -32,6 +32,8 @@ public:
 	void spawnEnemy(void);
 
 	void createHUD(void);
+
+	void onEnemyDies(void);
 	
 private:
 
@@ -49,6 +51,14 @@ private:
 	 * The camera in the scene
 	 */
 	scene::ICameraSceneNode* camera;
+
+	gui::IGUIStaticText* scoreText;
+	int scorePlus;
+	stringw score;
+
+	gui::IGUIStaticText* xpText;
+	int xpPlus;
+	stringw xp;
 };
 
 #endif

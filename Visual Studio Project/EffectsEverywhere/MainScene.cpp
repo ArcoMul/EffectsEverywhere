@@ -90,7 +90,7 @@ void MainScene::spawnEnemy (void)
 	std::cout << "Spawn enemy" << std::endl;
 
 	// Create enemy
-	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
+	Enemy* enemy = new Enemy(std::bind(&MainScene::onEnemyDies, this), manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
 
 	// Create spawn particle effect
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
@@ -120,9 +120,37 @@ void MainScene::createHUD(void)
 	gui->addImage(this->getTexture("../../Media/irrlichtlogo2.png"),
 		core::position2d<int>(this->getDriverWidth() - 800, this->getDriverHeight() - 600));
 
+	scorePlus = 0;
+	score = L"Score: ";
+	core::stringw tempScore = score;
+	tempScore += scorePlus;
+
 	// Add score and xp text to the GUI
-	gui->addStaticText(L"Score: ", rect<s32>(350,20,425,40), true);
-	gui->addStaticText(L"XP: ", rect<s32>(650,20,725,40), true);
+	scoreText = gui->addStaticText(L"Score: ", rect<s32>(350,20,425,40), false);
+	scoreText->setOverrideColor(video::SColor(255,255,100,255));
+	scoreText->setText(tempScore.c_str());
+
+	xpPlus = 0;
+	xp = L"Xp: ";
+	core::stringw tempXp = xp;
+	tempXp += xpPlus;
+
+	xpText = gui->addStaticText(L"Xp: ", rect<s32>(650,20,725,40), false);
+	xpText->setOverrideColor(video::SColor(255,255,100,255));
+	xpText->setText(tempScore.c_str());
+}
+
+void MainScene::onEnemyDies(void)
+{
+	scorePlus++;
+	core::stringw yolo = score;
+	yolo += scorePlus;
+	scoreText->setText(yolo.c_str());
+
+	xpPlus++;
+	core::stringw swag = xp;
+	swag += xpPlus;
+	xpText->setText(swag.c_str());
 }
 
 void MainScene::update(float deltaTime)
