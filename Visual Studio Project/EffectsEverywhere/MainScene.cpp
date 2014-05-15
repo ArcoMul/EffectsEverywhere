@@ -20,6 +20,9 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 
+	EffActor* test99 = new EffActor;
+	this->addXMLParticleActor(test99, "../../Media/removeAfterTest.xml", core::vector3df(0,30,0));
+
 	// Create robot actor
 	robot = new Robot ();
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));

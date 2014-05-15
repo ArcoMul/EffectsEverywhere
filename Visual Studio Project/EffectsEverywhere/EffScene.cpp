@@ -38,6 +38,8 @@ void EffScene::update(float deltaTime)
 
 	timer->update(deltaTime);
 
+	pManager->update();
+
 	// Some actors are saved to be removed, remove these now after we updated all the actors
 	cleanupActors ();
 }
