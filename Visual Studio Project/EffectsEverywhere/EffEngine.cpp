@@ -17,7 +17,7 @@ EffEngine::EffEngine()
 bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, bool stencilbuffer, bool vsyncenabled)
 {
 	// Create the input event receiver
-	inputReceiver = new InputReceiver;
+	inputReceiver = new InputReceiver(this);
 	if (!inputReceiver) return false;
 	
 	// Create a device
@@ -111,6 +111,11 @@ void EffEngine::setMouseVisible (bool mouseVisible)
 	mouseLock = !mouseVisible;
 }
 
+void EffEngine::onButtonClick(s32 id)
+{
+	activeEffScene->onButtonClick(id);
+}
+
 void EffEngine::draw (void)
 {
 	// Draw all objects in the Irrlicht Scene Manager
@@ -137,6 +142,14 @@ void EffEngine::switchScene (EffScene* scene)
 	smgr->clear();
 	gui->clear();
     setScene (scene);
+}
+
+void EffEngine::closeGame (void)
+{
+	delete activeEffScene;
+	smgr->clear();
+	gui->clear();
+	device->closeDevice();
 }
 
 EffEngine::~EffEngine(void)

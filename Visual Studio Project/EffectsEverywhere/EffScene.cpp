@@ -42,6 +42,11 @@ void EffScene::update(float deltaTime)
 	cleanupActors ();
 }
 
+
+void EffScene::onButtonClick(s32 id)
+{
+}
+
 void EffScene::stop(void)
 {
 	isStopped = true;
@@ -248,6 +253,11 @@ video::ITexture* EffScene::getTexture (core::stringc pathname)
 void EffScene::setMouseVisible (bool mouseVisible)
 {
 	engine->setMouseVisible(mouseVisible);
+}
+
+void EffScene::closeGame (void)
+{
+	engine->closeGame ();
 }
 
 void EffScene::switchScene (EffScene* scene)

@@ -36,10 +36,19 @@ bool StartScene::init(void)
 	//gui->addImage(this->getTexture("../../Media/irrlichtlogo2.png"),
 	//	core::position2d<int>(this->getDriverWidth()- 200, this->getDriverHeight()-200));
 
-	gui->addButton(rect<s32>(300,300,500,350));
+	IGUIButton *startButton = gui->addButton(rect<s32>(300,300,500,350), 0, GUI_ID_START_BUTTON,
+            L"Start");
+	
+	//ITexture *startButton1 = getTexture("../../media/stones.jpg");
+	startButton->setDrawBorder(false);
+	startButton->setImage(getTexture("../../media/stones.jpg"));
+	startButton->setPressedImage(getTexture("../../media/water.jpg"));
+	
+	//gui->addButton(rect<s32>(300,300,500,350), 0, GUI_ID_START_BUTTON,
+    //        L"Start");
 	gui->addButton(rect<s32>(300,400,500,450));
 	gui->addButton(rect<s32>(300,500,500,550), 0, GUI_ID_QUIT_BUTTON,
-            L"Quit", L"Exits Program");
+            L"Quit");
 
 	// Add the camera node to the scene
 	camera = manager->addCameraSceneNode();
@@ -53,7 +62,23 @@ bool StartScene::init(void)
 }
 
 
-
+void StartScene::onButtonClick(s32 id)
+{
+	switch(id)
+    {
+	case GUI_ID_START_BUTTON:
+        std::cout << "Start" << std::endl;
+		switchScene (new MainScene());
+		break;
+    case GUI_ID_QUIT_BUTTON:
+        std::cout << "Quit" << std::endl;
+		closeGame();
+		break;
+	default:
+		break;
+	}
+	
+}
 void StartScene::update(float deltaTime)
 {
 	EffScene::update(deltaTime);
@@ -63,6 +88,7 @@ void StartScene::update(float deltaTime)
 		std::cout << "Start" << std::endl;
 		switchScene (new MainScene());
 	}
+	
 }
 
 StartScene::~StartScene(void)

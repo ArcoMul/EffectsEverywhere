@@ -24,6 +24,8 @@ public:
 	void setScene (EffScene* scene);
 	void switchScene (EffScene* scene);
 	void setMouseVisible (bool mouseVisible);
+	void onButtonClick(s32 id);
+	void closeGame (void);
 	~EffEngine(void);
 	
 	// Mouse position on the last frame

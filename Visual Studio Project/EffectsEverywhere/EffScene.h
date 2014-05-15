@@ -24,6 +24,8 @@ public:
 	virtual bool init (void);
 
 	virtual void update (float deltaTime);
+	//click on button (GUI)
+	virtual void onButtonClick(s32 id);
 
 	virtual void stop ();
 
@@ -134,6 +136,7 @@ protected:
 	// TODO: make special mouse object to do this, not in the effeninge class
 	void setMouseVisible (bool mouseVisible);
 	
+	void closeGame (void);
 	// The Irrlicht scene manager used to spawn object in the scene
 	scene::ISceneManager* manager;
 	ParticleManager* pManager;

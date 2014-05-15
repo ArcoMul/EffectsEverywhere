@@ -27,6 +27,8 @@ public:
 	
 	virtual void update (float deltaTime);
 
+	virtual void onButtonClick(s32 id);
+
 	~StartScene(void);
 	
 private:
@@ -39,9 +41,7 @@ private:
 enum
 {
     GUI_ID_QUIT_BUTTON = 101,
-    GUI_ID_NEW_WINDOW_BUTTON,
-    GUI_ID_FILE_OPEN_BUTTON,
-    GUI_ID_TRANSPARENCY_SCROLL_BAR
+    GUI_ID_START_BUTTON
 };
 
 #endif
