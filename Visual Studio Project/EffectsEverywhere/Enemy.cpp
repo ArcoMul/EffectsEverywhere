@@ -21,7 +21,12 @@ void Enemy::start ()
 	EffActor::start ();
 
 	// Get the mesh
-	scene::IMesh* meshEnemy = manager->getMesh("../../Media/enemy.obj");
+	scene::IMesh* meshEnemy;
+	if ((rand() / (float) RAND_MAX) > 0.5) {
+		meshEnemy = manager->getMesh("../../Media/enemy-devil.obj");
+	} else {
+		meshEnemy = manager->getMesh("../../Media/enemy.obj");
+	}
 	node = manager->addOctreeSceneNode(meshEnemy, 0);
 
 	// Set the right lightning and position
