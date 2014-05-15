@@ -123,7 +123,7 @@ void MainScene::update(float deltaTime)
 	camera->setTarget(robot->node->getPosition());
 	
 	// When the spacebar is pressed and the cooldown is low enough, shoot!
-	if (getInput()->IsKeyDown(irr::KEY_SPACE))
+	if (getInput()->IsMLeftButtonDown() || getInput()->IsKeyDown(irr::KEY_SPACE))
 	{
 		robot->shoot(&enemies);
 	}

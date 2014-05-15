@@ -1,14 +1,14 @@
-#ifndef STARTSCENE_H_
-#define STARTSCENE_H_
+#ifndef INSTRUCTIONSSCENE_H_
+#define INSTRUCTIONSSCENE_H_
 
 #include "EffScene.h"
 
 using namespace irr;
 
-class StartScene : public EffScene
+class InstructionsScene : public EffScene
 {
 public:
-	StartScene();
+	InstructionsScene();
 
 	/**
 	 * Creates all the objects, basically sets up the scene visually
@@ -19,7 +19,7 @@ public:
 
 	virtual void onButtonClick(s32 id);
 
-	~StartScene(void);
+	~InstructionsScene(void);
 	
 private:
 
@@ -30,10 +30,7 @@ private:
 };
 enum
 {
-	GUI_ID_START_BUTTON = 101,
-	GUI_ID_INSTRUCTIONS_BUTTON,
-    GUI_ID_QUIT_BUTTON
-    
+	GUI_ID_BACK_BUTTON = 101
 };
 
 #endif

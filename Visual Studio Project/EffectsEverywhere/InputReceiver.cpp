@@ -16,8 +16,25 @@ bool InputReceiver::OnEvent(const SEvent& event)
 		KeyIsDown[event.KeyInput.Key] = event.KeyInput.PressedDown;
 	if(event.EventType == EET_MOUSE_INPUT_EVENT)
     {
-        // store mouse X and Y coords
-        cursor = core::position2di(event.MouseInput.X, event.MouseInput.Y);
+		switch(event.MouseInput.Event)
+            {
+            case EMIE_LMOUSE_PRESSED_DOWN:
+                MLeftButtonDown = true;
+                break;
+
+            case EMIE_LMOUSE_LEFT_UP:
+                MLeftButtonDown = false;
+                break;
+
+            case EMIE_MOUSE_MOVED:
+				// store mouse X and Y coords
+                cursor = core::position2di(event.MouseInput.X, event.MouseInput.Y);
+                break;
+
+            default:
+                // We won't use the wheel
+                break;
+            }
     }
 	// Mouse click on button
 	if (event.EventType == EET_GUI_EVENT)
@@ -40,7 +57,11 @@ bool InputReceiver::IsKeyDown(EKEY_CODE keyCode) const
 	return KeyIsDown[keyCode];
 }
 
-
+bool InputReceiver::IsMLeftButtonDown(void)
+{
+	// Return if the given key is down
+	return MLeftButtonDown;
+}
 
 InputReceiver::~InputReceiver(void)
 {	

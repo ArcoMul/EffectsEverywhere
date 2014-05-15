@@ -19,12 +19,15 @@ public:
 	// To check if a key is down
 	virtual bool IsKeyDown(EKEY_CODE keyCode) const;
 
+	virtual bool IsMLeftButtonDown(void);
+
 	~InputReceiver(void);
 private:
 
 	EffEngine* engine;
     // We use this array to store the current state of each key
     bool KeyIsDown[KEY_KEY_CODES_COUNT];
+	bool MLeftButtonDown;
 };
 
 #endif
