@@ -29,27 +29,8 @@ void Bullet::start ()
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 
 	trailEffect = new TemporaryParticleEffect(500, false);
-	ParticleParser* p = new ParticleParser();
-	ParticleModel m = p->parse(flyEffectXML.c_str());
-	m.addAffectorType(ParticleModel::AffectorTypes::SCALE);
-	m.addAffectorType(ParticleModel::AffectorTypes::FADE_OUT);
-	m.addAffectorType(ParticleModel::AffectorTypes::GRAVITY);
-	m.setGravityAffectorGravity(core::vector3df(0,-0.05,0));
-	m.setGravityAffectorTimeForceLost(500);
-	m.setScaleAffectorScaleTo(core::dimension2df(15,15));
-	if(flyEffectXML == "../../Media/RockTrailEffect.xml")
-	{
-		m.setFadeOutAffectorTargetColor(video::SColor(0,125,125,125));
-	}
-	m.setFadeOutAffectorTimeNeededToFadeOut(3000);
-	scene->addParticleActor((EffActor*) trailEffect, &m, core::vector3df(0,0,0));
+	scene->addXMLParticleActor((EffActor*) trailEffect, flyEffectXML.c_str(), core::vector3df(0,0,0));
 	trailEffect->node->setParent(node);
-	if(flyEffectXML == "../../Media/RockTrailEffect.xml")
-	{
-		trailEffect->node->setMaterialType(video::EMT_ONETEXTURE_BLEND);
-		trailEffect->node->getMaterial(0).MaterialTypeParam = video::pack_textureBlendFunc (video::EBF_SRC_ALPHA, video::EBF_ONE_MINUS_SRC_ALPHA,
-                                                    video::EMFN_MODULATE_1X, video::EAS_TEXTURE | video::EAS_VERTEX_COLOR);
-	}
 }
 
 void Bullet::update (float deltaTime)

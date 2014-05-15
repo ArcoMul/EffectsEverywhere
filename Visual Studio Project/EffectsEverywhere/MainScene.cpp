@@ -26,7 +26,19 @@ bool MainScene::init(void)
 	if (!robot) return false;
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",130 , "../../Media/HitEffectE.xml",400 , "../../Media/RockTrailEffect.xml",200 );
+	robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
+			core::vector3df(-8.5, 7, 0), // gun position
+			"../../Media/rock-bullet.obj", // bullet mesh
+			core::vector3df(0, 0, 0), // bullet offset
+			2, // damage
+			0.6, // speed
+			600, // cooldown
+			"../../Media/shootParticle.xml", // shoot effect
+			200, // shoot effect lifetime
+			"../../Media/HitEffectE.xml", // hit effect
+			400, // hit effect lifetime
+			"../../Media/RockTrailEffect.xml", // bullet trail effect
+			200); // bullet trail effect life time
 
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
@@ -186,11 +198,35 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 2, 0.6, 600, "../../Media/shootParticle.xml",200, "../../Media/HitEffectE.xml",400, "../../Media/RockTrailEffect.xml",200);
+		robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
+			core::vector3df(-8.5, 7, 0), // gun position
+			"../../Media/rock-bullet.obj", // bullet mesh
+			core::vector3df(0, 0, 0), // bullet offset
+			2, // damage
+			0.6, // speed
+			600, // cooldown
+			"../../Media/shootParticle.xml", // shoot effect
+			200, // shoot effect lifetime
+			"../../Media/HitEffectE.xml", // hit effect
+			400, // hit effect lifetime
+			"../../Media/RockTrailEffect.xml", // bullet trail effect
+			200); // bullet trail effect life time
 	}
 	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj","../../Media/rock-bullet.obj", 5, 0.6, 800, "../../Media/ToxicShootEffect.xml",800, "../../Media/ToxicHitEffect.xml",250, "../../Media/ToxicTrailEffect.xml",200);
+		robot->setWeapon("../../Media/toxic-gun.obj",
+			core::vector3df(-1, 2, 0), // gun position
+			"../../Media/toxic-bullet.obj",
+			core::vector3df(-7, 0, 0), // bullet offset
+			5,
+			1,
+			800,
+			"../../Media/ToxicShootEffect.xml",
+			800,
+			"../../Media/ToxicHitEffect.xml",
+			250,
+			"../../Media/ToxicTrailEffect.xml",
+			200);
 	}
 
 	// Check if there was collision with an enemy
