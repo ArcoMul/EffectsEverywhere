@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include "EffActor.h"
+#include <functional>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
@@ -17,7 +18,7 @@ class ParticleModel;
 class Robot : public EffActor
 {
 public:
-	Robot (void);
+	Robot (std::function<void(void)> F);
 
 	/**
 	 * Create the robot mesh and the gun node and position these on the right position
@@ -55,6 +56,11 @@ public:
 	EffActor* mesh;
 
 private:
+
+	/**
+	 * The function to call
+	 */
+	std::function<void(void)> f;
 
 	/**
 	 * Add gun

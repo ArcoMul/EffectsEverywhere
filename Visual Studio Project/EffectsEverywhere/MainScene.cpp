@@ -21,7 +21,7 @@ bool MainScene::init(void)
 	EffScene::init ();
 
 	// Create robot actor
-	robot = new Robot ();
+	robot = new Robot (std::bind(&MainScene::onPlayerHit, this));
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
@@ -110,47 +110,65 @@ void MainScene::createHUD(void)
 {
 	// Create a custom font
 	IGUISkin* skin = gui->getSkin();
-	IGUIFont* font = gui->getFont("../../media/fonthaettenschweiler.bmp");
+	IGUIFont* font = gui->getFont("../../Media/fonthaettenschweiler.bmp");
 	if (font)
 		skin->setFont(font);
 
 	skin->setFont(gui->getBuiltInFont(), EGDF_TOOLTIP);
 
-	// Add images of the hearts to the GUI
-	gui->addImage(this->getTexture("../../Media/irrlichtlogo2.png"),
-		core::position2d<int>(this->getDriverWidth() - 800, this->getDriverHeight() - 600));
+	gui->addImage(this->getTexture("../../Media/hud-bar.png"),
+		core::position2d<int>(this->getDriverWidth()-800, this->getDriverHeight()-600));
 
+	//Score
 	scorePlus = 0;
 	score = L"Score: ";
 	core::stringw tempScore = score;
 	tempScore += scorePlus;
 
-	// Add score and xp text to the GUI
-	scoreText = gui->addStaticText(L"Score: ", rect<s32>(350,20,425,40), false);
-	scoreText->setOverrideColor(video::SColor(255,255,100,255));
+	scoreText = gui->addStaticText(L"Score: ", rect<s32>(370,12,445,40), false);
+	scoreText->setOverrideColor(video::SColor(255,31,31,31));
 	scoreText->setText(tempScore.c_str());
 
+	//Xp
 	xpPlus = 0;
 	xp = L"Xp: ";
 	core::stringw tempXp = xp;
 	tempXp += xpPlus;
 
-	xpText = gui->addStaticText(L"Xp: ", rect<s32>(650,20,725,40), false);
-	xpText->setOverrideColor(video::SColor(255,255,100,255));
+	xpText = gui->addStaticText(L"Xp: ", rect<s32>(725,12,800,40), false);
+	xpText->setOverrideColor(video::SColor(255,31,31,31));
 	xpText->setText(tempScore.c_str());
+
+	//Health
+	healthMin = 100;
+	health = L"Health: ";
+	core::stringw tempHealth = health;
+	tempHealth += healthMin;
+
+	healthText = gui->addStaticText(L"Health: " , rect<s32>(30,12,105,40), false);
+	healthText->setOverrideColor(video::SColor(255,31,31,31));
+	healthText->setText(tempHealth.c_str());
 }
 
 void MainScene::onEnemyDies(void)
 {
 	scorePlus++;
-	core::stringw yolo = score;
-	yolo += scorePlus;
-	scoreText->setText(yolo.c_str());
+	core::stringw tempScore = score;
+	tempScore += scorePlus;
+	scoreText->setText(tempScore.c_str());
 
 	xpPlus++;
-	core::stringw swag = xp;
-	swag += xpPlus;
-	xpText->setText(swag.c_str());
+	core::stringw tempXp = xp;
+	tempXp += xpPlus;
+	xpText->setText(tempXp.c_str());
+}
+
+void MainScene::onPlayerHit(void)
+{
+	healthMin -= 10;
+	core::stringw tempHealth = health;
+	tempHealth += healthMin;
+	healthText->setText(tempHealth.c_str());
 }
 
 void MainScene::update(float deltaTime)

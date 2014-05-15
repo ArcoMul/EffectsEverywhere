@@ -25,9 +25,10 @@ float limit (float value, float max)
 	return value;
 }
 
-Robot::Robot(void)
+Robot::Robot(std::function<void(void)> F)
 {
 	// Set some default values
+	this->f = F;
 	floatDirection = 1;
 	restFloatSpeed = 0.005;
 	movingFloatSpeed = 0.0075;
@@ -233,6 +234,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 void Robot::hit (int damage, core::vector3df position)
 {
 	health -= damage;
+	f();
 	
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(400);
 	scene->addXMLParticleActor((EffActor*) p, "../../Media/playerHitEffect.xml", position + core::vector3df(0,12,-5));
