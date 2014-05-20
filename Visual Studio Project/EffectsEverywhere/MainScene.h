@@ -55,16 +55,13 @@ private:
 	scene::ICameraSceneNode* camera;
 
 	gui::IGUIStaticText* scoreText;
-	int scorePlus;
-	stringw score;
+	int score;
 
 	gui::IGUIStaticText* xpText;
-	int xpPlus;
-	stringw xp;
+	int xp;
 
 	gui::IGUIStaticText* healthText;
-	int healthMin;
-	stringw health;
+	int health;
 };
 
 #endif

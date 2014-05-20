@@ -10,6 +10,7 @@
 #include "Robot.h"
 #include "EffTimer.h"
 #include "TemporaryParticleEffect.h"
+#include <string>
 
 MainScene::MainScene()
 {
@@ -132,55 +133,37 @@ void MainScene::createHUD(void)
 		core::position2d<int>(this->getDriverWidth()-800, this->getDriverHeight()-600));
 
 	//Score
-	scorePlus = 0;
-	score = L"Score: ";
-	core::stringw tempScore = score;
-	tempScore += scorePlus;
-
-	scoreText = gui->addStaticText(L"Score: ", rect<s32>(370,12,445,40), false);
+	score = 0;
+	scoreText = gui->addStaticText(L"Score: 0", rect<s32>(370,12,445,40), false);
 	scoreText->setOverrideColor(video::SColor(255,31,31,31));
-	scoreText->setText(tempScore.c_str());
+	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
 
-	//Xp
-	xpPlus = 0;
-	xp = L"Xp: ";
-	core::stringw tempXp = xp;
-	tempXp += xpPlus;
-
-	xpText = gui->addStaticText(L"Xp: ", rect<s32>(725,12,800,40), false);
+	// Xp
+	xp = 0;
+	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(725,12,800,40), false);
 	xpText->setOverrideColor(video::SColor(255,31,31,31));
-	xpText->setText(tempScore.c_str());
+	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
 
 	//Health
-	healthMin = 100;
-	health = L"Health: ";
-	core::stringw tempHealth = health;
-	tempHealth += healthMin;
-
-	healthText = gui->addStaticText(L"Health: " , rect<s32>(30,12,105,40), false);
+	health = 100;
+	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30,12,105,40), false);
 	healthText->setOverrideColor(video::SColor(255,31,31,31));
-	healthText->setText(tempHealth.c_str());
+	healthText->setText((core::stringw("Health: ") + core::stringw(health)).c_str());
 }
 
 void MainScene::onEnemyDies(void)
 {
-	scorePlus++;
-	core::stringw tempScore = score;
-	tempScore += scorePlus;
-	scoreText->setText(tempScore.c_str());
+	score++;
+	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
 
-	xpPlus++;
-	core::stringw tempXp = xp;
-	tempXp += xpPlus;
-	xpText->setText(tempXp.c_str());
+	xp++;
+	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
 }
 
 void MainScene::onPlayerHit(void)
 {
-	healthMin -= 10;
-	core::stringw tempHealth = health;
-	tempHealth += healthMin;
-	healthText->setText(tempHealth.c_str());
+	health -= 10;
+	healthText->setText((core::stringw("Health: ") + core::stringw(health)).c_str());
 }
 
 void MainScene::update(float deltaTime)
