@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Particle>
     <Emitter Type="1"/>
-    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Aabbox MaxX="3" MaxY="3" MaxZ="3" MinX="-3" MinY="-3" MinZ="-3"/>
     <Direction X="0" Y="0" Z="0"/>
     <Position X="0" Y="0" Z="0"/>
     <Center X="0" Y="0" Z="0"/>
@@ -14,6 +14,19 @@
     <MaxStartSize Height="3" Width="3"/>
     <MinStartSize Height="2" Width="2"/>
     <Texture PathName="bullet-trail.png"/>
-    <Rest MbNumber="-842150451" NormalDirectionModifier="-4.31602e+08" Radius="-4.31602e+08" LengthCylinder="-4.31602e+08" RingThickness="-4.31602e+08" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
-    <Affectors/>
+    <Material Type="1"/>
+    <Rest MbNumber="-842150451" NormalDirectionModifier="-4.31602e+08" Radius="0" LengthCylinder="0" RingThickness="0" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
+    <Affectors>
+        <FADE_OUT>
+            <FadeOutAffectorTargetColor Alpha="0" Red="125" Green="125" Blue="125"/>
+            <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="3000"/>
+        </FADE_OUT>
+        <GRAVITY>
+            <GravityAffectorGravity X="0" Y="-0.05" Z="0"/>
+            <GRAVITY_Rest GravityAffectorTimeForceLost="500"/>
+        </GRAVITY>
+        <SCALE>
+            <ScaleAffectorScaleTo Height="15" Width="15"/>
+        </SCALE>
+    </Affectors>
 </Particle>

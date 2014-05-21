@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include "EffActor.h"
+#include <functional>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
@@ -17,7 +18,8 @@ class ParticleModel;
 class Robot : public EffActor
 {
 public:
-	Robot (void);
+	
+	Robot (std::function<void(void)> onHit);
 
 	/**
 	 * Create the robot mesh and the gun node and position these on the right position
@@ -32,7 +34,7 @@ public:
 	/**
 	 * Add gun and bullet 
 	 */
-	void setWeapon (core::stringc gunMesh, core::stringc bulletMesh, int damage,
+	void setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core::stringc bulletMesh, core::vector3df bulletOffset, int damage,
 		float speed, float cooldown, core::stringc shootEffect,float shootEffectLifeTime,
 		core::stringc enemyHitEffect,float enemyHitEffectLifeTime, core::stringc flyEffect, float flyEffectLifeTime);
 	
@@ -54,12 +56,19 @@ public:
 	 */
 	EffActor* mesh;
 
+	int health;
+
 private:
+
+	/**
+	 * The function to call
+	 */
+	std::function<void(void)> onHit;
 
 	/**
 	 * Add gun
 	 */
-	void addGun(core::stringc gunMesh);
+	void addGun(core::stringc gunMesh, core::vector3df position);
 
 	/**
 	 * URL XMLs of the weapon effects
@@ -95,6 +104,8 @@ private:
 	 */
 	float bulletSpeed;
 
+	core::vector3df bulletOffset;
+
 	/**
 	 * Counter to keep track of the shoot cooldown
 	 */
@@ -129,8 +140,6 @@ private:
 	float maxAcceleration;
 	float damping;
 	core::vector3df velocity;
-
-	int health;
 };
 
 #endif

@@ -44,6 +44,11 @@ void EffScene::update(float deltaTime)
 	cleanupActors ();
 }
 
+
+void EffScene::onButtonClick(s32 id)
+{
+}
+
 void EffScene::stop(void)
 {
 	isStopped = true;
@@ -227,6 +232,21 @@ void EffScene::setManager(scene::ISceneManager* manager)
 	this->manager = manager;
 }
 
+void EffScene::setGUI (gui::IGUIEnvironment* gui)
+{
+	this->gui = gui;
+}
+
+float EffScene::getDriverWidth()
+{
+	return engine->driver->getViewPort().getWidth();
+}
+
+float EffScene::getDriverHeight()
+{
+	return engine->driver->getViewPort().getHeight();
+}
+
 video::ITexture* EffScene::getTexture (core::stringc pathname)
 {
 	return engine->driver->getTexture(pathname);
@@ -235,6 +255,16 @@ video::ITexture* EffScene::getTexture (core::stringc pathname)
 void EffScene::setMouseVisible (bool mouseVisible)
 {
 	engine->setMouseVisible(mouseVisible);
+}
+
+void EffScene::closeGame (void)
+{
+	engine->closeGame ();
+}
+
+void EffScene::switchScene (EffScene* scene)
+{
+	engine->switchScene (scene);
 }
 
 InputReceiver* EffScene::getInput ()
@@ -289,4 +319,7 @@ void EffScene::spawnDebugMesh (core::vector3df position)
 
 EffScene::~EffScene(void)
 {
+	for(auto actor = actors.begin(); actor != actors.end(); ++actor){
+		this->removeActor(*actor);
+	}
 }

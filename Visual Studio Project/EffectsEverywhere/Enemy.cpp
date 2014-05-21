@@ -5,8 +5,9 @@
 #include <iostream>
 #include <cmath>
 
-Enemy::Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
+Enemy::Enemy(std::function<void(void)> onDie,scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
 {
+	this->onDie = onDie;
 	this->manager = manager;
 	this->target = target;
 	this->speed = speed;
@@ -21,7 +22,12 @@ void Enemy::start ()
 	EffActor::start ();
 
 	// Get the mesh
-	scene::IMesh* meshEnemy = manager->getMesh("../../Media/enemy.obj");
+	scene::IMesh* meshEnemy;
+	if ((rand() / (float) RAND_MAX) > 0.5) {
+		meshEnemy = manager->getMesh("../../Media/enemy-devil.obj");
+	} else {
+		meshEnemy = manager->getMesh("../../Media/enemy.obj");
+	}
 	node = manager->addOctreeSceneNode(meshEnemy, 0);
 
 	// Set the right lightning and position
@@ -117,13 +123,14 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 {
 	if (cooldown <= 0)
 	{
-		robot->hit(1, position);
+		robot->hit(10, position);
 		cooldown = 500;
 	}
 }
 
 void Enemy::die ()
 {
+	onDie();
 	isDeath = true;
 	scene->removeActor ((EffActor*) this);
 }

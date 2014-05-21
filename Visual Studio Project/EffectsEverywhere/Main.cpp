@@ -1,6 +1,7 @@
 #include <iostream>
 #include "EffEngine.h"
 #include "MainScene.h"
+#include "StartScene.h"
 
 int main()
 {
@@ -11,7 +12,7 @@ int main()
 	if (engine->init(800, 600))
 	{
 		// Set the initial scene
-		engine->setScene (new MainScene());
+		engine->setScene (new StartScene());
 
 		// Start running the engine
 		engine->run();
