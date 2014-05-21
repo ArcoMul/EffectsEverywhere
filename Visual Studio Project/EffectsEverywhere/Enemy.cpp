@@ -5,10 +5,11 @@
 #include <iostream>
 #include <cmath>
 
-Enemy::Enemy(std::function<void(void)> onDie,scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
+Enemy::Enemy(std::function<void(void)> onDie,scene::ISceneManager* manager, Enemy::TYPES type, core::vector3df position, scene::ISceneNode* target, float speed)
 {
 	this->onDie = onDie;
 	this->manager = manager;
+	this->type = type;
 	this->target = target;
 	this->speed = speed;
 	this->health = 5;
@@ -23,7 +24,7 @@ void Enemy::start ()
 
 	// Get the mesh
 	scene::IMesh* meshEnemy;
-	if ((rand() / (float) RAND_MAX) > 0.5) {
+	if (type == Enemy::TYPES::EVIL) {
 		meshEnemy = manager->getMesh("../../Media/enemy-devil.obj");
 	} else {
 		meshEnemy = manager->getMesh("../../Media/enemy.obj");

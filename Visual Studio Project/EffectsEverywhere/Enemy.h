@@ -15,10 +15,15 @@ class Enemy : public EffActor
 {
 public:
 	
+	enum TYPES {
+		NORMAL = 1,
+		EVIL = 2
+	};
+
 	/**
 	 * Create a constructor Enemy and give it the engine and position.
 	 */
-	Enemy(std::function<void(void)> onDie, scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
+	Enemy(std::function<void(void)> onDie, scene::ISceneManager* manager, TYPES type, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 
 	virtual void start ();
 
@@ -96,6 +101,8 @@ private:
 	scene::ISceneNodeAnimatorCollisionResponse* collision;
 
 	scene::ISceneManager* manager;
+
+	Enemy::TYPES type;
 };
 
 #endif

@@ -22,7 +22,9 @@ public:
 	/**
 	 * Tell the timer to repeatably call the given function every x seconds
 	 */
-	void repeat (std::function<void(void)>, float seconds);
+	EffRepeatable* repeat (std::function<void(void)>, float seconds);
+
+	void remove(EffRepeatable* r);
 
 	/**
 	 * Update the timer, check if any functions need to be called
@@ -36,6 +38,8 @@ public:
 
 private:
 
+	void cleanUp (void);
+
 	/**
 	 * List of function which need to be checked
 	 */
@@ -46,6 +50,7 @@ private:
 	 */
 	EffScene* scene;
 
+	core::list<EffRepeatable*> cleanUpList;
 };
 
 #endif

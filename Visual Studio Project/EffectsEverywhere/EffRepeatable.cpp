@@ -1,11 +1,13 @@
 #include "EffRepeatable.h"
+#include "EffTimer.h"
 #include <iostream>
 
-EffRepeatable::EffRepeatable(std::function<void(void)> f, float startTime, float repeatAfter)
+EffRepeatable::EffRepeatable(std::function<void(void)> f, EffTimer* timer, float startTime, float repeatAfter)
 {
 	this->f = f;
 	this->startTime = startTime;
 	this->repeatAfter = repeatAfter;
+	this->timer = timer;
 }
 
 bool EffRepeatable::call (float time)
@@ -22,6 +24,11 @@ bool EffRepeatable::call (float time)
 		return true;
 	}
 	return false;
+}
+
+void EffRepeatable::stop(void)
+{
+	timer->remove(this);
 }
 
 EffRepeatable::~EffRepeatable(void)
