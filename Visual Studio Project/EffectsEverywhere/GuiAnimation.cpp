@@ -12,10 +12,15 @@ GuiAnimation::GuiAnimation(gui::IGUIElement* element, float x, float y, float sp
 	position = core::vector2df(element->getRelativePosition().UpperLeftCorner.X, element->getRelativePosition().UpperLeftCorner.Y);
 }
 
+/**
+ * TODO: remove the animation or something when the animation is done
+ */
 void GuiAnimation::update (float deltaTime)
 {
+	// Count up so that we know when to start
 	running += deltaTime;
 
+	// If we waited long enough, start animating
 	if (delay > running) return;
 
 	if (position.X < x) {
