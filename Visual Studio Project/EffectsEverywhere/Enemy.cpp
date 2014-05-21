@@ -123,7 +123,7 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 {
 	if (cooldown <= 0)
 	{
-		robot->hit(1, position);
+		robot->hit(10, position);
 		cooldown = 500;
 	}
 }

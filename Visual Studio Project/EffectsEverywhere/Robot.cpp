@@ -38,7 +38,7 @@ Robot::Robot(std::function<void(void)> onHit)
 	bulletMesh ="null";
 	maxAcceleration = .1;
 	damping = .0005;
-	health = 10;
+	health = 100;
 }
 
 void Robot::start ()
