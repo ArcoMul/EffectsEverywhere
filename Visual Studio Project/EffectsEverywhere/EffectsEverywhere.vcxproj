@@ -74,9 +74,11 @@
     <ClCompile Include="EffScene.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="InputReceiver.cpp" />
+    <ClCompile Include="InstructionsScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TemporaryParticleEffect.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -94,8 +96,10 @@
     <ClInclude Include="EffScene.h" />
     <ClInclude Include="Gun.h" />
     <ClInclude Include="InputReceiver.h" />
+    <ClInclude Include="InstructionsScene.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Robot.h" />
+    <ClInclude Include="StartScene.h" />
     <ClInclude Include="TemporaryParticleEffect.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

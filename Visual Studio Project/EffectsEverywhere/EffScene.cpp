@@ -42,6 +42,11 @@ void EffScene::update(float deltaTime)
 	cleanupActors ();
 }
 
+
+void EffScene::onButtonClick(s32 id)
+{
+}
+
 void EffScene::stop(void)
 {
 	isStopped = true;
@@ -250,6 +255,16 @@ void EffScene::setMouseVisible (bool mouseVisible)
 	engine->setMouseVisible(mouseVisible);
 }
 
+void EffScene::closeGame (void)
+{
+	engine->closeGame ();
+}
+
+void EffScene::switchScene (EffScene* scene)
+{
+	engine->switchScene (scene);
+}
+
 InputReceiver* EffScene::getInput ()
 {
 	return engine->inputReceiver;
@@ -302,4 +317,7 @@ void EffScene::spawnDebugMesh (core::vector3df position)
 
 EffScene::~EffScene(void)
 {
+	for(auto actor = actors.begin(); actor != actors.end(); ++actor){
+		this->removeActor(*actor);
+	}
 }

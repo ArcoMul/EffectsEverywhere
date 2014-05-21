@@ -11,6 +11,7 @@
 #include "EffTimer.h"
 #include "TemporaryParticleEffect.h"
 #include <string>
+#include "StartScene.h"
 
 MainScene::MainScene()
 {
@@ -172,11 +173,11 @@ void MainScene::update(float deltaTime)
 	camera->setTarget(robot->node->getPosition());
 	
 	// When the spacebar is pressed and the cooldown is low enough, shoot!
-	if (getInput()->IsKeyDown(irr::KEY_SPACE))
+	if (getInput()->IsMLeftButtonDown() || getInput()->IsKeyDown(irr::KEY_SPACE))
 	{
 		robot->shoot(&enemies);
 	}
-
+	//Switch weapon
 	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
 	{
 		robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
@@ -210,6 +211,11 @@ void MainScene::update(float deltaTime)
 			200);
 	}
 
+	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))
+	{
+		switchScene(new StartScene());
+		return;
+	}
 	// Check if there was collision with an enemy
 	core::vector3df collisionPosition;
 	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
