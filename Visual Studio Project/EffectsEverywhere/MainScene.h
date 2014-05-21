@@ -30,6 +30,12 @@ public:
 	~MainScene(void);
 
 	void spawnEnemy(void);
+
+	void createHUD(void);
+
+	void onEnemyDie(void);
+
+	void onPlayerHit(void);
 	
 private:
 
@@ -47,6 +53,14 @@ private:
 	 * The camera in the scene
 	 */
 	scene::ICameraSceneNode* camera;
+
+	gui::IGUIStaticText* scoreText;
+	int score;
+
+	gui::IGUIStaticText* xpText;
+	int xp;
+
+	gui::IGUIStaticText* healthText;
 };
 
 #endif

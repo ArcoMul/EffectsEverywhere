@@ -2,6 +2,7 @@
 #define ENEMY_H_
 
 #include <irrlicht.h>
+#include <functional>
 #include "EffActor.h"
 
 using namespace irr;
@@ -17,7 +18,7 @@ public:
 	/**
 	 * Create a constructor Enemy and give it the engine and position.
 	 */
-	Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
+	Enemy(std::function<void(void)> onDie, scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 
 	virtual void start ();
 
@@ -58,6 +59,11 @@ public:
 	EffEngine* _engine;
 
 private:
+
+	/**
+	 * The function to call
+	 */
+	std::function<void(void)> onDie;
 
 	/**
 	 * Which ISceneNode to follow when walking
