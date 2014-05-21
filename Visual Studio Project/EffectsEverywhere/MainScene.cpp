@@ -134,31 +134,31 @@ void MainScene::createHUD(void)
 {
 	// Create a custom font
 	IGUISkin* skin = gui->getSkin();
-	IGUIFont* font = gui->getFont("../../Media/fonthaettenschweiler.bmp");
-	if (font)
+	IGUIFont* font = gui->getFont("../../Media/fonts/asap.xml");
+	if (font) {
 		skin->setFont(font);
+	}
 
-	skin->setFont(gui->getBuiltInFont(), EGDF_TOOLTIP);
+	gui::IGUIImage* img = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, 0));
 
-	gui->addImage(this->getTexture("../../Media/hud-bar.png"),
-		core::position2d<int>(this->getDriverWidth()-800, this->getDriverHeight()-600));
+	//Health
+	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30, 12, 230, 60), false);
+	healthText->setOverrideColor(video::SColor(255,31,31,31));
+	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
 
 	//Score
 	score = 0;
-	scoreText = gui->addStaticText(L"Score: 0", rect<s32>(370,12,445,40), false);
+	scoreText = gui->addStaticText(L"Score: 0", rect<s32>((this->getDriverWidth() / 2) - 100, 12, (this->getDriverWidth() / 2) + 100, 60), false);
 	scoreText->setOverrideColor(video::SColor(255,31,31,31));
+	scoreText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
 
 	// Xp
 	xp = 0;
-	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(725,12,800,40), false);
+	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(this->getDriverWidth() - 230, 12, this->getDriverWidth() - 30, 60), false);
 	xpText->setOverrideColor(video::SColor(255,31,31,31));
+	xpText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_LOWERRIGHT, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
-
-	//Health
-	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30,12,105,40), false);
-	healthText->setOverrideColor(video::SColor(255,31,31,31));
-	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
 }
 
 void MainScene::onEnemyDie(void)
