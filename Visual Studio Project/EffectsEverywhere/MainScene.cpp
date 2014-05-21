@@ -140,22 +140,24 @@ void MainScene::createHUD(void)
 	}
 
 	gui::IGUIImage* img = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, 0));
+	img->setScaleImage(true);
+	img->setMinSize(core::dimension2du(this->getDriverWidth(), 55));
 
 	//Health
-	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30, 12, 230, 60), false);
+	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30, 10, 230, 50), false);
 	healthText->setOverrideColor(video::SColor(255,31,31,31));
 	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
 
 	//Score
 	score = 0;
-	scoreText = gui->addStaticText(L"Score: 0", rect<s32>((this->getDriverWidth() / 2) - 100, 12, (this->getDriverWidth() / 2) + 100, 60), false);
+	scoreText = gui->addStaticText(L"Score: 0", rect<s32>((this->getDriverWidth() / 2) - 100, 10, (this->getDriverWidth() / 2) + 100, 50), false);
 	scoreText->setOverrideColor(video::SColor(255,31,31,31));
 	scoreText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
 
 	// Xp
 	xp = 0;
-	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(this->getDriverWidth() - 230, 12, this->getDriverWidth() - 30, 60), false);
+	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(this->getDriverWidth() - 230, 10, this->getDriverWidth() - 30, 50), false);
 	xpText->setOverrideColor(video::SColor(255,31,31,31));
 	xpText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_LOWERRIGHT, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
