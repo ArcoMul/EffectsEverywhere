@@ -9,7 +9,7 @@ int main()
 	EffEngine* engine = new EffEngine();
 
 	// Start the engine
-	if (engine->init(800, 600))
+	if (engine->init(1366, 768, 32, true, false, false))
 	{
 		// Set the initial scene
 		engine->setScene (new StartScene());
