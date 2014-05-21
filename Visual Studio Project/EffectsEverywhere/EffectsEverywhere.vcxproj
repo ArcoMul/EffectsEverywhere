@@ -78,8 +78,11 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
     <ClCompile Include="Robot.cpp" />
+    <ClCompile Include="SpawnPoint.cpp" />
     <ClCompile Include="StartScene.cpp" />
     <ClCompile Include="TemporaryParticleEffect.cpp" />
+    <ClCompile Include="Wave.cpp" />
+    <ClCompile Include="WaveSystem.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Irrlicht\source\Irrlicht\Irrlicht10.0.vcxproj">
@@ -99,8 +102,11 @@
     <ClInclude Include="InstructionsScene.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="Robot.h" />
+    <ClInclude Include="SpawnPoint.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="TemporaryParticleEffect.h" />
+    <ClInclude Include="Wave.h" />
+    <ClInclude Include="WaveSystem.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

@@ -128,6 +128,8 @@ public:
 
 	void switchScene (EffScene* scene);
 
+	EffTimer* timer;
+
 	~EffScene(void);
 
 protected:
@@ -141,8 +143,6 @@ protected:
 	scene::ISceneManager* manager;
 	ParticleManager* pManager;
 	gui::IGUIEnvironment* gui;
-
-	EffTimer* timer;
 
 private:
 

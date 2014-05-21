@@ -10,11 +10,17 @@
 #include "Robot.h"
 #include "EffTimer.h"
 #include "TemporaryParticleEffect.h"
+#include <string>
 #include "StartScene.h"
+#include "WaveSystem.h"
+#include "Wave.h"
+#include "SpawnPoint.h"
 
 MainScene::MainScene()
 {
-
+	spawnPoint1 = core::vector2df(120, -115);
+	spawnPoint2 = core::vector2df(110, 110);
+	spawnPoint3 = core::vector2df(-100, 115);
 }
 
 bool MainScene::init(void)
@@ -23,7 +29,7 @@ bool MainScene::init(void)
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(1400);
 	this->addXMLParticleActor((EffActor*) p, "../../Media/SpawnP1.xml", core::vector3df(0, 100,0));
 	// Create robot actor
-	robot = new Robot ();
+	robot = new Robot (std::bind(&MainScene::onPlayerHit, this));
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
@@ -97,21 +103,24 @@ bool MainScene::init(void)
 void MainScene::startPlaying(void)
 {
 	robot->node->addChild(camera);
-	spawnEnemy ();
-	timer->repeat(std::bind(&MainScene::spawnEnemy, this), 2);
+	waveSystem = new WaveSystem();
+	AddWaves();
 	collisionLevel->setGravity(core::vector3df(0, -100, 0));
 }
 
-void MainScene::spawnEnemy (void)
+void MainScene::spawnEnemy (core::vector2df position, Enemy::TYPES type)
 {
 	std::cout << "Spawn enemy" << std::endl;
 
 	// Create enemy
-	Enemy* enemy = new Enemy(manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
-
-	// Create spawn particle effect
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
-	this->addXMLParticleActor((EffActor*) p, "../../Media/purpleEnemySpawnEffect.xml", core::vector3df(120, 0, -113));
+	Enemy* enemy = new Enemy(
+		std::bind(&MainScene::onEnemyDie, this),
+		manager,
+		type,
+		core::vector3df(position.X, 0, position.Y),
+		robot->node,
+		.05 + (0.03 * (rand() / (float) RAND_MAX))
+	);
 
 	// Add to enemy list
 	enemies.push_back(enemy);
@@ -121,6 +130,51 @@ void MainScene::spawnEnemy (void)
 
 	// Add collision with the player and the enemies
 	enemy->addCollision((scene::ISceneNode*) robot->node, ((scene::IMeshSceneNode*) robot->mesh->node)->getMesh());
+}
+
+void MainScene::createHUD(void)
+{
+	// Create a custom font
+	IGUISkin* skin = gui->getSkin();
+	IGUIFont* font = gui->getFont("../../Media/fonthaettenschweiler.bmp");
+	if (font)
+		skin->setFont(font);
+
+	skin->setFont(gui->getBuiltInFont(), EGDF_TOOLTIP);
+
+	gui->addImage(this->getTexture("../../Media/hud-bar.png"),
+		core::position2d<int>(this->getDriverWidth()-800, this->getDriverHeight()-600));
+
+	//Score
+	score = 0;
+	scoreText = gui->addStaticText(L"Score: 0", rect<s32>(370,12,445,40), false);
+	scoreText->setOverrideColor(video::SColor(255,31,31,31));
+	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
+
+	// Xp
+	xp = 0;
+	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(725,12,800,40), false);
+	xpText->setOverrideColor(video::SColor(255,31,31,31));
+	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
+
+	//Health
+	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30,12,105,40), false);
+	healthText->setOverrideColor(video::SColor(255,31,31,31));
+	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
+}
+
+void MainScene::onEnemyDie(void)
+{
+	score++;
+	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
+
+	xp++;
+	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
+}
+
+void MainScene::onPlayerHit(void)
+{
+	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
 }
 
 void MainScene::update(float deltaTime)
@@ -195,6 +249,45 @@ void MainScene::update(float deltaTime)
 			break;
 		}
 	}
+}
+
+void MainScene::AddWaves (void)
+{
+	// Wave 1
+	core::list<int> wave1p1enemies = core::list<int>();
+	wave1p1enemies.push_back(1);
+	wave1p1enemies.push_back(0);
+	core::list<int> wave1p2enemies = core::list<int>();
+	wave1p2enemies.push_back(2);
+	wave1p2enemies.push_back(0);
+	core::list<int> wave1p3enemies = core::list<int>();
+	wave1p3enemies.push_back(1);
+	wave1p3enemies.push_back(0);
+
+	core::list<SpawnPoint> wave1points = core::list<SpawnPoint>();
+	wave1points.push_back(SpawnPoint(spawnPoint1, wave1p1enemies));
+	wave1points.push_back(SpawnPoint(spawnPoint2, wave1p2enemies));
+	wave1points.push_back(SpawnPoint(spawnPoint3, wave1p3enemies));
+	
+	waveSystem->addWave(Wave(this, wave1points, 5));
+
+	// Wave 2
+	core::list<int> wave2p1enemies = core::list<int>();
+	wave2p1enemies.push_back(1);
+	wave2p1enemies.push_back(1);
+	core::list<int> wave2p2enemies = core::list<int>();
+	wave2p2enemies.push_back(2);
+	wave2p2enemies.push_back(2);
+	core::list<int> wave2p3enemies = core::list<int>();
+	wave2p3enemies.push_back(1);
+	wave2p3enemies.push_back(1);
+
+	core::list<SpawnPoint> wave2points = core::list<SpawnPoint>();
+	wave2points.push_back(SpawnPoint(spawnPoint1, wave2p1enemies));
+	wave2points.push_back(SpawnPoint(spawnPoint2, wave2p2enemies));
+	wave2points.push_back(SpawnPoint(spawnPoint3, wave2p3enemies));
+
+	waveSystem->addWave(Wave(this, wave2points, 3));
 }
 
 MainScene::~MainScene(void)

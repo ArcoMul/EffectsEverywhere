@@ -4,16 +4,15 @@
 #include <irrlicht.h>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
-#include "EffScene.h"
-#include <ParticleManager.h>
-#include <ParticleModel.h>
 #include <ParticleParser.h>
+#include "EffScene.h"
+#include "Enemy.h"
 
 using namespace irr;
 
 class EffEngine;
-class Enemy;
 class Robot;
+class WaveSystem;
 
 class MainScene : public EffScene
 {
@@ -29,10 +28,20 @@ public:
 
 	~MainScene(void);
 
-	void spawnEnemy(void);
+	void spawnEnemy (core::vector2df position, Enemy::TYPES type);
 	void startPlaying(void);
+	void createHUD(void);
+
+	void onEnemyDie(void);
+
+	void onPlayerHit(void);
+
+	core::vector2df spawnPoint1;
+	core::vector2df spawnPoint2;
+	core::vector2df spawnPoint3;
 	
 private:
+	void AddWaves (void);
 	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel;
 	bool levelstart;
 	float gravity;
@@ -50,6 +59,19 @@ private:
 	 * The camera in the scene
 	 */
 	scene::ICameraSceneNode* camera;
+
+	/**
+	 * Controller which keeps track of the waves, starts and stops them
+	 */
+	WaveSystem* waveSystem;
+
+	gui::IGUIStaticText* scoreText;
+	int score;
+
+	gui::IGUIStaticText* xpText;
+	int xp;
+
+	gui::IGUIStaticText* healthText;
 };
 
 #endif

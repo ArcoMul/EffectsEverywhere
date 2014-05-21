@@ -2,6 +2,7 @@
 #define ENEMY_H_
 
 #include <irrlicht.h>
+#include <functional>
 #include "EffActor.h"
 
 using namespace irr;
@@ -14,10 +15,15 @@ class Enemy : public EffActor
 {
 public:
 	
+	enum TYPES {
+		PURPLE = 1,
+		EVIL = 2
+	};
+
 	/**
 	 * Create a constructor Enemy and give it the engine and position.
 	 */
-	Enemy(scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
+	Enemy(std::function<void(void)> onDie, scene::ISceneManager* manager, TYPES type, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 
 	virtual void start ();
 
@@ -60,6 +66,11 @@ public:
 private:
 
 	/**
+	 * The function to call
+	 */
+	std::function<void(void)> onDie;
+
+	/**
 	 * Which ISceneNode to follow when walking
 	 */
 	scene::ISceneNode* target;
@@ -90,6 +101,8 @@ private:
 	scene::ISceneNodeAnimatorCollisionResponse* collision;
 
 	scene::ISceneManager* manager;
+
+	Enemy::TYPES type;
 };
 
 #endif
