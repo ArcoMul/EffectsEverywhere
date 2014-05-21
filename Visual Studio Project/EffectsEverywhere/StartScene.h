@@ -15,11 +15,19 @@ public:
 	 */
 	virtual bool init (void);
 	
-	virtual void update (float deltaTime);
-
+	/**
+	 * When a button gets clicked in the scene
+	 */
 	virtual void onButtonClick(s32 id);
 
 	~StartScene(void);
+
+	enum BUTTONS
+	{
+		GUI_ID_START_BUTTON = 101,
+		GUI_ID_INSTRUCTIONS_BUTTON,
+		GUI_ID_QUIT_BUTTON
+	};
 	
 private:
 
@@ -27,13 +35,6 @@ private:
 	 * The camera in the scene
 	 */
 	scene::ICameraSceneNode* camera;
-};
-enum
-{
-	GUI_ID_START_BUTTON = 101,
-	GUI_ID_INSTRUCTIONS_BUTTON,
-    GUI_ID_QUIT_BUTTON
-    
 };
 
 #endif

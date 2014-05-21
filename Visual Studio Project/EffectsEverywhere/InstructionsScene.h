@@ -15,11 +15,14 @@ public:
 	 */
 	virtual bool init (void);
 	
-	virtual void update (float deltaTime);
-
 	virtual void onButtonClick(s32 id);
 
 	~InstructionsScene(void);
+
+	enum BUTTONS
+	{
+		GUI_ID_BACK_BUTTON = 101
+	};
 	
 private:
 
@@ -27,10 +30,6 @@ private:
 	 * The camera in the scene
 	 */
 	scene::ICameraSceneNode* camera;
-};
-enum
-{
-	GUI_ID_BACK_BUTTON = 101
 };
 
 #endif
