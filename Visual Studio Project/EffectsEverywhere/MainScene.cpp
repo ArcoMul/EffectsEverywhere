@@ -15,6 +15,7 @@
 #include "WaveSystem.h"
 #include "Wave.h"
 #include "SpawnPoint.h"
+#include "GuiAnimation.h"
 
 MainScene::MainScene()
 {
@@ -139,28 +140,32 @@ void MainScene::createHUD(void)
 		skin->setFont(font);
 	}
 
-	gui::IGUIImage* img = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, 0));
-	img->setScaleImage(true);
-	img->setMinSize(core::dimension2du(this->getDriverWidth(), 55));
+	gui::IGUIImage* hudBar = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, -55));
+	hudBar->setScaleImage(true);
+	hudBar->setMinSize(core::dimension2du(this->getDriverWidth(), 55));
+	hudBarAnim = new GuiAnimation(hudBar, 0, 0, .5, 800);
 
 	//Health
-	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30, 10, 230, 50), false);
+	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30, -40, 230, 0), false);
 	healthText->setOverrideColor(video::SColor(255,31,31,31));
 	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
+	healthAnim = new GuiAnimation(healthText, 30, 10, .5, 1050);
 
 	//Score
 	score = 0;
-	scoreText = gui->addStaticText(L"Score: 0", rect<s32>((this->getDriverWidth() / 2) - 100, 10, (this->getDriverWidth() / 2) + 100, 50), false);
+	scoreText = gui->addStaticText(L"Score: 0", rect<s32>((this->getDriverWidth() / 2) - 100, -40, (this->getDriverWidth() / 2) + 100, 50), false);
 	scoreText->setOverrideColor(video::SColor(255,31,31,31));
 	scoreText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
+	scoreAnim = new GuiAnimation(scoreText, (this->getDriverWidth() / 2) - 100, 10, .5, 1050);
 
 	// Xp
 	xp = 0;
-	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(this->getDriverWidth() - 230, 10, this->getDriverWidth() - 30, 50), false);
+	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(this->getDriverWidth() - 230, -40, this->getDriverWidth() - 30, 50), false);
 	xpText->setOverrideColor(video::SColor(255,31,31,31));
 	xpText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_LOWERRIGHT, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
+	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 1050);
 }
 
 void MainScene::onEnemyDie(void)
@@ -180,6 +185,11 @@ void MainScene::onPlayerHit(void)
 void MainScene::update(float deltaTime)
 {
 	EffScene::update(deltaTime);
+
+	hudBarAnim->update(deltaTime);
+	scoreAnim->update(deltaTime);
+	xpAnim->update(deltaTime);
+	healthAnim->update(deltaTime);
 
 	// Set where the camera has to look at
 	camera->setTarget(robot->node->getPosition());

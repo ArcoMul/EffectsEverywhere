@@ -31,6 +31,7 @@
     <ClCompile Include="WaveSystem.cpp" />
     <ClCompile Include="Wave.cpp" />
     <ClCompile Include="SpawnPoint.cpp" />
+    <ClCompile Include="GuiAnimation.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -84,6 +85,7 @@
     <ClInclude Include="SpawnPoint.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="GuiAnimation.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
