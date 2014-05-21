@@ -8,6 +8,8 @@
 #include <iostream>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
+#include "StartScene.h"
+
 
 float damp (float acc, float damp)
 {
@@ -235,12 +237,9 @@ void Robot::hit (int damage, core::vector3df position)
 	particleNode->addAffector(affector);
 	affector->drop();
 
-	// Remove the player and stop the scene when the player dies
-	// (not a beautiful way, but is serves the purpose)
+	// switch scene when the player dies
 	if (health <= 0) {
-		scene->stop();
-		mesh->node->remove();
-		scene->removeActor((EffActor*) this);
+		scene->switchScene(new StartScene());
 	}
 }
 

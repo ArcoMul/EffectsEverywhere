@@ -24,6 +24,8 @@ public:
 	virtual bool init (void);
 
 	virtual void update (float deltaTime);
+	//click on button (GUI)
+	virtual void onButtonClick(s32 id);
 
 	virtual void stop ();
 
@@ -87,6 +89,16 @@ public:
 	 */
 	void setManager (scene::ISceneManager* manager);
 
+	/**
+	 * Sets the irrlicht gui manager to this scene
+	 */
+	void setGUI (gui::IGUIEnvironment* gui);
+
+
+	float getDriverWidth();
+
+	float getDriverHeight();
+
 	// Get which keys are pressed
 	// TODO: make special input class, done use the code from the engine
 	InputReceiver* getInput(void);
@@ -114,6 +126,8 @@ public:
 	 */
 	video::ITexture* getTexture (core::stringc pathname);
 
+	void switchScene (EffScene* scene);
+
 	~EffScene(void);
 
 protected:
@@ -122,9 +136,11 @@ protected:
 	// TODO: make special mouse object to do this, not in the effeninge class
 	void setMouseVisible (bool mouseVisible);
 	
+	void closeGame (void);
 	// The Irrlicht scene manager used to spawn object in the scene
 	scene::ISceneManager* manager;
 	ParticleManager* pManager;
+	gui::IGUIEnvironment* gui;
 
 	EffTimer* timer;
 
