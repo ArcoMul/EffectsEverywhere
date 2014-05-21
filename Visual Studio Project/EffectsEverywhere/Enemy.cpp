@@ -2,6 +2,7 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "Robot.h"
+#include "TemporaryParticleEffect.h"
 #include <iostream>
 #include <cmath>
 
@@ -31,13 +32,21 @@ void Enemy::start ()
 	}
 	node = manager->addOctreeSceneNode(meshEnemy, 0);
 
-	// Set the right lightning and position
+	// Set the right lighting and position
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 	node->setPosition (spawnPosition);
 
 	// Give the enemies a triangle selector for ray cast detecting of bullets
 	scene::ITriangleSelector* selector = manager->createOctreeTriangleSelector(meshEnemy, node, 12);
 	node->setTriangleSelector(selector);
+	
+	// Create spawn particle effect
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
+	if (type == Enemy::TYPES::EVIL) {
+		scene->addXMLParticleActor((EffActor*) p, "../../Media/spawn-effect-evil-enemy.xml", this->spawnPosition);
+	} else {
+		scene->addXMLParticleActor((EffActor*) p, "../../Media/spawn-effect-purple-enemy.xml", this->spawnPosition);
+	}
 }
 
 void Enemy::update(float deltaTime)

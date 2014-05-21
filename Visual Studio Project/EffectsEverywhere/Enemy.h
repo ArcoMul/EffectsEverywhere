@@ -16,7 +16,7 @@ class Enemy : public EffActor
 public:
 	
 	enum TYPES {
-		NORMAL = 1,
+		PURPLE = 1,
 		EVIL = 2
 	};
 

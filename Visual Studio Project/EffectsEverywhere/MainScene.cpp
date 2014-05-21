@@ -120,10 +120,6 @@ void MainScene::spawnEnemy (core::vector2df position, Enemy::TYPES type)
 		.05 + (0.03 * (rand() / (float) RAND_MAX))
 	);
 
-	// Create spawn particle effect
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
-	this->addXMLParticleActor((EffActor*) p, "../../Media/purpleEnemySpawnEffect.xml", core::vector3df(position.X, 0, position.Y));
-
 	// Add to enemy list
 	enemies.push_back(enemy);
 

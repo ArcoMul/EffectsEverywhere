@@ -25,7 +25,7 @@ Enemy::TYPES SpawnPoint::popEnemy (void)
 		if ((*enemyTypeToSpawn) > 0 && (rand() / (float) RAND_MAX) < (float) 1 / enemies.size()) {
 			(*enemyTypeToSpawn)--;
 			if (index == 0) {
-				return Enemy::TYPES::NORMAL;
+				return Enemy::TYPES::PURPLE;
 			} else {
 				return Enemy::TYPES::EVIL;
 			}

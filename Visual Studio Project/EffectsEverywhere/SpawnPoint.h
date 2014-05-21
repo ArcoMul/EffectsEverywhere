@@ -32,7 +32,7 @@ public:
 
 	/**
 	 * List with integers of how many enemies there are left to spawn
-	 * 0 = Enemy::TYPES::<first> (NORMAL)
+	 * 0 = Enemy::TYPES::<first> (PURPLE)
 	 * 1 = Enemy::TYPES::<second> (EVIL)
 	 */
 	core::list<int> enemies;
