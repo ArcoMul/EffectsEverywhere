@@ -103,7 +103,7 @@ void MainScene::spawnEnemy (void)
 	std::cout << "Spawn enemy" << std::endl;
 
 	// Create enemy
-	Enemy* enemy = new Enemy(std::bind(&MainScene::onEnemyDies, this), manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
+	Enemy* enemy = new Enemy(std::bind(&MainScene::onEnemyDie, this), manager, core::vector3df(120, 0, -115), robot->node, .05 + (0.03 * (rand() / (float) RAND_MAX)));
 
 	// Create spawn particle effect
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
@@ -145,13 +145,12 @@ void MainScene::createHUD(void)
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
 
 	//Health
-	health = 100;
 	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30,12,105,40), false);
 	healthText->setOverrideColor(video::SColor(255,31,31,31));
-	healthText->setText((core::stringw("Health: ") + core::stringw(health)).c_str());
+	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
 }
 
-void MainScene::onEnemyDies(void)
+void MainScene::onEnemyDie(void)
 {
 	score++;
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
@@ -162,8 +161,7 @@ void MainScene::onEnemyDies(void)
 
 void MainScene::onPlayerHit(void)
 {
-	health -= 10;
-	healthText->setText((core::stringw("Health: ") + core::stringw(health)).c_str());
+	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
 }
 
 void MainScene::update(float deltaTime)

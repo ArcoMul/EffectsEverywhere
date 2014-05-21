@@ -33,7 +33,7 @@ public:
 
 	void createHUD(void);
 
-	void onEnemyDies(void);
+	void onEnemyDie(void);
 
 	void onPlayerHit(void);
 	
@@ -61,7 +61,6 @@ private:
 	int xp;
 
 	gui::IGUIStaticText* healthText;
-	int health;
 };
 
 #endif

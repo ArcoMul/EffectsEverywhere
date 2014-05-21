@@ -18,7 +18,8 @@ class ParticleModel;
 class Robot : public EffActor
 {
 public:
-	Robot (std::function<void(void)> F);
+	
+	Robot (std::function<void(void)> onHit);
 
 	/**
 	 * Create the robot mesh and the gun node and position these on the right position
@@ -55,12 +56,14 @@ public:
 	 */
 	EffActor* mesh;
 
+	int health;
+
 private:
 
 	/**
 	 * The function to call
 	 */
-	std::function<void(void)> f;
+	std::function<void(void)> onHit;
 
 	/**
 	 * Add gun
@@ -137,8 +140,6 @@ private:
 	float maxAcceleration;
 	float damping;
 	core::vector3df velocity;
-
-	int health;
 };
 
 #endif

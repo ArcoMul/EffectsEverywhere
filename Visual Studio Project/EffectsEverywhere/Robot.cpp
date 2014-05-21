@@ -25,10 +25,10 @@ float limit (float value, float max)
 	return value;
 }
 
-Robot::Robot(std::function<void(void)> F)
+Robot::Robot(std::function<void(void)> onHit)
 {
 	// Set some default values
-	this->f = F;
+	this->onHit = onHit;
 	floatDirection = 1;
 	restFloatSpeed = 0.005;
 	movingFloatSpeed = 0.0075;
@@ -204,8 +204,6 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 {
 	if (bulletMesh == "null") return;
 	if (countShootCooldown > 0) return;
-	
-
 
 	// Reset the cooldown
 	countShootCooldown = shootCooldown;
@@ -227,7 +225,7 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 void Robot::hit (int damage, core::vector3df position)
 {
 	health -= damage;
-	f();
+	onHit();
 	
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(400);
 	scene->addXMLParticleActor((EffActor*) p, "../../Media/playerHitEffect.xml", position + core::vector3df(0,12,-5));
