@@ -96,7 +96,7 @@ bool MainScene::init(void)
 	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
 	levelstart = true;
-	
+	createHUD();
 	return true;
 }
 
@@ -105,6 +105,7 @@ void MainScene::startPlaying(void)
 	robot->node->addChild(camera);
 	waveSystem = new WaveSystem();
 	AddWaves();
+	waveSystem->start();
 	collisionLevel->setGravity(core::vector3df(0, -100, 0));
 }
 
