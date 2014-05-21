@@ -28,6 +28,7 @@ bool EffRepeatable::call (float time)
 
 void EffRepeatable::stop(void)
 {
+	// Tell the timer to remove this repeatable
 	timer->remove(this);
 }
 

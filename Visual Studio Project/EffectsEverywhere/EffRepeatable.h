@@ -22,6 +22,9 @@ public:
 	 */
 	bool call (float time);
 
+	/**
+	 * Stop the interval of this repeatable
+	 */
 	void stop(void);
 
 	/**

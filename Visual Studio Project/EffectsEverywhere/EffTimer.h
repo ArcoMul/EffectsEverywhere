@@ -24,6 +24,9 @@ public:
 	 */
 	EffRepeatable* repeat (std::function<void(void)>, float seconds);
 
+	/**
+	 * Remove an repeatable from the timer
+	 */
 	void remove(EffRepeatable* r);
 
 	/**
@@ -38,7 +41,11 @@ public:
 
 private:
 
-	void cleanUp (void);
+	/**
+	 * We dont remove repeatables immideately, only after the update is done.
+	 * This function cleans it up
+	 */
+	void cleanUpRepeatables (void);
 
 	/**
 	 * List of function which need to be checked
@@ -50,7 +57,10 @@ private:
 	 */
 	EffScene* scene;
 
-	core::list<EffRepeatable*> cleanUpList;
+	/**
+	 * List of repeatables to clean up
+	 */
+	core::list<EffRepeatable*> repeatablesToCleanUp;
 };
 
 #endif

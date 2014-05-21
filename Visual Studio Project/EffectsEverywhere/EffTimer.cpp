@@ -26,24 +26,24 @@ void EffTimer::update (float deltaTime)
 	{
 		(**repeatable).call(scene->getTime());
 	}
-	cleanUp();
+	cleanUpRepeatables();
 }
 
 void EffTimer::remove(EffRepeatable* r)
 {
-	std::cout << "EffTimer remove EffRepeatable" << std::endl;
-	cleanUpList.push_back(r);
-	// Remove repeatable from list
+	// Add this repeatable to the back of the clean up list
+	repeatablesToCleanUp.push_back(r);
 }
 
-void EffTimer::cleanUp (void)
+void EffTimer::cleanUpRepeatables (void)
 {
-	for(auto toCleanUp = cleanUpList.begin(); toCleanUp != cleanUpList.end(); ++toCleanUp)
+	// Remove all repeatables in the clean up list from the main list
+	// TODO: should be possible more easily
+	for(auto toCleanUp = repeatablesToCleanUp.begin(); toCleanUp != repeatablesToCleanUp.end(); ++toCleanUp)
 	{
 		for(auto repeatable = repeatables.begin(); repeatable != repeatables.end(); ++repeatable)
 		{
 			if ((*toCleanUp) == (*repeatable)) {
-				std::cout << "EffTimer cleanUp EffRepeatable" << std::endl;
 				repeatables.erase(repeatable);
 				break;
 			}
