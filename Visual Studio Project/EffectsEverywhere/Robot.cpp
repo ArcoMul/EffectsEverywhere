@@ -102,6 +102,7 @@ void Robot::update(float deltaTime)
 		acceleration.Z = damp (acceleration.Z, damping);
 	}
 
+
 	// Movement speed
  	bool goingLeftAndRight = false;
  	// WARNING HACKY: When both a front/back key and a right/left key is pressed reduce the speed,

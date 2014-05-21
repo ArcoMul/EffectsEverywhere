@@ -20,10 +20,11 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
-
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(1400);
+	this->addXMLParticleActor((EffActor*) p, "../../Media/SpawnP1.xml", core::vector3df(0, 100,0));
 	// Create robot actor
 	robot = new Robot ();
-	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
+	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
 	// add Gun & Bullet
@@ -58,9 +59,9 @@ bool MainScene::init(void)
 	// your object (player) to move through walls and other objects. The collision box of the enemy
 	// has been set to 7, 7, 10. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
-	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel = manager->createCollisionResponseAnimator(
+	collisionLevel = manager->createCollisionResponseAnimator(
 			levelSelector, robot->node, core::vector3df(7, 7, 10),
-			core::vector3df(0, -100, 0), core::vector3df(0, 0, 1));
+			core::vector3df(0, -0.1, 0), core::vector3df(0, 0, 1));
 
 	// We add the animator to our collisionNode and drop the selector and collision if
 	// we don't need it anymore.
@@ -88,12 +89,17 @@ bool MainScene::init(void)
 	// the camera follows the robot.
 	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
-	robot->node->addChild(camera);
+	levelstart = true;
+	
+	return true;
+}
 
+void MainScene::startPlaying(void)
+{
+	robot->node->addChild(camera);
 	spawnEnemy ();
 	timer->repeat(std::bind(&MainScene::spawnEnemy, this), 2);
-
-	return true;
+	collisionLevel->setGravity(core::vector3df(0, -100, 0));
 }
 
 void MainScene::spawnEnemy (void)
@@ -121,6 +127,17 @@ void MainScene::update(float deltaTime)
 {
 	EffScene::update(deltaTime);
 
+	
+	if(robot->node->getPosition().Y < 8 && levelstart && robot->node->getRotation().Y < -368)
+	{
+		levelstart = false;
+		this->startPlaying();
+	}
+	if (levelstart)
+	{
+		core::vector3df rot=robot->node->getRotation();
+		robot->node->setRotation(core::vector3df(rot.X,rot.Y += -.3,rot.Z));
+	}
 	// Set where the camera has to look at
 	camera->setTarget(robot->node->getPosition());
 	

@@ -30,9 +30,12 @@ public:
 	~MainScene(void);
 
 	void spawnEnemy(void);
+	void startPlaying(void);
 	
 private:
-
+	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel;
+	bool levelstart;
+	float gravity;
 	/**
 	 * The player
 	 */
