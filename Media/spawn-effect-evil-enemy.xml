@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Particle>
     <Emitter Type="6"/>
-    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="-1" MinZ="-3"/>
     <Direction X="0" Y="0.01" Z="0"/>
     <Position X="0" Y="0" Z="0"/>
     <Center X="0" Y="0" Z="0"/>
@@ -14,7 +14,10 @@
     <MaxStartSize Height="2" Width="2"/>
     <MinStartSize Height="1" Width="1"/>
     <Texture PathName="smoke.png"/>
-    <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="20" LengthCylinder="0" RingThickness="2" UseNormalDirection="244" EveryMeshVertex="246" OutLineOnly="1"/>
+    <Material Type="0"/>
+    <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="20" LengthCylinder="0" RingThickness="2" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
+    <StopEmitting StopEmittingAfter="0"/>
+    <RemoveParticleAfter RemoveParticleAfter="0"/>
     <Affectors>
         <FADE_OUT>
             <FadeOutAffectorTargetColor Alpha="255" Red="250" Green="0" Blue="4"/>

@@ -49,8 +49,6 @@ void Bullet::update (float deltaTime)
 			EffActor* p = new EffActor();
 			scene->addXMLParticleActor(p,enemyHitEffectXML.c_str(),node->getPosition());
 
-			std::cout << "Particle Created!!! " << std::endl;
-
 			(*enemy)->hit(damage);
 			scene->removeActor ((EffActor*) trailEffect);
 			scene->removeActor ((EffActor*) this);
