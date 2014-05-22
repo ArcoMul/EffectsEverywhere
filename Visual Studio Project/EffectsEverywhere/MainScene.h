@@ -13,6 +13,7 @@ using namespace irr;
 class EffEngine;
 class Robot;
 class WaveSystem;
+class GuiAnimation;
 
 class MainScene : public EffScene
 {
@@ -68,13 +69,18 @@ private:
 	 */
 	WaveSystem* waveSystem;
 
+	GuiAnimation* hudBarAnim;
+
 	gui::IGUIStaticText* scoreText;
 	int score;
+	GuiAnimation* scoreAnim;
 
 	gui::IGUIStaticText* xpText;
 	int xp;
+	GuiAnimation* xpAnim;
 
 	gui::IGUIStaticText* healthText;
+	GuiAnimation* healthAnim;
 };
 
 #endif

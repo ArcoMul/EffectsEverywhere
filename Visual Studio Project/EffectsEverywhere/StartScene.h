@@ -1,9 +1,12 @@
 #ifndef STARTSCENE_H_
 #define STARTSCENE_H_
 
+#include <irrlicht.h>
 #include "EffScene.h"
 
 using namespace irr;
+
+class GuiAnimation;
 
 class StartScene : public EffScene
 {
@@ -14,6 +17,8 @@ public:
 	 * Creates all the objects, basically sets up the scene visually
 	 */
 	virtual bool init (void);
+
+	virtual void update (float deltaTime);
 	
 	/**
 	 * When a button gets clicked in the scene
@@ -35,6 +40,17 @@ private:
 	 * The camera in the scene
 	 */
 	scene::ICameraSceneNode* camera;
+
+	GuiAnimation* robotAnim;
+
+	gui::IGUIButton* startButton;
+	GuiAnimation* startButtonAnim;
+
+	gui::IGUIButton* instructionsButton;
+	GuiAnimation* instructionsButtonAnim;
+
+	gui::IGUIButton* quitButton;
+	GuiAnimation* quitButtonAnim;
 };
 
 #endif

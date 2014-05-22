@@ -21,7 +21,7 @@ bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, boo
 	if (!inputReceiver) return false;
 	
 	// Create a device
-	device = createDevice(video::EDT_DIRECT3D9, dimension2d<u32>(width, height), colordepth, fullscreen, false, vsyncenabled, inputReceiver);
+	device = createDevice(video::EDT_DIRECT3D9, dimension2d<u32>(width, height), colordepth, fullscreen, stencilbuffer, vsyncenabled, inputReceiver);
 	if (!device) return false;
 
 	// Get the video driver from the device
