@@ -2,7 +2,6 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "Robot.h"
-#include "TemporaryParticleEffect.h"
 #include <iostream>
 #include <cmath>
 
@@ -41,7 +40,7 @@ void Enemy::start ()
 	node->setTriangleSelector(selector);
 	
 	// Create spawn particle effect
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
+	EffActor* p = new EffActor();
 	if (type == Enemy::TYPES::EVIL) {
 		scene->addXMLParticleActor((EffActor*) p, "../../Media/spawn-effect-evil-enemy.xml", this->spawnPosition);
 	} else {

@@ -9,7 +9,6 @@
 #include "Bullet.h"
 #include "Robot.h"
 #include "EffTimer.h"
-#include "TemporaryParticleEffect.h"
 #include <string>
 #include "StartScene.h"
 #include "WaveSystem.h"
@@ -28,9 +27,6 @@ bool MainScene::init(void)
 {
 	EffScene::init ();
 
-	EffActor* test99 = new EffActor;
-	this->addXMLParticleActor(test99, "../../Media/removeAfterTest.xml", core::vector3df(0,30,0));
-
 	// Create robot actor
 	robot = new Robot (std::bind(&MainScene::onPlayerHit, this));
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
@@ -45,11 +41,9 @@ bool MainScene::init(void)
 			0.6, // speed
 			600, // cooldown
 			"../../Media/shootParticle.xml", // shoot effect
-			200, // shoot effect lifetime
 			"../../Media/HitEffectE.xml", // hit effect
-			400, // hit effect lifetime
-			"../../Media/RockTrailEffect.xml", // bullet trail effect
-			200); // bullet trail effect life time
+			"../../Media/RockTrailEffect.xml"); // bullet trail effect
+			
 
 	// Add floor to scene
 	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
@@ -213,11 +207,8 @@ void MainScene::update(float deltaTime)
 			0.6, // speed
 			600, // cooldown
 			"../../Media/shootParticle.xml", // shoot effect
-			200, // shoot effect lifetime
 			"../../Media/HitEffectE.xml", // hit effect
-			400, // hit effect lifetime
-			"../../Media/RockTrailEffect.xml", // bullet trail effect
-			200); // bullet trail effect life time
+			"../../Media/RockTrailEffect.xml"); // bullet trail effect
 	}
 	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
@@ -229,11 +220,8 @@ void MainScene::update(float deltaTime)
 			1,
 			800,
 			"../../Media/ToxicShootEffect.xml",
-			800,
 			"../../Media/ToxicHitEffect.xml",
-			250,
-			"../../Media/ToxicTrailEffect.xml",
-			200);
+			"../../Media/ToxicTrailEffect.xml");
 	}
 
 	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))

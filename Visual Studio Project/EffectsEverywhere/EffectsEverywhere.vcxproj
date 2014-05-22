@@ -81,7 +81,6 @@
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="SpawnPoint.cpp" />
     <ClCompile Include="StartScene.cpp" />
-    <ClCompile Include="TemporaryParticleEffect.cpp" />
     <ClCompile Include="Wave.cpp" />
     <ClCompile Include="WaveSystem.cpp" />
   </ItemGroup>
@@ -106,7 +105,6 @@
     <ClInclude Include="Robot.h" />
     <ClInclude Include="SpawnPoint.h" />
     <ClInclude Include="StartScene.h" />
-    <ClInclude Include="TemporaryParticleEffect.h" />
     <ClInclude Include="Wave.h" />
     <ClInclude Include="WaveSystem.h" />
   </ItemGroup>
