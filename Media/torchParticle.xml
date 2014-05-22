@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="1"/>
+    <Aabbox MaxX="4" MaxY="0" MaxZ="2" MinX="-4" MinY="0" MinZ="-2"/>
+    <Direction X="-0.005" Y="0.02" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="-30"/>
+    <LifeTime Max="500" Min="100"/>
+    <PPS Max="500" Min="100"/>
+    <MaxStartColor Alpha="255" Red="255" Green="165" Blue="21"/>
+    <MinStartColor Alpha="255" Red="251" Green="255" Blue="15"/>
+    <MaxStartSize Height="3" Width="3"/>
+    <MinStartSize Height="2" Width="2"/>
+    <Texture PathName="fire-particle3.png"/>
+    <Material Type="0"/>
+    <Rest MbNumber="4928240" NormalDirectionModifier="0" Radius="5" LengthCylinder="5" RingThickness="1" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
+    <Affectors>
+        <FADE_OUT>
+            <FadeOutAffectorTargetColor Alpha="0" Red="255" Green="7" Blue="7"/>
+            <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="500"/>
+        </FADE_OUT>
+    </Affectors>
+</Particle>

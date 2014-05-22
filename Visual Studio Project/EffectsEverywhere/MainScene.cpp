@@ -57,6 +57,10 @@ bool MainScene::init(void)
 	// Random particles in the level
 	pManager->spawnXMLParticle("../../Media/levelParticles.xml", core::vector3df(4,2,2));
 
+	pManager->spawnXMLParticle("../../Media/torchParticle.xml", core::vector3df(4,2,2));
+
+	pManager->spawnXMLParticle("../../Media/torchParticle2.xml", core::vector3df(60,2,6));
+
 	// Create a Triangle selector for the level
 	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
 	floor->setTriangleSelector(levelSelector);
