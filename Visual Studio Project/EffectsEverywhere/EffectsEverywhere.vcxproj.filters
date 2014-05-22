@@ -32,6 +32,8 @@
     <ClCompile Include="Wave.cpp" />
     <ClCompile Include="SpawnPoint.cpp" />
     <ClCompile Include="GuiAnimation.cpp" />
+    <ClCompile Include="EvilEnemy.cpp" />
+    <ClCompile Include="PurpleEnemy.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -88,6 +90,8 @@
     <ClInclude Include="GuiAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="EvilEnemy.h" />
+    <ClInclude Include="PurpleEnemy.h" />
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">

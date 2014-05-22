@@ -6,6 +6,8 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "Enemy.h"
+#include "PurpleEnemy.h"
+#include "EvilEnemy.h"
 #include "Bullet.h"
 #include "Robot.h"
 #include "EffTimer.h"
@@ -38,7 +40,7 @@ bool MainScene::init(void)
 			core::vector3df(-8.5, 7, 0), // gun position
 			"../../Media/rock-bullet.obj", // bullet mesh
 			core::vector3df(0, 0, 0), // bullet offset
-			2, // damage
+			5, // damage
 			0.6, // speed
 			600, // cooldown
 			"../../Media/shootParticle.xml", // shoot effect
@@ -112,14 +114,12 @@ void MainScene::spawnEnemy (core::vector2df position, Enemy::TYPES type)
 	std::cout << "Spawn enemy" << std::endl;
 
 	// Create enemy
-	Enemy* enemy = new Enemy(
-		std::bind(&MainScene::onEnemyDie, this),
-		manager,
-		type,
-		core::vector3df(position.X, 0, position.Y),
-		robot->node,
-		.05 + (0.03 * (rand() / (float) RAND_MAX))
-	);
+	Enemy* enemy;
+	if (type == Enemy::TYPES::EVIL) {
+		enemy = (Enemy*) new EvilEnemy(std::bind(&MainScene::onEnemyDie, this), manager, core::vector3df(position.X, 0, position.Y), robot->node);
+	} else {
+		enemy = (Enemy*) new PurpleEnemy(std::bind(&MainScene::onEnemyDie, this), manager, core::vector3df(position.X, 0, position.Y), robot->node);
+	}
 
 	// Add to enemy list
 	enemies.push_back(enemy);
@@ -206,7 +206,7 @@ void MainScene::update(float deltaTime)
 			core::vector3df(-8.5, 7, 0), // gun position
 			"../../Media/rock-bullet.obj", // bullet mesh
 			core::vector3df(0, 0, 0), // bullet offset
-			2, // damage
+			5, // damage
 			0.6, // speed
 			600, // cooldown
 			"../../Media/shootParticle.xml", // shoot effect
@@ -222,7 +222,7 @@ void MainScene::update(float deltaTime)
 			core::vector3df(-1, 2, 0), // gun position
 			"../../Media/toxic-bullet.obj",
 			core::vector3df(-7, 0, 0), // bullet offset
-			5,
+			10,
 			1,
 			800,
 			"../../Media/ToxicShootEffect.xml",
