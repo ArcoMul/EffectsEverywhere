@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="GuiAnimation.cpp" />
     <ClCompile Include="EffActor.cpp" />
     <ClCompile Include="EffRepeatable.cpp" />
     <ClCompile Include="EffTimer.cpp" />
@@ -90,6 +91,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="GuiAnimation.h" />
     <ClInclude Include="EffActor.h" />
     <ClInclude Include="EffRepeatable.h" />
     <ClInclude Include="EffTimer.h" />
