@@ -9,8 +9,8 @@
     <AngleDegrees Max="350"/>
     <LifeTime Max="2000" Min="1300"/>
     <PPS Max="200" Min="50"/>
-    <MaxStartColor Alpha="255" Red="255" Green="255" Blue="255"/>
-    <MinStartColor Alpha="255" Red="0" Green="0" Blue="255"/>
+    <MaxStartColor Alpha="255" Red="230" Green="255" Blue="0"/>
+    <MinStartColor Alpha="255" Red="190" Green="0" Blue="253"/>
     <MaxStartSize Height="1.5" Width="1.5"/>
     <MinStartSize Height="1" Width="1"/>
     <Texture PathName="smoke.png"/>
@@ -20,8 +20,8 @@
     <RemoveParticleAfter RemoveParticleAfter="0"/>
     <Affectors>
         <FADE_OUT>
-            <FadeOutAffectorTargetColor Alpha="0" Red="0" Green="0" Blue="0"/>
-            <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="1000"/>
+            <FadeOutAffectorTargetColor Alpha="0" Red="38" Green="255" Blue="0"/>
+            <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="250"/>
         </FADE_OUT>
     </Affectors>
 </Particle>
