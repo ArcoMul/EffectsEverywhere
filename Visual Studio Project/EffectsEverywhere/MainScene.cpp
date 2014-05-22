@@ -6,6 +6,8 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "Enemy.h"
+#include "PurpleEnemy.h"
+#include "EvilEnemy.h"
 #include "Bullet.h"
 #include "Robot.h"
 #include "EffTimer.h"
@@ -22,6 +24,8 @@ MainScene::MainScene()
 	spawnPoint1 = core::vector2df(120, -115);
 	spawnPoint2 = core::vector2df(110, 110);
 	spawnPoint3 = core::vector2df(-100, 115);
+
+	enemiesAlive = 0;
 }
 
 bool MainScene::init(void)
@@ -38,7 +42,7 @@ bool MainScene::init(void)
 			core::vector3df(-8.5, 7, 0), // gun position
 			"../../Media/rock-bullet.obj", // bullet mesh
 			core::vector3df(0, 0, 0), // bullet offset
-			2, // damage
+			5, // damage
 			0.6, // speed
 			600, // cooldown
 			"../../Media/shootParticle.xml", // shoot effect
@@ -107,7 +111,7 @@ bool MainScene::init(void)
 	createHUD();
 
 	// Create the wave system, add waves, and start the waves
-	waveSystem = new WaveSystem();
+	waveSystem = new WaveSystem(this);
 	AddWaves();
 	waveSystem->start();
 
@@ -116,17 +120,15 @@ bool MainScene::init(void)
 
 void MainScene::spawnEnemy (core::vector2df position, Enemy::TYPES type)
 {
-	std::cout << "Spawn enemy" << std::endl;
+	enemiesAlive++;
 
 	// Create enemy
-	Enemy* enemy = new Enemy(
-		std::bind(&MainScene::onEnemyDie, this),
-		manager,
-		type,
-		core::vector3df(position.X, 0, position.Y),
-		robot->node,
-		.05 + (0.03 * (rand() / (float) RAND_MAX))
-	);
+	Enemy* enemy;
+	if (type == Enemy::TYPES::EVIL) {
+		enemy = (Enemy*) new EvilEnemy(std::bind(&MainScene::onEnemyDie, this), manager, core::vector3df(position.X, 0, position.Y), robot->node);
+	} else {
+		enemy = (Enemy*) new PurpleEnemy(std::bind(&MainScene::onEnemyDie, this), manager, core::vector3df(position.X, 0, position.Y), robot->node);
+	}
 
 	// Add to enemy list
 	enemies.push_back(enemy);
@@ -173,10 +175,19 @@ void MainScene::createHUD(void)
 	xpText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_LOWERRIGHT, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
 	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 1050);
+
+	// Wave text
+	waveText = gui->addStaticText(L"WAVE 1", rect<s32>((this->getDriverWidth() / 2) - 100, 100, (this->getDriverWidth() / 2) + 100, 200), false);
+	waveText->setOverrideColor(video::SColor(255,255,255,255));
+	waveText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 }
 
 void MainScene::onEnemyDie(void)
 {
+	enemiesAlive--;
+
+	waveSystem->checkNextWave();
+
 	score++;
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
 
@@ -213,7 +224,7 @@ void MainScene::update(float deltaTime)
 			core::vector3df(-8.5, 7, 0), // gun position
 			"../../Media/rock-bullet.obj", // bullet mesh
 			core::vector3df(0, 0, 0), // bullet offset
-			2, // damage
+			5, // damage
 			0.6, // speed
 			600, // cooldown
 			"../../Media/shootParticle.xml", // shoot effect
@@ -229,7 +240,7 @@ void MainScene::update(float deltaTime)
 			core::vector3df(-1, 2, 0), // gun position
 			"../../Media/toxic-bullet.obj",
 			core::vector3df(-7, 0, 0), // bullet offset
-			5,
+			10,
 			1,
 			800,
 			"../../Media/ToxicShootEffect.xml",
@@ -257,43 +268,151 @@ void MainScene::update(float deltaTime)
 	}
 }
 
+void MainScene::showWaveText(core::stringw text)
+{
+	waveText->setText(text.c_str());
+	waveText->setOverrideColor(video::SColor(255,255,255,255));
+	timer->time(std::bind(&MainScene::hideWaveText, this), 2);
+}
+
+void MainScene::hideWaveText()
+{
+	waveText->setOverrideColor(video::SColor(0,255,255,255));
+}
+
 void MainScene::AddWaves (void)
 {
-	// Wave 1
-	core::list<int> wave1p1enemies = core::list<int>();
-	wave1p1enemies.push_back(1);
-	wave1p1enemies.push_back(0);
+	// Wave 1 - intro, only one cave
 	core::list<int> wave1p2enemies = core::list<int>();
-	wave1p2enemies.push_back(2);
-	wave1p2enemies.push_back(0);
-	core::list<int> wave1p3enemies = core::list<int>();
-	wave1p3enemies.push_back(1);
-	wave1p3enemies.push_back(0);
+	wave1p2enemies.push_back(3);
 
 	core::list<SpawnPoint> wave1points = core::list<SpawnPoint>();
-	wave1points.push_back(SpawnPoint(spawnPoint1, wave1p1enemies));
 	wave1points.push_back(SpawnPoint(spawnPoint2, wave1p2enemies));
-	wave1points.push_back(SpawnPoint(spawnPoint3, wave1p3enemies));
 	
-	waveSystem->addWave(Wave(this, wave1points, 5));
+	waveSystem->addWave(Wave(this, wave1points, 2));
 
-	// Wave 2
+	// Wave 2 - intro, more caves
 	core::list<int> wave2p1enemies = core::list<int>();
-	wave2p1enemies.push_back(1);
-	wave2p1enemies.push_back(1);
-	core::list<int> wave2p2enemies = core::list<int>();
-	wave2p2enemies.push_back(2);
-	wave2p2enemies.push_back(2);
+	wave2p1enemies.push_back(3);
 	core::list<int> wave2p3enemies = core::list<int>();
-	wave2p3enemies.push_back(1);
-	wave2p3enemies.push_back(1);
+	wave2p3enemies.push_back(3);
 
 	core::list<SpawnPoint> wave2points = core::list<SpawnPoint>();
 	wave2points.push_back(SpawnPoint(spawnPoint1, wave2p1enemies));
-	wave2points.push_back(SpawnPoint(spawnPoint2, wave2p2enemies));
 	wave2points.push_back(SpawnPoint(spawnPoint3, wave2p3enemies));
-
+	
 	waveSystem->addWave(Wave(this, wave2points, 3));
+
+	// Wave 3, - more enemies
+	core::list<int> wave3p1enemies = core::list<int>();
+	wave3p1enemies.push_back(2);
+	core::list<int> wave3p2enemies = core::list<int>();
+	wave3p2enemies.push_back(2);
+	core::list<int> wave3p3enemies = core::list<int>();
+	wave3p3enemies.push_back(2);
+
+	core::list<SpawnPoint> wave3points = core::list<SpawnPoint>();
+	wave3points.push_back(SpawnPoint(spawnPoint1, wave3p1enemies));
+	wave3points.push_back(SpawnPoint(spawnPoint2, wave3p2enemies));
+	wave3points.push_back(SpawnPoint(spawnPoint3, wave3p3enemies));
+	
+	waveSystem->addWave(Wave(this, wave3points, 4));
+
+	// Wave 4, more types of enemies
+	core::list<int> wave4p1enemies = core::list<int>();
+	wave4p1enemies.push_back(1);
+	wave4p1enemies.push_back(1);
+	core::list<int> wave4p2enemies = core::list<int>();
+	wave4p2enemies.push_back(1);
+	core::list<int> wave4p3enemies = core::list<int>();
+	wave4p3enemies.push_back(1);
+	wave4p3enemies.push_back(1);
+
+	core::list<SpawnPoint> wave4points = core::list<SpawnPoint>();
+	wave4points.push_back(SpawnPoint(spawnPoint1, wave4p1enemies));
+	wave4points.push_back(SpawnPoint(spawnPoint2, wave4p2enemies));
+	wave4points.push_back(SpawnPoint(spawnPoint3, wave4p3enemies));
+	
+	waveSystem->addWave(Wave(this, wave4points, 3));
+
+	// Wave 5, a lot of enemies in a short time
+	core::list<int> wave5p2enemies = core::list<int>();
+	wave5p2enemies.push_back(7);
+
+	core::list<SpawnPoint> wave5points = core::list<SpawnPoint>();
+	wave5points.push_back(SpawnPoint(spawnPoint2, wave5p2enemies));
+	
+	waveSystem->addWave(Wave(this, wave5points, 1));
+
+	// Wave 6, a lot of enemies in a short time with different types
+	core::list<int> wave6p1enemies = core::list<int>();
+	wave6p1enemies.push_back(1);
+	core::list<int> wave6p2enemies = core::list<int>();
+	wave6p2enemies.push_back(4);
+	wave6p2enemies.push_back(4);
+	core::list<int> wave6p3enemies = core::list<int>();
+	wave6p3enemies.push_back(1);
+
+	core::list<SpawnPoint> wave6points = core::list<SpawnPoint>();
+	wave6points.push_back(SpawnPoint(spawnPoint1, wave6p1enemies));
+	wave6points.push_back(SpawnPoint(spawnPoint2, wave6p2enemies));
+	wave6points.push_back(SpawnPoint(spawnPoint3, wave6p3enemies));
+	
+	waveSystem->addWave(Wave(this, wave6points, 1.5));
+
+	// Wave 7, a lot of enemies everywhere!
+	core::list<int> wave7p1enemies = core::list<int>();
+	wave7p1enemies.push_back(2);
+	wave7p1enemies.push_back(2);
+	core::list<int> wave7p2enemies = core::list<int>();
+	wave7p2enemies.push_back(4);
+	wave7p2enemies.push_back(4);
+	core::list<int> wave7p3enemies = core::list<int>();
+	wave7p3enemies.push_back(2);
+	wave7p3enemies.push_back(2);
+
+	core::list<SpawnPoint> wave7points = core::list<SpawnPoint>();
+	wave7points.push_back(SpawnPoint(spawnPoint1, wave7p1enemies));
+	wave7points.push_back(SpawnPoint(spawnPoint2, wave7p2enemies));
+	wave7points.push_back(SpawnPoint(spawnPoint3, wave7p3enemies));
+	
+	waveSystem->addWave(Wave(this, wave7points, 2.5));
+
+	// Wave 8, a lot of evil enemies
+	core::list<int> wave8p1enemies = core::list<int>();
+	wave8p1enemies.push_back(0);
+	wave8p1enemies.push_back(3);
+	core::list<int> wave8p2enemies = core::list<int>();
+	wave8p2enemies.push_back(0);
+	wave8p2enemies.push_back(4);
+	core::list<int> wave8p3enemies = core::list<int>();
+	wave8p3enemies.push_back(0);
+	wave8p3enemies.push_back(3);
+
+	core::list<SpawnPoint> wave8points = core::list<SpawnPoint>();
+	wave8points.push_back(SpawnPoint(spawnPoint1, wave8p1enemies));
+	wave8points.push_back(SpawnPoint(spawnPoint2, wave8p2enemies));
+	wave8points.push_back(SpawnPoint(spawnPoint3, wave8p3enemies));
+	
+	waveSystem->addWave(Wave(this, wave8points, 2.5));
+
+	// Wave 9, too much
+	core::list<int> wave9p1enemies = core::list<int>();
+	wave9p1enemies.push_back(4);
+	wave9p1enemies.push_back(4);
+	core::list<int> wave9p2enemies = core::list<int>();
+	wave9p2enemies.push_back(4);
+	wave9p2enemies.push_back(4);
+	core::list<int> wave9p3enemies = core::list<int>();
+	wave9p3enemies.push_back(4);
+	wave9p3enemies.push_back(4);
+
+	core::list<SpawnPoint> wave9points = core::list<SpawnPoint>();
+	wave9points.push_back(SpawnPoint(spawnPoint1, wave9p1enemies));
+	wave9points.push_back(SpawnPoint(spawnPoint2, wave9p2enemies));
+	wave9points.push_back(SpawnPoint(spawnPoint3, wave9p3enemies));
+	
+	waveSystem->addWave(Wave(this, wave9points, 3));
 }
 
 MainScene::~MainScene(void)

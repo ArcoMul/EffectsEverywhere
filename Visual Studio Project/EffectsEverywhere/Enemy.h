@@ -23,7 +23,7 @@ public:
 	/**
 	 * Create a constructor Enemy and give it the engine and position.
 	 */
-	Enemy(std::function<void(void)> onDie, scene::ISceneManager* manager, TYPES type, core::vector3df position, scene::ISceneNode* target, float speed = .05);
+	Enemy(std::function<void(void)> onDie, scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 
 	virtual void start ();
 
@@ -63,17 +63,7 @@ public:
 
 	EffEngine* _engine;
 
-private:
-
-	/**
-	 * The function to call
-	 */
-	std::function<void(void)> onDie;
-
-	/**
-	 * Which ISceneNode to follow when walking
-	 */
-	scene::ISceneNode* target;
+protected:
 
 	/**
 	 * Speed of walking of the enemy
@@ -103,6 +93,24 @@ private:
 	scene::ISceneManager* manager;
 
 	Enemy::TYPES type;
+
+	/**
+	 * The function to call
+	 */
+	std::function<void(void)> onDie;
+
+	/**
+	 * Which ISceneNode to follow when walking
+	 */
+	scene::ISceneNode* target;
+
+	int damage;
+
+	core::stringw meshSrc;
+	core::stringc spawnEffectSrc;
+
+private:
+	
 };
 
 #endif

@@ -37,9 +37,14 @@ public:
 
 	void onPlayerHit(void);
 
+	void showWaveText(core::stringw text);
+	void hideWaveText();
+
 	core::vector2df spawnPoint1;
 	core::vector2df spawnPoint2;
 	core::vector2df spawnPoint3;
+
+	int enemiesAlive;
 	
 private:
 
@@ -77,6 +82,8 @@ private:
 
 	gui::IGUIStaticText* healthText;
 	GuiAnimation* healthAnim;
+
+	gui::IGUIStaticText* waveText;
 };
 
 #endif

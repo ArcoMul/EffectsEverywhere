@@ -11,7 +11,18 @@ EffTimer::EffTimer(EffScene* scene)
 EffRepeatable* EffTimer::repeat (std::function<void(void)> f, float seconds)
 {
 	// Create a new repeatable based on the given paramaters
-	EffRepeatable* r = new EffRepeatable(f, this, scene->getTime(), seconds);
+	EffRepeatable* r = new EffRepeatable(f, this, scene->getTime(), true, seconds);
+
+	// Keep track of the repeatables
+	repeatables.push_back(r);
+
+	return r;
+}
+
+EffRepeatable* EffTimer::time (std::function<void(void)> f, float seconds)
+{
+	// Create a new repeatable based on the given paramaters
+	EffRepeatable* r = new EffRepeatable(f, this, scene->getTime(), false);
 
 	// Keep track of the repeatables
 	repeatables.push_back(r);
