@@ -41,6 +41,8 @@ private:
 	 */
 	scene::ICameraSceneNode* camera;
 
+	GuiAnimation* robotAnim;
+
 	gui::IGUIButton* startButton;
 	GuiAnimation* startButtonAnim;
 
