@@ -103,13 +103,12 @@ bool MainScene::init(void)
 	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
 	levelstart = true;
-	hudActive = false;
 	createHUD();
 	return true;
 }
 
 void MainScene::startPlaying(void)
-{	
+{
 	robot->node->addChild(camera);
 	robot->setLevelStart(true);
 	waveSystem = new WaveSystem();
@@ -154,13 +153,13 @@ void MainScene::createHUD(void)
 	gui::IGUIImage* hudBar = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, -55));
 	hudBar->setScaleImage(true);
 	hudBar->setMinSize(core::dimension2du(this->getDriverWidth(), 55));
-	hudBarAnim = new GuiAnimation(hudBar, 0, 0, .5, 100);
+	hudBarAnim = new GuiAnimation(hudBar, 0, 0, .5, 800);
 
 	//Health
 	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30, -40, 230, 0), false);
 	healthText->setOverrideColor(video::SColor(255,31,31,31));
 	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
-	healthAnim = new GuiAnimation(healthText, 30, 10, .5, 350);
+	healthAnim = new GuiAnimation(healthText, 30, 10, .5, 1050);
 
 	//Score
 	score = 0;
@@ -168,7 +167,7 @@ void MainScene::createHUD(void)
 	scoreText->setOverrideColor(video::SColor(255,31,31,31));
 	scoreText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
-	scoreAnim = new GuiAnimation(scoreText, (this->getDriverWidth() / 2) - 100, 10, .5, 350);
+	scoreAnim = new GuiAnimation(scoreText, (this->getDriverWidth() / 2) - 100, 10, .5, 1050);
 
 	// Xp
 	xp = 0;
@@ -176,7 +175,7 @@ void MainScene::createHUD(void)
 	xpText->setOverrideColor(video::SColor(255,31,31,31));
 	xpText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_LOWERRIGHT, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
-	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 350);
+	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 1050);
 }
 
 void MainScene::onEnemyDie(void)
@@ -197,14 +196,8 @@ void MainScene::update(float deltaTime)
 {
 	EffScene::update(deltaTime);
 
-	if (!levelstart &&(hudActive || (!robot->node->getPosition().X == 0 && !robot->node->getPosition().Z == 0))){
-		hudActive = true;
-		hudBarAnim->update(deltaTime);
-		scoreAnim->update(deltaTime);
-		xpAnim->update(deltaTime);
-		healthAnim->update(deltaTime);
-	}
-
+<<<<<<< HEAD
+	
 	if(robot->node->getPosition().Y < 7.6 && levelstart && robot->node->getRotation().Y < -360)
 	{
 		levelstart = false;
@@ -215,6 +208,13 @@ void MainScene::update(float deltaTime)
 		core::vector3df rot=robot->node->getRotation();
 		robot->node->setRotation(core::vector3df(rot.X,rot.Y += -.3,rot.Z));
 	}
+=======
+	hudBarAnim->update(deltaTime);
+	scoreAnim->update(deltaTime);
+	xpAnim->update(deltaTime);
+	healthAnim->update(deltaTime);
+
+>>>>>>> Github/master
 	// Set where the camera has to look at
 	camera->setTarget(robot->node->getPosition());
 	

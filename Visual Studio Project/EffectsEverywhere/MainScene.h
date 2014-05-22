@@ -48,6 +48,7 @@ private:
 	 * Level start robot is landed
 	 */
 	bool levelstart;
+	bool hudActive;
 	float gravity;
 	/**
 	 * The player
