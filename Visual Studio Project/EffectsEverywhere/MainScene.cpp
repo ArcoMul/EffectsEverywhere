@@ -115,6 +115,7 @@ bool MainScene::init(void)
 void MainScene::startPlaying(void)
 {	
 	robot->node->addChild(camera);
+	camera->setPosition(camera->getPosition()-robot->node->getPosition());
 	robot->setLevelStart(true);
 	waveSystem = new WaveSystem(this);
 	AddWaves();
@@ -181,7 +182,7 @@ void MainScene::createHUD(void)
 	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 350);
 
 	// Wave text
-	waveText = gui->addStaticText(L"WAVE 1", rect<s32>((this->getDriverWidth() / 2) - 100, 100, (this->getDriverWidth() / 2) + 100, 200), false);
+	waveText = gui->addStaticText(L"", rect<s32>((this->getDriverWidth() / 2) - 100, 100, (this->getDriverWidth() / 2) + 100, 200), false);
 	waveText->setOverrideColor(video::SColor(255,255,255,255));
 	waveText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 }
@@ -207,7 +208,6 @@ void MainScene::onPlayerHit(void)
 void MainScene::update(float deltaTime)
 {
 	EffScene::update(deltaTime);
-
 	if (!levelstart &&(hudActive || (!robot->node->getPosition().X == 0 && !robot->node->getPosition().Z == 0))){
 		hudActive = true;
 		hudBarAnim->update(deltaTime);
