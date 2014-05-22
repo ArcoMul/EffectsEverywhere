@@ -26,13 +26,19 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(1400);
-	this->addXMLParticleActor((EffActor*) p, "../../Media/SpawnP1.xml", core::vector3df(0, 100,0));
+	
 	// Create robot actor
 	robot = new Robot (std::bind(&MainScene::onPlayerHit, this));
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(1900);
+	this->addXMLParticleActor((EffActor*) p, "../../Media/SpawnP1.xml", core::vector3df(0, 133,0));
+
+	TemporaryParticleEffect* p2 = new TemporaryParticleEffect(3300);
+	this->addXMLParticleActor((EffActor*) p2, "../../Media/SpawnP2.xml", core::vector3df(0, 0,0));
+
+	robot->node->addChild(p2->node);
 	// add Gun & Bullet
 	robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
 			core::vector3df(-8.5, 7, 0), // gun position
@@ -66,8 +72,8 @@ bool MainScene::init(void)
 	// has been set to 7, 7, 10. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
 	collisionLevel = manager->createCollisionResponseAnimator(
-			levelSelector, robot->node, core::vector3df(7, 7, 10),
-			core::vector3df(0, -0.1, 0), core::vector3df(0, 0, 1));
+	levelSelector, robot->node, core::vector3df(7, 7, 10),
+	core::vector3df(0, -0.1, 0), core::vector3df(0, 0, 1));
 
 	// We add the animator to our collisionNode and drop the selector and collision if
 	// we don't need it anymore.
@@ -103,6 +109,7 @@ bool MainScene::init(void)
 void MainScene::startPlaying(void)
 {
 	robot->node->addChild(camera);
+	robot->setLevelStart(true);
 	waveSystem = new WaveSystem();
 	AddWaves();
 	waveSystem->start();
@@ -183,12 +190,12 @@ void MainScene::update(float deltaTime)
 	EffScene::update(deltaTime);
 
 	
-	if(robot->node->getPosition().Y < 8 && levelstart && robot->node->getRotation().Y < -368)
+	if(robot->node->getPosition().Y < 7.6 && levelstart && robot->node->getRotation().Y < -360)
 	{
 		levelstart = false;
 		this->startPlaying();
 	}
-	if (levelstart)
+	if (levelstart && robot->node->getRotation().Y > -360)
 	{
 		core::vector3df rot=robot->node->getRotation();
 		robot->node->setRotation(core::vector3df(rot.X,rot.Y += -.3,rot.Z));

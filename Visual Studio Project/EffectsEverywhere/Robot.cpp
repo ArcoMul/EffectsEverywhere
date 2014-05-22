@@ -39,6 +39,7 @@ Robot::Robot(std::function<void(void)> onHit)
 	maxAcceleration = .1;
 	damping = .0005;
 	health = 100;
+	levelStart = false;
 }
 
 void Robot::start ()
@@ -72,22 +73,22 @@ void Robot::update(float deltaTime)
 	core::matrix4 mat = node->getAbsoluteTransformation();
  
 	// When the W key is down
-	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_W)) {
+	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_W) && levelStart) {
 		velocity.Z = -.0006;
 	}
 	// When the S key is down go back
-	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_S)) {
+	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_S) && levelStart) {
 		velocity.Z = .0006;
 	} else {
 		velocity.Z = 0;
 	}
 	
 	// When the A key is down go right
-	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_A)) {
+	if(scene->getInput()->IsKeyDown(irr::KEY_KEY_A) && levelStart) {
 		velocity.X = .0006;
 	}
 	// When the D key is down go left
-	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_D)) {
+	else if(scene->getInput()->IsKeyDown(irr::KEY_KEY_D) && levelStart) {
 		velocity.X = -.0006;
 	} else {
 		velocity.X = 0;
@@ -145,8 +146,9 @@ void Robot::update(float deltaTime)
 	mesh->node->setPosition (meshPosition);
 
 	// Add deltaMouse, the change of mouse position, to the rotation of the robot
-    rot.Y += -.3 * scene->getDeltaMouse().X;
-
+	if(levelStart){
+		rot.Y += -.3 * scene->getDeltaMouse().X;
+	}
 	// Set the newly calculated position and rotation
 	node->setPosition(pos);
 	node->setRotation(rot);
@@ -242,6 +244,11 @@ void Robot::hit (int damage, core::vector3df position)
 	if (health <= 0) {
 		scene->switchScene(new StartScene());
 	}
+}
+
+void Robot::setLevelStart(bool levelStart)
+{
+	this->levelStart = levelStart;
 }
 
 Robot::~Robot(void)

@@ -43,6 +43,9 @@ public:
 private:
 	void AddWaves (void);
 	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel;
+	/**
+	 * Level start robot is landed
+	 */
 	bool levelstart;
 	float gravity;
 	/**
