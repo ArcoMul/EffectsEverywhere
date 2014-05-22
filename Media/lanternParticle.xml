@@ -7,11 +7,11 @@
     <Center X="0" Y="0" Z="0"/>
     <Normal X="0" Y="0" Z="0"/>
     <AngleDegrees Max="-30"/>
-    <LifeTime Max="500" Min="100"/>
+    <LifeTime Max="250" Min="50"/>
     <PPS Max="500" Min="100"/>
     <MaxStartColor Alpha="255" Red="255" Green="165" Blue="21"/>
     <MinStartColor Alpha="255" Red="251" Green="255" Blue="15"/>
-    <MaxStartSize Height="3.5" Width="3.5"/>
+    <MaxStartSize Height="3" Width="3"/>
     <MinStartSize Height="2" Width="2"/>
     <Texture PathName="fire-particle3.png"/>
     <Material Type="0"/>
