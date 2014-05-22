@@ -3,6 +3,8 @@
 
 #include <functional>
 
+class EffTimer;
+
 class EffRepeatable
 {
 public:
@@ -13,12 +15,17 @@ public:
 	 * startTime - when this repeatable was created / called for the last time
 	 * repeatAfter - call the functino of this repeatable every x seconds
 	 */
-	EffRepeatable(std::function<void(void)> f, float startTime, float repeatAfter);
+	EffRepeatable(std::function<void(void)> f, EffTimer* timer, float startTime, float repeatAfter);
 
 	/**
 	 * Check if, and if so, call the function of this repeatable
 	 */
 	bool call (float time);
+
+	/**
+	 * Stop the interval of this repeatable
+	 */
+	void stop(void);
 
 	/**
 	 * Deconstructor
@@ -41,6 +48,8 @@ private:
 	 * Call this repeatable every x seconds
 	 */
 	float repeatAfter;
+
+	EffTimer* timer;
 };
 
 #endif
