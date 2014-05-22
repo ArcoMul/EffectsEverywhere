@@ -6,11 +6,10 @@
 #include <iostream>
 #include <cmath>
 
-Enemy::Enemy(std::function<void(void)> onDie,scene::ISceneManager* manager, Enemy::TYPES type, core::vector3df position, scene::ISceneNode* target, float speed)
+Enemy::Enemy(std::function<void(void)> onDie,scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
 {
 	this->onDie = onDie;
 	this->manager = manager;
-	this->type = type;
 	this->target = target;
 	this->speed = speed;
 	this->health = 5;
@@ -25,11 +24,7 @@ void Enemy::start ()
 
 	// Get the mesh
 	scene::IMesh* meshEnemy;
-	if (type == Enemy::TYPES::EVIL) {
-		meshEnemy = manager->getMesh("../../Media/enemy-devil.obj");
-	} else {
-		meshEnemy = manager->getMesh("../../Media/enemy.obj");
-	}
+	meshEnemy = manager->getMesh(this->meshSrc);
 	node = manager->addOctreeSceneNode(meshEnemy, 0);
 
 	// Set the right lighting and position
@@ -42,11 +37,7 @@ void Enemy::start ()
 	
 	// Create spawn particle effect
 	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
-	if (type == Enemy::TYPES::EVIL) {
-		scene->addXMLParticleActor((EffActor*) p, "../../Media/spawn-effect-evil-enemy.xml", this->spawnPosition);
-	} else {
-		scene->addXMLParticleActor((EffActor*) p, "../../Media/spawn-effect-purple-enemy.xml", this->spawnPosition);
-	}
+	scene->addXMLParticleActor((EffActor*) p, this->spawnEffectSrc.c_str(), this->spawnPosition);
 }
 
 void Enemy::update(float deltaTime)
@@ -133,7 +124,7 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 {
 	if (cooldown <= 0)
 	{
-		robot->hit(10, position);
+		robot->hit(damage, position);
 		cooldown = 500;
 	}
 }
