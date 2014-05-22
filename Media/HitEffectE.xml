@@ -17,6 +17,6 @@
     <Material Type="0"/>
     <Rest MbNumber="0" NormalDirectionModifier="1.82246e-27" Radius="1.82235e-27" LengthCylinder="1.82229e-27" RingThickness="1.8224e-27" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
     <StopEmitting StopEmittingAfter="0"/>
-    <RemoveParticleAfter RemoveParticleAfter="1000"/>
+    <RemoveParticleAfter RemoveParticleAfter="400"/>
     <Affectors/>
 </Particle>

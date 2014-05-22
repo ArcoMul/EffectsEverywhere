@@ -17,7 +17,7 @@
     <Material Type="0"/>
     <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="10" LengthCylinder="10" RingThickness="0" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
     <StopEmitting StopEmittingAfter="0"/>
-    <RemoveParticleAfter RemoveParticleAfter="0"/>
+    <RemoveParticleAfter RemoveParticleAfter="800"/>
     <Affectors>
         <SCALE>
             <ScaleAffectorScaleTo Height="4" Width="4"/>

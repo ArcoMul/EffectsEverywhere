@@ -17,7 +17,7 @@
     <Material Type="0"/>
     <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="20" LengthCylinder="0" RingThickness="2" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
     <StopEmitting StopEmittingAfter="0"/>
-    <RemoveParticleAfter RemoveParticleAfter="0"/>
+    <RemoveParticleAfter RemoveParticleAfter="800"/>
     <Affectors>
         <FADE_OUT>
             <FadeOutAffectorTargetColor Alpha="255" Red="250" Green="0" Blue="4"/>
