@@ -3,10 +3,12 @@
 
 #include "Wave.h"
 
+class MainScene;
+
 class WaveSystem
 {
 public:
-	WaveSystem(void);
+	WaveSystem(MainScene* scene);
 	~WaveSystem(void);
 
 	/**
@@ -24,11 +26,31 @@ public:
 	 */
 	void onWaveDone (void);
 
+	/**
+	 * Check if the next wave should start, or not yet
+	 */
+	void checkNextWave (void);
+
 private:
 	/**
 	 * List with all the waves in this system
 	 */
 	core::list<Wave> waves;
+
+	/**
+	 * The total amount of waves at the start of the game
+	 */
+	int totalWaves;
+
+	/**
+	 * Reference to the scene, to spawn certain object and call functions
+	 */
+	MainScene* scene;
+
+	/**
+	 * If there is a wave spawning enemies
+	 */
+	bool isSpawning;
 };
 
 #endif
