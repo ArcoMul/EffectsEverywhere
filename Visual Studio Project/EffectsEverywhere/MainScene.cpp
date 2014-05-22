@@ -31,12 +31,19 @@ MainScene::MainScene()
 bool MainScene::init(void)
 {
 	EffScene::init ();
-
+	
 	// Create robot actor
 	robot = new Robot (std::bind(&MainScene::onPlayerHit, this));
-	addNodeActor ((EffActor*) robot, core::vector3df(0, 7.5f, 0), core::vector3df(0, 0, 0));
+	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
+	TemporaryParticleEffect* p = new TemporaryParticleEffect(1900);
+	this->addXMLParticleActor((EffActor*) p, "../../Media/SpawnP1.xml", core::vector3df(0, 133,0));
+
+	TemporaryParticleEffect* p2 = new TemporaryParticleEffect(3300);
+	this->addXMLParticleActor((EffActor*) p2, "../../Media/SpawnP2.xml", core::vector3df(0, 0,0));
+
+	robot->node->addChild(p2->node);
 	// add Gun & Bullet
 	robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
 			core::vector3df(-8.5, 7, 0), // gun position
@@ -76,9 +83,9 @@ bool MainScene::init(void)
 	// your object (player) to move through walls and other objects. The collision box of the enemy
 	// has been set to 7, 7, 10. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
-	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel = manager->createCollisionResponseAnimator(
-			levelSelector, robot->node, core::vector3df(7, 7, 10),
-			core::vector3df(0, -100, 0), core::vector3df(0, 0, 1));
+	collisionLevel = manager->createCollisionResponseAnimator(
+	levelSelector, robot->node, core::vector3df(7, 7, 10),
+	core::vector3df(0, -0.1, 0), core::vector3df(0, 0, 1));
 
 	// We add the animator to our collisionNode and drop the selector and collision if
 	// we don't need it anymore.
@@ -106,16 +113,21 @@ bool MainScene::init(void)
 	// the camera follows the robot.
 	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
-	robot->node->addChild(camera);
-
+	levelstart = true;
+	hudActive = false;
 	createHUD();
+	return true;
+}
 
-	// Create the wave system, add waves, and start the waves
+void MainScene::startPlaying(void)
+{	
+	robot->node->addChild(camera);
+	camera->setPosition(camera->getPosition()-robot->node->getPosition());
+	robot->setLevelStart(true);
 	waveSystem = new WaveSystem(this);
 	AddWaves();
 	waveSystem->start();
-
-	return true;
+	collisionLevel->setGravity(core::vector3df(0, -100, 0));
 }
 
 void MainScene::spawnEnemy (core::vector2df position, Enemy::TYPES type)
@@ -152,13 +164,13 @@ void MainScene::createHUD(void)
 	gui::IGUIImage* hudBar = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, -55));
 	hudBar->setScaleImage(true);
 	hudBar->setMinSize(core::dimension2du(this->getDriverWidth(), 55));
-	hudBarAnim = new GuiAnimation(hudBar, 0, 0, .5, 800);
+	hudBarAnim = new GuiAnimation(hudBar, 0, 0, .5, 100);
 
 	//Health
 	healthText = gui->addStaticText(L"Health: 100" , rect<s32>(30, -40, 230, 0), false);
 	healthText->setOverrideColor(video::SColor(255,31,31,31));
 	healthText->setText((core::stringw("Health: ") + core::stringw(robot->health)).c_str());
-	healthAnim = new GuiAnimation(healthText, 30, 10, .5, 1050);
+	healthAnim = new GuiAnimation(healthText, 30, 10, .5, 350);
 
 	//Score
 	score = 0;
@@ -166,7 +178,7 @@ void MainScene::createHUD(void)
 	scoreText->setOverrideColor(video::SColor(255,31,31,31));
 	scoreText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
-	scoreAnim = new GuiAnimation(scoreText, (this->getDriverWidth() / 2) - 100, 10, .5, 1050);
+	scoreAnim = new GuiAnimation(scoreText, (this->getDriverWidth() / 2) - 100, 10, .5, 350);
 
 	// Xp
 	xp = 0;
@@ -174,10 +186,10 @@ void MainScene::createHUD(void)
 	xpText->setOverrideColor(video::SColor(255,31,31,31));
 	xpText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_LOWERRIGHT, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
-	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 1050);
+	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 350);
 
 	// Wave text
-	waveText = gui->addStaticText(L"WAVE 1", rect<s32>((this->getDriverWidth() / 2) - 100, 100, (this->getDriverWidth() / 2) + 100, 200), false);
+	waveText = gui->addStaticText(L"", rect<s32>((this->getDriverWidth() / 2) - 100, 100, (this->getDriverWidth() / 2) + 100, 200), false);
 	waveText->setOverrideColor(video::SColor(255,255,255,255));
 	waveText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 }
@@ -203,12 +215,24 @@ void MainScene::onPlayerHit(void)
 void MainScene::update(float deltaTime)
 {
 	EffScene::update(deltaTime);
+	if (!levelstart &&(hudActive || (!robot->node->getPosition().X == 0 && !robot->node->getPosition().Z == 0))){
+		hudActive = true;
+		hudBarAnim->update(deltaTime);
+		scoreAnim->update(deltaTime);
+		xpAnim->update(deltaTime);
+		healthAnim->update(deltaTime);
+	}
 
-	hudBarAnim->update(deltaTime);
-	scoreAnim->update(deltaTime);
-	xpAnim->update(deltaTime);
-	healthAnim->update(deltaTime);
-
+	if(robot->node->getPosition().Y < 7.6 && levelstart && robot->node->getRotation().Y < -360)
+	{
+		levelstart = false;
+		this->startPlaying();
+	}
+	if (levelstart && robot->node->getRotation().Y > -360)
+	{
+		core::vector3df rot=robot->node->getRotation();
+		robot->node->setRotation(core::vector3df(rot.X,rot.Y += -.3,rot.Z));
+	}
 	// Set where the camera has to look at
 	camera->setTarget(robot->node->getPosition());
 	
