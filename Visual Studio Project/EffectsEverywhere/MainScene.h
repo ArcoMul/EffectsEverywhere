@@ -30,7 +30,7 @@ public:
 	~MainScene(void);
 
 	void spawnEnemy (core::vector2df position, Enemy::TYPES type);
-
+	void startPlaying(void);
 	void createHUD(void);
 
 	void onEnemyDie(void);
@@ -47,9 +47,14 @@ public:
 	int enemiesAlive;
 	
 private:
-
 	void AddWaves (void);
-
+	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel;
+	/**
+	 * Level start robot is landed
+	 */
+	bool levelstart;
+	bool hudActive;
+	float gravity;
 	/**
 	 * The player
 	 */
