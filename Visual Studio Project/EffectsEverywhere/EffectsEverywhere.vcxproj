@@ -65,6 +65,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="EvilEnemy.cpp" />
     <ClCompile Include="GuiAnimation.cpp" />
     <ClCompile Include="EffActor.cpp" />
@@ -93,6 +94,7 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EndScene.h" />
     <ClInclude Include="EvilEnemy.h" />
     <ClInclude Include="GuiAnimation.h" />
     <ClInclude Include="EffActor.h" />
