@@ -275,6 +275,11 @@ void MainScene::update(float deltaTime)
 		switchScene(new EndScene(levelWon,score));
 		return;
 	}
+	if (levelWon)
+	{
+		switchScene(new EndScene(levelWon,score));
+		return;
+	}
 	// Check if there was collision with an enemy
 	core::vector3df collisionPosition;
 	for(core::list<Enemy*>::Iterator enemy = enemies.begin(); enemy != enemies.end(); enemy++)
@@ -285,14 +290,10 @@ void MainScene::update(float deltaTime)
 			// switch scene when the player dies
 			if (robot->health <= 0) {
 				switchScene(new EndScene(levelWon,score));
+				return;
 				}
 			break;
 		}
-	}
-	if (levelWon)
-	{
-		switchScene(new EndScene(levelWon,score));
-		return;
 	}
 }
 
