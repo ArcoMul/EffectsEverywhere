@@ -45,6 +45,7 @@ public:
 	core::vector2df spawnPoint3;
 
 	int enemiesAlive;
+	int getScore ();
 	
 private:
 	void AddWaves (void);

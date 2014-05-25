@@ -18,6 +18,7 @@
 #include "Wave.h"
 #include "SpawnPoint.h"
 #include "GuiAnimation.h"
+#include "EndScene.h"
 
 MainScene::MainScene()
 {
@@ -191,13 +192,13 @@ void MainScene::onEnemyDie(void)
 {
 	enemiesAlive--;
 
-	waveSystem->checkNextWave();
-
 	score++;
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
 
 	xp++;
 	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
+	
+	waveSystem->checkNextWave();
 }
 
 void MainScene::onPlayerHit(void)
@@ -270,7 +271,7 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))
 	{
-		switchScene(new StartScene());
+		switchScene(new EndScene(false,score));
 		return;
 	}
 	// Check if there was collision with an enemy
@@ -280,6 +281,10 @@ void MainScene::update(float deltaTime)
 		// If there was collision tell the enemy that it can hit the robot
 		if(!(*enemy)->isDeath && (*enemy)->collisionOccurred(&collisionPosition)) {
 			(*enemy)->hit (robot, collisionPosition);
+			// switch scene when the player dies
+			if (robot->health <= 0) {
+				switchScene(new EndScene(false,score));
+				}
 			break;
 		}
 	}
@@ -430,6 +435,10 @@ void MainScene::AddWaves (void)
 	wave9points.push_back(SpawnPoint(spawnPoint3, wave9p3enemies));
 	
 	waveSystem->addWave(Wave(this, wave9points, 3));
+}
+
+int MainScene::getScore(){
+	return score;
 }
 
 MainScene::~MainScene(void)
