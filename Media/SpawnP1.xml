@@ -7,8 +7,8 @@
     <Center X="0" Y="0" Z="0"/>
     <Normal X="0" Y="0" Z="0"/>
     <AngleDegrees Max="0"/>
-    <LifeTime Max="20000" Min="15000"/>
-    <PPS Max="2000" Min="500"/>
+    <LifeTime Max="2500" Min="2000"/>
+    <PPS Max="250" Min="150"/>
     <MaxStartColor Alpha="180" Red="147" Green="255" Blue="246"/>
     <MinStartColor Alpha="180" Red="0" Green="243" Blue="255"/>
     <MaxStartSize Height="5" Width="1"/>
@@ -16,7 +16,7 @@
     <Texture PathName="lightFalloff.png"/>
     <Material Type="0"/>
     <Rest MbNumber="-1394265718" NormalDirectionModifier="0" Radius="20" LengthCylinder="50" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
-    <StopEmitting StopEmittingAfter="1900"/>
-    <RemoveParticleAfter RemoveParticleAfter="1900"/>
+    <StopEmitting StopEmittingAfter="3000"/>
+    <RemoveParticleAfter RemoveParticleAfter="3000"/>
     <Affectors/>
 </Particle>
