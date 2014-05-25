@@ -24,14 +24,14 @@ bool EndScene::init(void)
 	// Background
 	gui->addImage(this->getTexture("../../Media/menu/background.png"), core::position2d<int>(0, 0));
 
-	//Won/Lost
+	// Won/Lost
 	if(won){
 		gui->addImage(this->getTexture("../../Media/menu/you-won.png"), core::position2d<int>(200, 35));
 	}else{
 		gui->addImage(this->getTexture("../../Media/menu/you-lost.png"), core::position2d<int>(200, 35));
 	}
 
-	//Score
+	// Score
 	IGUISkin* skin = gui->getSkin();
 	IGUIFont* font = gui->getFont("../../Media/fonts/Score.xml");
 	if (font) {

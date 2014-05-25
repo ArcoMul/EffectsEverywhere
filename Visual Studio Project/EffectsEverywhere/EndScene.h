@@ -11,6 +11,13 @@ class GuiAnimation;
 class EndScene : public EffScene
 {
 public:
+
+	enum BUTTONS
+	{
+		GUI_ID_MAIN_BUTTON = 101,
+		GUI_ID_RESTART_BUTTON
+	};
+
 	EndScene(bool won, int score);
 
 	/**
@@ -22,18 +29,8 @@ public:
 	virtual void onButtonClick(s32 id);
 
 	~EndScene(void);
-
-	
-
-	enum BUTTONS
-	{
-		GUI_ID_MAIN_BUTTON = 101,
-		GUI_ID_RESTART_BUTTON
-	};
 	
 private:
-
-
 	/**
 	 * The camera in the scene
 	 */
@@ -48,7 +45,6 @@ private:
 
 	gui::IGUIButton* backButton;
 	GuiAnimation* backButtonAnim;
-
 };
 
 #endif
