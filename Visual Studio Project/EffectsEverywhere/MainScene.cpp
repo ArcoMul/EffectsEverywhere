@@ -108,6 +108,7 @@ bool MainScene::init(void)
 	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
 	levelstart = true;
+	levelWon = false;
 	hudActive = false;
 	createHUD();
 	return true;
@@ -271,7 +272,7 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))
 	{
-		switchScene(new EndScene(false,score));
+		switchScene(new EndScene(levelWon,score));
 		return;
 	}
 	// Check if there was collision with an enemy
@@ -283,10 +284,15 @@ void MainScene::update(float deltaTime)
 			(*enemy)->hit (robot, collisionPosition);
 			// switch scene when the player dies
 			if (robot->health <= 0) {
-				switchScene(new EndScene(false,score));
+				switchScene(new EndScene(levelWon,score));
 				}
 			break;
 		}
+	}
+	if (levelWon)
+	{
+		switchScene(new EndScene(levelWon,score));
+		return;
 	}
 }
 
@@ -339,7 +345,7 @@ void MainScene::AddWaves (void)
 	wave3points.push_back(SpawnPoint(spawnPoint3, wave3p3enemies));
 	
 	waveSystem->addWave(Wave(this, wave3points, 4));
-
+	
 	// Wave 4, more types of enemies
 	core::list<int> wave4p1enemies = core::list<int>();
 	wave4p1enemies.push_back(1);
@@ -437,8 +443,8 @@ void MainScene::AddWaves (void)
 	waveSystem->addWave(Wave(this, wave9points, 3));
 }
 
-int MainScene::getScore(){
-	return score;
+void MainScene::setLevelWon(bool levelWon){
+	this->levelWon = levelWon;
 }
 
 MainScene::~MainScene(void)

@@ -37,8 +37,7 @@ void WaveSystem::onWaveDone (void)
 
 	// No more waves? You won the game!
 	if (waves.size() == 0) {
-		scene->switchScene(new EndScene(true,scene->getScore()));
-		std::cout << "You won the game!" << std::endl;
+		scene->setLevelWon(true);
 		return;
 	}
 
