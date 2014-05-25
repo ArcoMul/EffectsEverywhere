@@ -37,13 +37,12 @@ bool MainScene::init(void)
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(1900);
-	this->addXMLParticleActor((EffActor*) p, "../../Media/SpawnP1.xml", core::vector3df(0, 133,0));
+	this->addXMLParticleActor(new EffActor(), "../../Media/SpawnP1.xml", core::vector3df(0, 133,0));
 
-	TemporaryParticleEffect* p2 = new TemporaryParticleEffect(3300);
-	this->addXMLParticleActor((EffActor*) p2, "../../Media/SpawnP2.xml", core::vector3df(0, 0,0));
-
+	EffActor* p2 = new EffActor();
+	this->addXMLParticleActor(p2, "../../Media/SpawnP2.xml", core::vector3df(0, 0,0));
 	robot->node->addChild(p2->node);
+
 	// add Gun & Bullet
 	robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
 			core::vector3df(-8.5, 7, 0), // gun position
