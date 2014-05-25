@@ -90,8 +90,12 @@
     <ClInclude Include="GuiAnimation.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="EvilEnemy.h" />
-    <ClInclude Include="PurpleEnemy.h" />
+    <ClInclude Include="EvilEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="PurpleEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
