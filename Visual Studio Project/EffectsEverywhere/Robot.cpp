@@ -8,8 +8,6 @@
 #include <iostream>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
-#include "StartScene.h"
-
 
 float damp (float acc, float damp)
 {
@@ -239,11 +237,6 @@ void Robot::hit (int damage, core::vector3df position)
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
 	particleNode->addAffector(affector);
 	affector->drop();
-
-	// switch scene when the player dies
-	if (health <= 0) {
-		scene->switchScene(new StartScene());
-	}
 }
 
 void Robot::setLevelStart(bool levelStart)

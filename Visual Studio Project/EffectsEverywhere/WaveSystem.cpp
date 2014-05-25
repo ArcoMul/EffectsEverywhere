@@ -1,5 +1,6 @@
 #include "WaveSystem.h"
 #include "MainScene.h"
+#include "EndScene.h"
 
 WaveSystem::WaveSystem(MainScene* scene)
 {
@@ -36,7 +37,7 @@ void WaveSystem::onWaveDone (void)
 
 	// No more waves? You won the game!
 	if (waves.size() == 0) {
-		std::cout << "You won the game!" << std::endl;
+		scene->setLevelWon(true);
 		return;
 	}
 

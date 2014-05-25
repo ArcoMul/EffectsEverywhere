@@ -45,6 +45,7 @@ public:
 	core::vector2df spawnPoint3;
 
 	int enemiesAlive;
+	void setLevelWon(bool levelWon);
 	
 private:
 	void AddWaves (void);
@@ -53,6 +54,7 @@ private:
 	 * Level start robot is landed
 	 */
 	bool levelstart;
+	bool levelWon;
 	bool hudActive;
 	float gravity;
 	/**
