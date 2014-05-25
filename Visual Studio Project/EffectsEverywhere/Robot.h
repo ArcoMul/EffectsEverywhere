@@ -48,6 +48,8 @@ public:
 	 */
 	void hit (int damage, core::vector3df position);
 
+	void setLevelStart(bool levelStart);
+
 	~Robot(void);
 
 	/**
@@ -132,6 +134,11 @@ private:
 	float maxAcceleration;
 	float damping;
 	core::vector3df velocity;
+	
+	/**
+	 * is level start
+	 */
+	bool levelStart;
 };
 
 #endif

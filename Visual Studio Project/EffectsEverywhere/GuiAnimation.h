@@ -15,18 +15,19 @@ public:
 	 * speed: how fast the element should move
 	 * delay: after how many miliseconds the animation should start
 	 */
-	GuiAnimation(gui::IGUIElement* element, float x, float y, float speed, float delay);
+	GuiAnimation(gui::IGUIElement* element, float x, float y, float speed, float delay, bool loop = false);
 	void update (float deltaTime);
 	~GuiAnimation(void);
 
 private:
 	gui::IGUIElement* element;
-	float x;
-	float y;
 	float speed;
 	float delay;
 	float running;
+	bool loop;
 	core::vector2df position;
+	core::vector2df goalPosition;
+	core::vector2df startPosition;
 };
 
 #endif

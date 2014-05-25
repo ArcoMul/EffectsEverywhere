@@ -30,21 +30,33 @@ public:
 	~MainScene(void);
 
 	void spawnEnemy (core::vector2df position, Enemy::TYPES type);
-
+	void startPlaying(void);
 	void createHUD(void);
 
 	void onEnemyDie(void);
 
 	void onPlayerHit(void);
 
+	void showWaveText(core::stringw text);
+	void hideWaveText();
+
 	core::vector2df spawnPoint1;
 	core::vector2df spawnPoint2;
 	core::vector2df spawnPoint3;
+
+	int enemiesAlive;
+	void setLevelWon(bool levelWon);
 	
 private:
-
 	void AddWaves (void);
-
+	scene::ISceneNodeAnimatorCollisionResponse* collisionLevel;
+	/**
+	 * Level start robot is landed
+	 */
+	bool levelstart;
+	bool levelWon;
+	bool hudActive;
+	float gravity;
 	/**
 	 * The player
 	 */
@@ -77,6 +89,8 @@ private:
 
 	gui::IGUIStaticText* healthText;
 	GuiAnimation* healthAnim;
+
+	gui::IGUIStaticText* waveText;
 };
 
 #endif

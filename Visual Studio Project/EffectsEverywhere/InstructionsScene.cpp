@@ -18,10 +18,12 @@ bool InstructionsScene::init(void)
 	setMouseVisible(true);
 	
 	// Background
-	gui->addImage(this->getTexture("../../Media/menu/menu-help-background.png"), core::position2d<int>(0, 0));
+	gui->addImage(this->getTexture("../../Media/menu/background.png"), core::position2d<int>(0, 0));
+
+	gui->addImage(this->getTexture("../../Media/menu/menu-help.png"), core::position2d<int>(340, 135));
 
 	// Back button
-	IGUIButton *backButton = gui->addButton(rect<s32>(80,470,251,527), 0, GUI_ID_BACK_BUTTON);
+	IGUIButton *backButton = gui->addButton(rect<s32>(365,547,565,647), 0, GUI_ID_BACK_BUTTON);
 	backButton->setDrawBorder(false);
 	backButton->setImage(getTexture("../../media/menu/button-back-default.png"));
 	backButton->setPressedImage(getTexture("../../media/menu/button-back-active.png"));

@@ -22,7 +22,7 @@ public:
 	/**
 	 * Interval function to spawn enemies
 	 */
-	void spawnEnemies ();
+	void spawnEnemies (void);
 
 	~Wave(void);
 

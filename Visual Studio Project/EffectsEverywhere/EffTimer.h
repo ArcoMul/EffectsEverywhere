@@ -25,6 +25,11 @@ public:
 	EffRepeatable* repeat (std::function<void(void)>, float seconds);
 
 	/**
+	 * Tell the timer to call the given function in x seconds
+	 */
+	EffRepeatable* time (std::function<void(void)>, float seconds);
+
+	/**
 	 * Remove an repeatable from the timer
 	 */
 	void remove(EffRepeatable* r);

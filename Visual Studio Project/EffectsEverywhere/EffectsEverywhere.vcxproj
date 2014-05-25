@@ -65,6 +65,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="EndScene.cpp" />
+    <ClCompile Include="EvilEnemy.cpp" />
     <ClCompile Include="GuiAnimation.cpp" />
     <ClCompile Include="EffActor.cpp" />
     <ClCompile Include="EffRepeatable.cpp" />
@@ -78,6 +80,7 @@
     <ClCompile Include="InstructionsScene.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="MainScene.cpp" />
+    <ClCompile Include="PurpleEnemy.cpp" />
     <ClCompile Include="Robot.cpp" />
     <ClCompile Include="SpawnPoint.cpp" />
     <ClCompile Include="StartScene.cpp" />
@@ -90,6 +93,8 @@
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="EndScene.h" />
+    <ClInclude Include="EvilEnemy.h" />
     <ClInclude Include="GuiAnimation.h" />
     <ClInclude Include="EffActor.h" />
     <ClInclude Include="EffRepeatable.h" />
@@ -102,6 +107,7 @@
     <ClInclude Include="InputReceiver.h" />
     <ClInclude Include="InstructionsScene.h" />
     <ClInclude Include="MainScene.h" />
+    <ClInclude Include="PurpleEnemy.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="SpawnPoint.h" />
     <ClInclude Include="StartScene.h" />
