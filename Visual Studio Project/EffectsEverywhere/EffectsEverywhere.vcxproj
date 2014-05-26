@@ -67,6 +67,7 @@
   <ItemGroup>
     <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="EvilEnemy.cpp" />
+    <ClCompile Include="FadeOutActor.cpp" />
     <ClCompile Include="GuiAnimation.cpp" />
     <ClCompile Include="EffActor.cpp" />
     <ClCompile Include="EffRepeatable.cpp" />
@@ -95,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="EndScene.h" />
     <ClInclude Include="EvilEnemy.h" />
+    <ClInclude Include="FadeOutActor.h" />
     <ClInclude Include="GuiAnimation.h" />
     <ClInclude Include="EffActor.h" />
     <ClInclude Include="EffRepeatable.h" />

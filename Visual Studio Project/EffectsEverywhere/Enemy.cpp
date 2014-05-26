@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cmath>
 
-Enemy::Enemy(std::function<void(void)> onDie,scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
+Enemy::Enemy(std::function<void(Enemy*)> onDie,scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
 {
 	this->onDie = onDie;
 	this->manager = manager;
@@ -129,7 +129,7 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 
 void Enemy::die ()
 {
-	onDie();
+	onDie(this);
 	isDeath = true;
 	scene->removeActor ((EffActor*) this);
 }

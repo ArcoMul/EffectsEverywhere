@@ -130,6 +130,8 @@ public:
 
 	EffTimer* timer;
 
+	gui::IGUIEnvironment* gui;
+
 	~EffScene(void);
 
 protected:
@@ -142,7 +144,6 @@ protected:
 	// The Irrlicht scene manager used to spawn object in the scene
 	scene::ISceneManager* manager;
 	ParticleManager* pManager;
-	gui::IGUIEnvironment* gui;
 
 private:
 
