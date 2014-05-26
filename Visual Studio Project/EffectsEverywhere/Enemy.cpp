@@ -129,6 +129,11 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 
 void Enemy::die ()
 {
+	ParticleParser* p = new ParticleParser();
+	ParticleModel d = p->parse("../../Media/xpParticle.xml");
+	d.setAttractionAffectorPoint(target->getPosition());
+	scene->addParticleActor(new EffActor(),&d, this->node->getPosition());
+
 	onDie(this);
 	isDeath = true;
 	scene->removeActor ((EffActor*) this);
