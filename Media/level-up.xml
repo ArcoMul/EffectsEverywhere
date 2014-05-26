@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="6"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="-1" MinZ="-3"/>
+    <Direction X="0" Y="0.05" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="0"/>
+    <LifeTime Max="500" Min="500"/>
+    <PPS Max="700" Min="700"/>
+    <MaxStartColor Alpha="100" Red="115" Green="253" Blue="255"/>
+    <MinStartColor Alpha="100" Red="255" Green="255" Blue="255"/>
+    <MaxStartSize Height="10" Width="3"/>
+    <MinStartSize Height="5" Width="3"/>
+    <Texture PathName="white-fadeout.png"/>
+    <Material Type="1"/>
+    <Rest MbNumber="2012678191" NormalDirectionModifier="8.59004e+09" Radius="5" LengthCylinder="5" RingThickness="8" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
+    <StopEmitting StopEmittingAfter="300"/>
+    <RemoveParticleAfter RemoveParticleAfter="800"/>
+    <Affectors>
+        <SCALE>
+            <ScaleAffectorScaleTo Height="50" Width="3"/>
+        </SCALE>
+        <GRAVITY>
+            <GravityAffectorGravity X="0" Y="0.9" Z="0"/>
+            <GRAVITY_Rest GravityAffectorTimeForceLost="500"/>
+        </GRAVITY>
+    </Affectors>
+</Particle>

@@ -9,6 +9,7 @@
 #include "Enemy.h"
 
 using namespace irr;
+using namespace std::placeholders;
 
 class EffEngine;
 class Robot;
@@ -33,7 +34,7 @@ public:
 	void startPlaying(void);
 	void createHUD(void);
 
-	void onEnemyDie(void);
+	void onEnemyDie(Enemy* enemy);
 
 	void onPlayerHit(void);
 
@@ -86,7 +87,6 @@ private:
 	GuiAnimation* scoreAnim;
 
 	gui::IGUIStaticText* xpText;
-	int xp;
 	GuiAnimation* xpAnim;
 
 	gui::IGUIStaticText* healthText;

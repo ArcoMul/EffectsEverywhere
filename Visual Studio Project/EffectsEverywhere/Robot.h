@@ -48,6 +48,10 @@ public:
 	 */
 	void hit (int damage, core::vector3df position);
 
+	void addXp(int xp);
+
+	int getXp();
+
 	void setLevelStart(bool levelStart);
 
 	~Robot(void);
@@ -58,6 +62,8 @@ public:
 	EffActor* mesh;
 
 	int health;
+
+	bool isWeapon2Unlocked;
 
 private:
 
@@ -70,6 +76,8 @@ private:
 	 * Add gun
 	 */
 	void addGun(core::stringc gunMesh, core::vector3df position);
+
+	void showWeapon2Unlock();
 
 	/**
 	 * URL XMLs of the weapon effects
@@ -139,6 +147,10 @@ private:
 	 * is level start
 	 */
 	bool levelStart;
+
+	int xp;
+
+	gui::IGUIImage* weapon2Unlock;
 };
 
 #endif
