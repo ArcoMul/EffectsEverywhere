@@ -30,7 +30,7 @@ EffActor::~EffActor(void)
 	// If this actor has a node, remove it from the scene
 	if (node != nullptr)
 	{
-		node->remove ();
+     		node->remove ();
 		node = nullptr;
 	}
 }

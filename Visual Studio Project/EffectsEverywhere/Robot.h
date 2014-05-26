@@ -35,8 +35,7 @@ public:
 	 * Add gun and bullet 
 	 */
 	void setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core::stringc bulletMesh, core::vector3df bulletOffset, int damage,
-		float speed, float cooldown, core::stringc shootEffect,float shootEffectLifeTime,
-		core::stringc enemyHitEffect,float enemyHitEffectLifeTime, core::stringc flyEffect, float flyEffectLifeTime);
+		float speed, float cooldown, core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect);
 	
 	
 	/**
@@ -78,13 +77,6 @@ private:
 	core::stringc shootEffectXML;
 	core::stringc enemyHitEffectXML;
 	core::stringc flyEffectXML;
-
-	/**
-	 * Lifetime of the weapon effects
-	 */
-	float shootEffectLifeTime;
-	float enemyHitEffectLifeTime;
-	float flyEffectLifeTime;
 
 	/**
 	 * Weapon Cooldown

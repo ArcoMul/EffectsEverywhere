@@ -9,10 +9,14 @@
     <AngleDegrees Max="360"/>
     <LifeTime Max="750" Min="500"/>
     <PPS Max="200" Min="50"/>
-    <MaxStartColor Alpha="0" Red="255" Blue="255" Green="255"/>
-    <MinStartColor Alpha="0" Red="180" Blue="180" Green="180"/>
+    <MaxStartColor Alpha="0" Red="255" Green="255" Blue="255"/>
+    <MinStartColor Alpha="0" Red="180" Green="180" Blue="180"/>
     <MaxStartSize Height="6" Width="6"/>
     <MinStartSize Height="3" Width="3"/>
     <Texture PathName="smoke.png"/>
+    <Material Type="0"/>
     <Rest MbNumber="0" NormalDirectionModifier="1.82246e-27" Radius="1.82235e-27" LengthCylinder="1.82229e-27" RingThickness="1.8224e-27" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
+    <StopEmitting StopEmittingAfter="0"/>
+    <RemoveParticleAfter RemoveParticleAfter="200"/>
+    <Affectors/>
 </Particle>

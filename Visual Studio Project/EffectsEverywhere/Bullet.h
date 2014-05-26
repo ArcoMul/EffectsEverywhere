@@ -9,7 +9,6 @@
 using namespace irr;
 
 class Enemy;
-class TemporaryParticleEffect;
 
 class Bullet : public EffActor
 {
@@ -19,7 +18,7 @@ public:
 	/**
 	 * Default constructor
 	 */
-	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, core::stringc enemyHitEffectXML, float enemyHitEffectLifeTime, core::stringc flyEffectXML, float flyEffectLifeTime);
+	Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int demage, core::stringc enemyHitEffectXML, core::stringc flyEffectXML);
 
 	/**
 	 * When the actor is ready apply some material settings to the node
@@ -58,7 +57,7 @@ private:
 	core::stringc flyEffectXML;
 	float enemyHitEffectLifeTime;
 	float flyEffectLifeTime;
-	TemporaryParticleEffect* trailEffect;
+	EffActor* trailEffect;
 };
 
 #endif
