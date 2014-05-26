@@ -5,7 +5,7 @@
 #include <iostream>
 #include <cmath>
 
-Enemy::Enemy(std::function<void(void)> onDie,scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
+Enemy::Enemy(std::function<void(Enemy*)> onDie,scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed)
 {
 	this->onDie = onDie;
 	this->manager = manager;
@@ -133,7 +133,8 @@ void Enemy::die ()
 	ParticleModel d = p->parse("../../Media/xpParticle.xml");
 	d.setAttractionAffectorPoint(target->getPosition());
 	scene->addParticleActor(new EffActor(),&d, this->node->getPosition());
-	onDie();
+
+	onDie(this);
 	isDeath = true;
 	scene->removeActor ((EffActor*) this);
 }

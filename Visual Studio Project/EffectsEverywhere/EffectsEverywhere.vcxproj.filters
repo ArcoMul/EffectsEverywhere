@@ -34,6 +34,7 @@
     <ClCompile Include="EvilEnemy.cpp" />
     <ClCompile Include="PurpleEnemy.cpp" />
     <ClCompile Include="EndScene.cpp" />
+    <ClCompile Include="FadeOutActor.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="MainScene.h">
@@ -94,6 +95,9 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="PurpleEnemy.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="FadeOutActor.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="resource.h">

@@ -18,6 +18,7 @@
 #include "SpawnPoint.h"
 #include "GuiAnimation.h"
 #include "EndScene.h"
+#include "FadeOutActor.h"
 
 MainScene::MainScene()
 {
@@ -156,9 +157,9 @@ void MainScene::spawnEnemy (core::vector2df position, Enemy::TYPES type)
 	// Create enemy
 	Enemy* enemy;
 	if (type == Enemy::TYPES::EVIL) {
-		enemy = (Enemy*) new EvilEnemy(std::bind(&MainScene::onEnemyDie, this), manager, core::vector3df(position.X, 0, position.Y), robot->node);
+		enemy = (Enemy*) new EvilEnemy(std::bind(&MainScene::onEnemyDie, this, _1), manager, core::vector3df(position.X, 0, position.Y), robot->node);
 	} else {
-		enemy = (Enemy*) new PurpleEnemy(std::bind(&MainScene::onEnemyDie, this), manager, core::vector3df(position.X, 0, position.Y), robot->node);
+		enemy = (Enemy*) new PurpleEnemy(std::bind(&MainScene::onEnemyDie, this, _1), manager, core::vector3df(position.X, 0, position.Y), robot->node);
 	}
 
 	// Add to enemy list
@@ -201,11 +202,10 @@ void MainScene::createHUD(void)
 	scoreAnim = new GuiAnimation(scoreText, (this->getDriverWidth() / 2) - 100, 10, .5, 350);
 
 	// Xp
-	xp = 0;
 	xpText = gui->addStaticText(L"Xp: 0", rect<s32>(this->getDriverWidth() - 230, -40, this->getDriverWidth() - 30, 50), false);
 	xpText->setOverrideColor(video::SColor(255,31,31,31));
 	xpText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_LOWERRIGHT, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
-	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
+	xpText->setText((core::stringw("Xp: ") + core::stringw(robot->getXp())).c_str());
 	xpAnim = new GuiAnimation(xpText, this->getDriverWidth() - 230, 10, .5, 350);
 
 	// Wave text
@@ -214,15 +214,15 @@ void MainScene::createHUD(void)
 	waveText->setTextAlignment(gui::EGUI_ALIGNMENT::EGUIA_CENTER, gui::EGUI_ALIGNMENT::EGUIA_UPPERLEFT);
 }
 
-void MainScene::onEnemyDie(void)
+void MainScene::onEnemyDie(Enemy* enemy)
 {
 	enemiesAlive--;
 
 	score++;
 	scoreText->setText((core::stringw("Score: ") + core::stringw(score)).c_str());
 
-	xp++;
-	xpText->setText((core::stringw("Xp: ") + core::stringw(xp)).c_str());
+	robot->addXp(enemy->xp);
+	xpText->setText((core::stringw("Xp: ") + core::stringw(robot->getXp())).c_str());
 	
 	waveSystem->checkNextWave();
 }
@@ -290,7 +290,7 @@ void MainScene::update(float deltaTime)
 			"../../Media/HitEffectE.xml", // hit effect
 			"../../Media/RockTrailEffect.xml"); // bullet trail effect
 	}
-	if (getInput()->IsKeyDown(irr::KEY_KEY_2))
+	if (robot->isWeapon2Unlocked && getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
 		robot->setWeapon("../../Media/toxic-gun.obj",
 			core::vector3df(-1, 2, 0), // gun position
@@ -334,13 +334,10 @@ void MainScene::update(float deltaTime)
 void MainScene::showWaveText(core::stringw text)
 {
 	waveText->setText(text.c_str());
-	waveText->setOverrideColor(video::SColor(255,255,255,255));
-	timer->time(std::bind(&MainScene::hideWaveText, this), 2);
-}
 
-void MainScene::hideWaveText()
-{
-	waveText->setOverrideColor(video::SColor(0,255,255,255));
+	FadeOutActor* a = new FadeOutActor(3000, 0.7);
+	addActor(a);
+	a->setGuiText(waveText);
 }
 
 void MainScene::AddWaves (void)

@@ -23,7 +23,7 @@ public:
 	/**
 	 * Create a constructor Enemy and give it the engine and position.
 	 */
-	Enemy(std::function<void(void)> onDie, scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
+	Enemy(std::function<void(Enemy*)> onDie, scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 
 	virtual void start ();
 
@@ -61,6 +61,8 @@ public:
 	 */
 	bool isDeath;
 
+	int xp;
+
 	EffEngine* _engine;
 
 protected:
@@ -97,7 +99,7 @@ protected:
 	/**
 	 * The function to call
 	 */
-	std::function<void(void)> onDie;
+	std::function<void(Enemy*)> onDie;
 
 	/**
 	 * Which ISceneNode to follow when walking
