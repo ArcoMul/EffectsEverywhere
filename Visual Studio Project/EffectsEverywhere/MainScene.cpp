@@ -308,11 +308,13 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))
 	{
+		this->getSoundEngine()->stopAllSounds();
 		switchScene(new EndScene(levelWon,score));
 		return;
 	}
 	if (levelWon)
 	{
+		this->getSoundEngine()->stopAllSounds();
 		switchScene(new EndScene(levelWon,score));
 		return;
 	}
@@ -325,6 +327,7 @@ void MainScene::update(float deltaTime)
 			(*enemy)->hit (robot, collisionPosition);
 			// switch scene when the player dies
 			if (robot->health <= 0) {
+				this->getSoundEngine()->stopAllSounds();
 				switchScene(new EndScene(levelWon,score));
 				return;
 				}
