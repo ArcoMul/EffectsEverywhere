@@ -7,8 +7,8 @@
     <Center X="0" Y="0" Z="0"/>
     <Normal X="0" Y="0" Z="0"/>
     <AngleDegrees Max="360"/>
-    <LifeTime Max="1500" Min="1300"/>
-    <PPS Max="10" Min="10"/>
+    <LifeTime Max="1600" Min="1400"/>
+    <PPS Max="15" Min="15"/>
     <MaxStartColor Alpha="255" Red="255" Green="255" Blue="255"/>
     <MinStartColor Alpha="255" Red="217" Green="203" Blue="1"/>
     <MaxStartSize Height="2" Width="2"/>
@@ -16,12 +16,12 @@
     <Texture PathName="gold-star.png"/>
     <Material Type="1"/>
     <Rest MbNumber="3814128" NormalDirectionModifier="0" Radius="5" LengthCylinder="5" RingThickness="1" UseNormalDirection="0" EveryMeshVertex="0" OutLineOnly="0"/>
-    <StopEmitting StopEmittingAfter="800"/>
-    <RemoveParticleAfter RemoveParticleAfter="1200"/>
+    <StopEmitting StopEmittingAfter="1000"/>
+    <RemoveParticleAfter RemoveParticleAfter="1400"/>
     <Affectors>
         <ATTRACT>
             <AttractionAffectorPoint X="20" Y="10" Z="0"/>
-            <ATTRACT_Rest AttractionAffectorSpeed="50" AttractionAffectorAttract="1" AttractionAffectorAffectX="1" AttractionAffectorAffectY="1" AttractionAffectorAffectZ="1"/>
+            <ATTRACT_Rest AttractionAffectorSpeed="100" AttractionAffectorAttract="1" AttractionAffectorAffectX="1" AttractionAffectorAffectY="1" AttractionAffectorAffectZ="1"/>
         </ATTRACT>
     </Affectors>
 </Particle>
