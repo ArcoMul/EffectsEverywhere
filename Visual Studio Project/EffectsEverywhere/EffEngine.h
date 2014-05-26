@@ -44,6 +44,8 @@ public:
 	IrrlichtDevice* device;
 	IGUIEnvironment* gui;
 
+	static std::string basePath;
+	static std::string getPath (std::string path);
 private:
 
 	// Update all the objects in the game

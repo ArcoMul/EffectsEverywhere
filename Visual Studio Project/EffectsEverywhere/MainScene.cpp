@@ -38,7 +38,8 @@ bool MainScene::init(void)
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
-	this->addXMLParticleActor(new EffActor(), "../../Media/spawn-effect-blue-lines.xml", core::vector3df(0, 133,0));
+	std::cout << (char*) EffEngine::getPath("Media/spawn-effect-blue-lines.xml").c_str() << std::endl;
+	this->addXMLParticleActor(new EffActor(), (char*) EffEngine::getPath("Media/spawn-effect-blue-lines.xml").c_str(), core::vector3df(0, 133,0));
 
 	EffActor* p2 = new EffActor();
 	this->addXMLParticleActor(p2, "../../Media/spawn-effect-bubbles.xml", core::vector3df(0, 0,0));
