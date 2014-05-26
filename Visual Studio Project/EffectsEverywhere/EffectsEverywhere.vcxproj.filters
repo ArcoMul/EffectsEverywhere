@@ -97,7 +97,9 @@
     <ClInclude Include="PurpleEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="FadeOutActor.h" />
+    <ClInclude Include="FadeOutActor.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
