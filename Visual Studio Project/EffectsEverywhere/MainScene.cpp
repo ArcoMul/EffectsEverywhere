@@ -37,10 +37,10 @@ bool MainScene::init(void)
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
-	this->addXMLParticleActor(new EffActor(), "../../Media/SpawnP1.xml", core::vector3df(0, 133,0));
+	this->addXMLParticleActor(new EffActor(), "../../Media/spawn-effect-blue-lines.xml", core::vector3df(0, 133,0));
 
 	EffActor* p2 = new EffActor();
-	this->addXMLParticleActor(p2, "../../Media/SpawnP2.xml", core::vector3df(0, 0,0));
+	this->addXMLParticleActor(p2, "../../Media/spawn-effect-bubbles.xml", core::vector3df(0, 0,0));
 	robot->node->addChild(p2->node);
 
 	// add Gun & Bullet
@@ -74,8 +74,8 @@ bool MainScene::init(void)
 	// has been set to 7, 7, 10. We do nothing with the gravity, this is why we set the vector to 0, 0, 0.
 	// The last vector is a translation for the animator, which is set to 0, 0, 1.
 	collisionLevel = manager->createCollisionResponseAnimator(
-	levelSelector, robot->node, core::vector3df(7, 7, 10),
-	core::vector3df(0, -0.1, 0), core::vector3df(0, 0, 1));
+		levelSelector, robot->node, core::vector3df(7, 7, 10),
+		core::vector3df(0, 0, 0), core::vector3df(0, 0, 1));
 
 	// We add the animator to our collisionNode and drop the selector and collision if
 	// we don't need it anymore.
@@ -103,21 +103,35 @@ bool MainScene::init(void)
 	// the camera follows the robot.
 	camera->setPosition(vector3df(0, 40, 80));
 	camera->setRotation(vector3df(0, 180, 0));
+
+	// Booleans to track the progress of the game
 	levelstart = true;
 	levelWon = false;
 	hudActive = false;
+
+	// Create the hud
 	createHUD();
+
+	// Create the waves
+	waveSystem = new WaveSystem(this);
+	AddWaves();
+
 	return true;
 }
 
 void MainScene::startPlaying(void)
-{	
+{
+	// The camera should folow the robot from on this point
 	robot->node->addChild(camera);
 	camera->setPosition(camera->getPosition()-robot->node->getPosition());
+
+	// Let the robot know the game started
 	robot->setLevelStart(true);
-	waveSystem = new WaveSystem(this);
-	AddWaves();
+
+	// Start the first wave
 	waveSystem->start();
+
+	// Give the robot gravity
 	collisionLevel->setGravity(core::vector3df(0, -100, 0));
 }
 
@@ -151,7 +165,8 @@ void MainScene::createHUD(void)
 	if (font) {
 		skin->setFont(font);
 	}
-
+	
+	// Top white bar
 	gui::IGUIImage* hudBar = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, -55));
 	hudBar->setScaleImage(true);
 	hudBar->setMinSize(core::dimension2du(this->getDriverWidth(), 55));
@@ -206,7 +221,10 @@ void MainScene::onPlayerHit(void)
 void MainScene::update(float deltaTime)
 {
 	EffScene::update(deltaTime);
-	if (!levelstart &&(hudActive || (!robot->node->getPosition().X == 0 && !robot->node->getPosition().Z == 0))){
+
+	// Show the hud when the game is started and the robot moved from its start position
+	if (!levelstart && (hudActive || (!robot->node->getPosition().X == 0 && !robot->node->getPosition().Z == 0)))
+	{
 		hudActive = true;
 		hudBarAnim->update(deltaTime);
 		scoreAnim->update(deltaTime);
@@ -214,16 +232,25 @@ void MainScene::update(float deltaTime)
 		healthAnim->update(deltaTime);
 	}
 
-	if(robot->node->getPosition().Y < 7.6 && levelstart && robot->node->getRotation().Y < -360)
+	// Intro of the game
+	if(levelstart)
 	{
-		levelstart = false;
-		this->startPlaying();
+		// Make the robot slowly go down
+		robot->node->setPosition(robot->node->getPosition() - core::vector3df(0, 0.035 * deltaTime, 0));
+
+		// Rotate it slowly as long as it didnt turn a compleet turn
+		if (robot->node->getRotation().Y > -360) {
+			robot->node->setRotation(robot->node->getRotation() + core::vector3df(0, -.13 * deltaTime, 0));
+		}
+
+		// After a certain point is reached, and a complete run; start the real game
+		if (robot->node->getRotation().Y < -360 && robot->node->getPosition().Y < 7.6)
+		{
+			levelstart = false;
+			this->startPlaying();
+		}
 	}
-	if (levelstart && robot->node->getRotation().Y > -360)
-	{
-		core::vector3df rot=robot->node->getRotation();
-		robot->node->setRotation(core::vector3df(rot.X,rot.Y += -.3,rot.Z));
-	}
+
 	// Set where the camera has to look at
 	camera->setTarget(robot->node->getPosition());
 	

@@ -16,8 +16,8 @@
     <Texture PathName="smoke.png"/>
     <Material Type="0"/>
     <Rest MbNumber="14090704" NormalDirectionModifier="1.4013e-45" Radius="5" LengthCylinder="5" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
-    <StopEmitting StopEmittingAfter="2150"/>
-    <RemoveParticleAfter RemoveParticleAfter="3300"/>
+    <StopEmitting StopEmittingAfter="3000"/>
+    <RemoveParticleAfter RemoveParticleAfter="5000"/>
     <Affectors>
         <FADE_OUT>
             <FadeOutAffectorTargetColor Alpha="0" Red="38" Green="255" Blue="0"/>
