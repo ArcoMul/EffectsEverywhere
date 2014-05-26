@@ -1,30 +1,22 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Particle>
     <Emitter Type="4"/>
-    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
-    <Direction X="0" Y="0" Z="0"/>
+    <Aabbox MaxX="15" MaxY="15" MaxZ="0" MinX="-15" MinY="-15" MinZ="0"/>
+    <Direction X="0" Y="0.01" Z="0"/>
     <Position X="0" Y="0" Z="0"/>
     <Center X="0" Y="0" Z="0"/>
-    <Normal X="0" Y="0" Z="0"/>
-    <AngleDegrees Max="0"/>
-    <LifeTime Max="400" Min="300"/>
-    <PPS Max="4000" Min="3000"/>
+    <Normal X="0" Y="2" Z="0"/>
+    <AngleDegrees Max="360"/>
+    <LifeTime Max="500" Min="500"/>
+    <PPS Max="4000" Min="4000"/>
     <MaxStartColor Alpha="255" Red="171" Green="255" Blue="248"/>
     <MinStartColor Alpha="255" Red="255" Green="10" Blue="116"/>
     <MaxStartSize Height="1.5" Width="1.5"/>
     <MinStartSize Height="1" Width="1"/>
     <Texture PathName="lightFalloff.png"/>
     <Material Type="0"/>
-    <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="40" LengthCylinder="1" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
-    <StopEmitting StopEmittingAfter="0"/>
-    <RemoveParticleAfter RemoveParticleAfter="800"/>
-    <Affectors>
-        <ATTRACT>
-            <AttractionAffectorPoint X="0" Y="0" Z="0"/>
-            <ATTRACT_Rest AttractionAffectorSpeed="60" AttractionAffectorAttract="1" AttractionAffectorAffectX="1" AttractionAffectorAffectY="1" AttractionAffectorAffectZ="1"/>
-        </ATTRACT>
-        <SCALE>
-            <ScaleAffectorScaleTo Height="2" Width="2"/>
-        </SCALE>
-    </Affectors>
+    <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="24" LengthCylinder="35" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
+    <StopEmitting StopEmittingAfter="500"/>
+    <RemoveParticleAfter RemoveParticleAfter="1000"/>
+    <Affectors/>
 </Particle>
