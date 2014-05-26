@@ -15,7 +15,7 @@
     <MinStartSize Height="3" Width="1"/>
     <Texture PathName="lightFalloff.png"/>
     <Material Type="0"/>
-    <Rest MbNumber="-1394265718" NormalDirectionModifier="0" Radius="20" LengthCylinder="50" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
+    <Rest MbNumber="-1394265718" NormalDirectionModifier="0" Radius="17" LengthCylinder="50" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
     <StopEmitting StopEmittingAfter="2000"/>
     <RemoveParticleAfter RemoveParticleAfter="4500"/>
     <Affectors/>

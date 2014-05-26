@@ -62,6 +62,8 @@ private:
 	 */
 	Robot* robot;
 
+	EffActor* ufo;
+
 	/**
 	 * List of all the enemies in the scene
 	 */
