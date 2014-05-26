@@ -62,6 +62,10 @@ bool MainScene::init(void)
 	if (!floor) return false;
 	floor->setMaterialFlag(EMF_LIGHTING, false);
 
+	ufo = new EffActor();
+	this->addMeshActor(ufo, "../../Media/ufo.obj", core::vector3df(0, 130, 0));
+	ufo->node->setMaterialFlag(video::EMF_LIGHTING, false);
+
 	// Random particles in the level
 	pManager->spawnXMLParticle("../../Media/levelParticles.xml", core::vector3df(4,2,2));
 
@@ -121,6 +125,9 @@ bool MainScene::init(void)
 
 void MainScene::startPlaying(void)
 {
+	// Remove the ufo
+	removeActor(ufo);
+
 	// The camera should folow the robot from on this point
 	robot->node->addChild(camera);
 	camera->setPosition(camera->getPosition()-robot->node->getPosition());
@@ -243,6 +250,9 @@ void MainScene::update(float deltaTime)
 			robot->node->setRotation(robot->node->getRotation() + core::vector3df(0, -.13 * deltaTime, 0));
 		}
 
+		// Slowly rotate the ufo
+		ufo->node->setRotation(ufo->node->getRotation() + core::vector3df(0, .01 * deltaTime, 0));
+		
 		// After a certain point is reached, and a complete run; start the real game
 		if (robot->node->getRotation().Y < -360 && robot->node->getPosition().Y < 7.6)
 		{
