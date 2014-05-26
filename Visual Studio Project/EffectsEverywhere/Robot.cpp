@@ -4,6 +4,8 @@
 #include "Enemy.h"
 #include "Bullet.h"
 #include "Gun.h"
+#include "FadeOutActor.h"
+#include "EffTimer.h"
 #include <iostream>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
@@ -37,6 +39,8 @@ Robot::Robot(std::function<void(void)> onHit)
 	damping = .0005;
 	health = 100;
 	levelStart = false;
+	xp = 0;
+	isWeapon2Unlocked = false;
 }
 
 void Robot::start ()
@@ -50,9 +54,11 @@ void Robot::start ()
 	mesh->node->setParent(node);
 
 	// Effect of fire beneath robot
-	// TODO: base rotation of effect on rotation of robot
 	EffActor* a = scene->addXMLParticleActor(new EffActor(),"../../Media/floatEffect.xml", core::vector3df(0,-4,0));
 	a->node->setParent(mesh->node);
+
+	weapon2Unlock = scene->gui->addImage(scene->getTexture("../../Media/new-gun-toxic.png"), core::position2d<int>((scene->getDriverWidth() / 2) - (528/2), (scene->getDriverHeight() / 2) - (319/2)));
+	weapon2Unlock->setColor(video::SColor(0, 255, 255, 255));
 }
 
 void Robot::update(float deltaTime)
@@ -237,6 +243,37 @@ void Robot::hit (int damage, core::vector3df position)
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
 	particleNode->addAffector(affector);
 	affector->drop();
+}
+
+void Robot::addXp(int xp)
+{
+	this->xp += xp;
+	if (this->xp >= 30 && !isWeapon2Unlocked)
+	{
+		isWeapon2Unlocked = true;
+
+		EffActor* a = new EffActor();
+		scene->addXMLParticleActor(a, "../../Media/level-up.xml", core::vector3df(0,0,0));
+		a->node->setParent(mesh->node);
+
+		a = new EffActor();
+		scene->addXMLParticleActor(a, "../../Media/level-up-ring.xml", core::vector3df(0,0,0));
+		a->node->setParent(mesh->node);
+
+		scene->timer->time(std::bind(&Robot::showWeapon2Unlock, this), 3);
+	}
+}
+
+void Robot::showWeapon2Unlock ()
+{
+	FadeOutActor* a = new FadeOutActor(1000, 1);
+	a->setGuiImage(weapon2Unlock);
+	scene->addActor(a);
+}
+
+int Robot::getXp(void)
+{
+	return xp;
 }
 
 void Robot::setLevelStart(bool levelStart)

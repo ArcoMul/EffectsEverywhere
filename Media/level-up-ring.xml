@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<Particle>
+    <Emitter Type="6"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="-1" MinZ="-3"/>
+    <Direction X="0" Y="0.001" Z="0"/>
+    <Position X="0" Y="0" Z="0"/>
+    <Center X="0" Y="0" Z="0"/>
+    <Normal X="0" Y="0" Z="0"/>
+    <AngleDegrees Max="360"/>
+    <LifeTime Max="500" Min="500"/>
+    <PPS Max="2000" Min="2000"/>
+    <MaxStartColor Alpha="255" Red="115" Green="253" Blue="255"/>
+    <MinStartColor Alpha="255" Red="255" Green="255" Blue="255"/>
+    <MaxStartSize Height="5" Width="5"/>
+    <MinStartSize Height="5" Width="5"/>
+    <Texture PathName="white-fadeout.png"/>
+    <Material Type="1"/>
+    <Rest MbNumber="2012678191" NormalDirectionModifier="8.59004e+09" Radius="25" LengthCylinder="5" RingThickness="8" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
+    <StopEmitting StopEmittingAfter="100"/>
+    <RemoveParticleAfter RemoveParticleAfter="800"/>
+    <Affectors>
+        <FADE_OUT>
+            <FadeOutAffectorTargetColor Alpha="0" Red="255" Green="255" Blue="255"/>
+            <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="200"/>
+        </FADE_OUT>
+    </Affectors>
+</Particle>
