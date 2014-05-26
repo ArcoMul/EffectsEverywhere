@@ -3,7 +3,6 @@
 #include "InputReceiver.h"
 #include "Enemy.h"
 #include "Bullet.h"
-#include "TemporaryParticleEffect.h"
 #include "Gun.h"
 #include <iostream>
 #include <ParticleManager.h>
@@ -160,7 +159,7 @@ void Robot::update(float deltaTime)
 
 void Robot::setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core::stringc bulletMesh, core::vector3df bulletOffset,
 	int damage, float speed, float cooldown, 
-	core::stringc shootEffect, float shootEffectLifeTime, core::stringc enemyHitEffect, float enemyHitEffectLifeTime, core::stringc flyEffect, float flyEffectLifeTime)
+	core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
 {
 	//Set gun/edit gun
 	if(this->bulletMesh != "null") {
@@ -186,10 +185,6 @@ void Robot::setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core:
 	this->shootEffectXML = shootEffect;
 	this->enemyHitEffectXML = enemyHitEffect;
 	this->flyEffectXML = flyEffect;
-	// Set Lifetime
-	this->shootEffectLifeTime = shootEffectLifeTime;
-	this->enemyHitEffectLifeTime = enemyHitEffectLifeTime;
-	this->flyEffectLifeTime = flyEffectLifeTime;
 }
 
 void Robot::addGun(core::stringc gunMesh, core::vector3df position)
@@ -214,13 +209,13 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	// Create bullet actor with the right position and rotation
 	core::matrix4 mat = gun->node->getAbsoluteTransformation();
 	core::vector3df right = core::vector3df(mat[0], 0, mat[2]);
-	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML, enemyHitEffectLifeTime, flyEffectXML, flyEffectLifeTime);
+	Bullet* bullet = new Bullet(enemies, bulletSpeed, bulletDamage, enemyHitEffectXML, flyEffectXML);
 	core::vector3df bulletPosition = gun->node->getAbsolutePosition() + (right * bulletOffset.X) + core::vector3df(0, bulletOffset.Y, 0);
 	scene->addMeshActor ((EffActor*) bullet, bulletMesh, bulletPosition, node->getRotation());
 
 	gun->shoot();
 
-	TemporaryParticleEffect* shootEffect = new TemporaryParticleEffect(shootEffectLifeTime, false);
+	EffActor* shootEffect = new EffActor();
 	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7) + bulletOffset);
 	shootEffect->node->setParent(mesh->node);
 }
@@ -230,7 +225,7 @@ void Robot::hit (int damage, core::vector3df position)
 	health -= damage;
 	onHit();
 	
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(400);
+	EffActor* p = new EffActor();
 	scene->addXMLParticleActor((EffActor*) p, "../../Media/playerHitEffect.xml", position + core::vector3df(0,12,-5));
 
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) p->node;

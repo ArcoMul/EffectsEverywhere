@@ -2,7 +2,6 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "Robot.h"
-#include "TemporaryParticleEffect.h"
 #include <iostream>
 #include <cmath>
 
@@ -36,8 +35,7 @@ void Enemy::start ()
 	node->setTriangleSelector(selector);
 	
 	// Create spawn particle effect
-	TemporaryParticleEffect* p = new TemporaryParticleEffect(800);
-	scene->addXMLParticleActor((EffActor*) p, this->spawnEffectSrc.c_str(), this->spawnPosition);
+	scene->addXMLParticleActor((EffActor*) new EffActor(), this->spawnEffectSrc.c_str(), this->spawnPosition);
 }
 
 void Enemy::update(float deltaTime)

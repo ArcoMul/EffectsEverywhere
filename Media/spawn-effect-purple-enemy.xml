@@ -14,7 +14,10 @@
     <MaxStartSize Height="1.5" Width="1.5"/>
     <MinStartSize Height="1" Width="1"/>
     <Texture PathName="lightFalloff.png"/>
+    <Material Type="0"/>
     <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="40" LengthCylinder="1" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="0"/>
+    <StopEmitting StopEmittingAfter="0"/>
+    <RemoveParticleAfter RemoveParticleAfter="800"/>
     <Affectors>
         <ATTRACT>
             <AttractionAffectorPoint X="0" Y="0" Z="0"/>

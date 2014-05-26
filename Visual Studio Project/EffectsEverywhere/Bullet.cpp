@@ -1,12 +1,11 @@
 #include "EffScene.h"
 #include "Bullet.h"
 #include "Enemy.h"
-#include "TemporaryParticleEffect.h"
 #include <iostream>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
 
-Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core::stringc enemyHitEffectXML,float enemyHitEffectLifeTime, core::stringc flyEffectXML, float flyEffectLifeTime)
+Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core::stringc enemyHitEffectXML, core::stringc flyEffectXML)
 {
 	this->enemies = enemies;
 	this->speed = bulletSpeed;
@@ -14,8 +13,6 @@ Bullet::Bullet (core::list<Enemy*>* enemies, float bulletSpeed, int damage, core
 	this->damage = damage;
 	this->enemyHitEffectXML = enemyHitEffectXML;
 	this->flyEffectXML = flyEffectXML;
-	this->enemyHitEffectLifeTime = enemyHitEffectLifeTime;
-	this->flyEffectLifeTime = flyEffectLifeTime;
 }
 
 void Bullet::start ()
@@ -28,7 +25,7 @@ void Bullet::start ()
 	// The node is set now, set some properties
 	node->setMaterialFlag(video::EMF_LIGHTING, false);
 
-	trailEffect = new TemporaryParticleEffect(500, false);
+	trailEffect = new EffActor();
 	scene->addXMLParticleActor((EffActor*) trailEffect, flyEffectXML.c_str(), core::vector3df(0,0,0));
 	trailEffect->node->setParent(node);
 }
@@ -49,17 +46,8 @@ void Bullet::update (float deltaTime)
 		if((*enemy)->node != nullptr && node->getTransformedBoundingBox().intersectsWithBox((*enemy)->node->getTransformedBoundingBox()))
 		{
 			// Spawn a particle effect at the position where we hit something with the bullet
-			TemporaryParticleEffect* p = new TemporaryParticleEffect(enemyHitEffectLifeTime, false);
+			EffActor* p = new EffActor();
 			scene->addXMLParticleActor(p,enemyHitEffectXML.c_str(),node->getPosition());
-
-			// Spawn a second particle effect at the position where we hit something with the bullet
-			/*TemporaryParticleEffect* pTriangle = new TemporaryParticleEffect(enemyTriangleHitEffectModel->getLifeTimeMax(), false);
-			scene->addParticleActor(pTriangle,enemyTriangleHitEffectModel, node->getPosition());
-
-			IParticleSystemSceneNode* triangleParticleNode = (IParticleSystemSceneNode*)
-			pTriangle->node;
-			triangleParticleNode->setMaterialType(video::EMT_TRANSPARENT_ALPHA_CHANNEL);
-			*/
 
 			(*enemy)->hit(damage);
 			scene->removeActor ((EffActor*) trailEffect);

@@ -18,7 +18,6 @@
       <Filter>EffEngine</Filter>
     </ClCompile>
     <ClCompile Include="Robot.cpp" />
-    <ClCompile Include="TemporaryParticleEffect.cpp" />
     <ClCompile Include="Gun.cpp" />
     <ClCompile Include="EffTimer.cpp">
       <Filter>EffEngine</Filter>
@@ -69,9 +68,6 @@
     </ClInclude>
     <ClInclude Include="EffRepeatable.h">
       <Filter>EffEngine\Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="TemporaryParticleEffect.h">
-      <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="StartScene.h">
       <Filter>Header Files</Filter>
