@@ -5,6 +5,7 @@
 #include "EffTimer.h"
 #include <iostream>
 #include <ParticleManager.h>
+#include <irrKlang.h>
 
 EffScene::EffScene()
 {
@@ -235,6 +236,11 @@ void EffScene::setManager(scene::ISceneManager* manager)
 void EffScene::setGUI (gui::IGUIEnvironment* gui)
 {
 	this->gui = gui;
+}
+
+irrklang::ISoundEngine* EffScene::getSoundEngine()
+{
+	return this->engine->soundEngine;
 }
 
 float EffScene::getDriverWidth()

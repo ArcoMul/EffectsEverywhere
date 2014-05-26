@@ -145,6 +145,8 @@ void MainScene::startPlaying(void)
 	// Start the first wave
 	waveSystem->start();
 
+	this->getSoundEngine()->play2D("../../Media/sounds/losestate.mp3",true);
+
 	// Give the robot gravity
 	collisionLevel->setGravity(core::vector3df(0, -100, 0));
 }
