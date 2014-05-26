@@ -13,7 +13,7 @@
   <PropertyGroup Label="Globals">
     <ProjectGuid>{3B1B4A12-7331-435C-A791-D8FB4E0DB2E9}</ProjectGuid>
     <RootNamespace>Awesome</RootNamespace>
-    <ProjectName>EffectsEverywhere</ProjectName>
+    <ProjectName>Effects Everywhere</ProjectName>
   </PropertyGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.Default.props" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'" Label="Configuration">
@@ -53,10 +53,10 @@
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
-      <Optimization>MaxSpeed</Optimization>
       <FunctionLevelLinking>true</FunctionLevelLinking>
       <IntrinsicFunctions>true</IntrinsicFunctions>
       <AdditionalIncludeDirectories>../Irrlicht/include;</AdditionalIncludeDirectories>
+      <Optimization>Disabled</Optimization>
     </ClCompile>
     <Link>
       <GenerateDebugInformation>true</GenerateDebugInformation>
@@ -67,6 +67,7 @@
   <ItemGroup>
     <ClCompile Include="EndScene.cpp" />
     <ClCompile Include="EvilEnemy.cpp" />
+    <ClCompile Include="FadeOutActor.cpp" />
     <ClCompile Include="GuiAnimation.cpp" />
     <ClCompile Include="EffActor.cpp" />
     <ClCompile Include="EffRepeatable.cpp" />
@@ -95,6 +96,7 @@
   <ItemGroup>
     <ClInclude Include="EndScene.h" />
     <ClInclude Include="EvilEnemy.h" />
+    <ClInclude Include="FadeOutActor.h" />
     <ClInclude Include="GuiAnimation.h" />
     <ClInclude Include="EffActor.h" />
     <ClInclude Include="EffRepeatable.h" />
@@ -108,11 +110,18 @@
     <ClInclude Include="InstructionsScene.h" />
     <ClInclude Include="MainScene.h" />
     <ClInclude Include="PurpleEnemy.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Robot.h" />
     <ClInclude Include="SpawnPoint.h" />
     <ClInclude Include="StartScene.h" />
     <ClInclude Include="Wave.h" />
     <ClInclude Include="WaveSystem.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EffectsEverywhere.rc" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon1.ico" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

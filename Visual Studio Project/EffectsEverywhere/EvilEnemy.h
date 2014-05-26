@@ -6,7 +6,7 @@
 class EvilEnemy : public Enemy
 {
 public:
-	EvilEnemy (std::function<void(void)> onDie, scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
+	EvilEnemy (std::function<void(Enemy*)> onDie, scene::ISceneManager* manager, core::vector3df position, scene::ISceneNode* target, float speed = .05);
 	~EvilEnemy (void);
 };
 
