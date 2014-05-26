@@ -41,8 +41,7 @@ bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, boo
 
 	// create the soundEngine
 	soundEngine = createIrrKlangDevice();
-
-	 if(!soundEngine) return false;
+	if(!soundEngine) return false;
 
 	// Get the start time of the engine
 	this->startTime = device->getTimer()->getTime();
