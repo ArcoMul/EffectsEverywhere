@@ -96,6 +96,9 @@
     <ClInclude Include="PurpleEnemy.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="resource.h">
+      <Filter>Icon</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <Filter Include="Header Files">
@@ -107,5 +110,18 @@
     <Filter Include="EffEngine\Header Files">
       <UniqueIdentifier>{d53e5158-9c93-4cae-aa48-72f649b7ef59}</UniqueIdentifier>
     </Filter>
+    <Filter Include="Icon">
+      <UniqueIdentifier>{fe5f2a8e-fc59-42cb-8779-f366d695d86c}</UniqueIdentifier>
+    </Filter>
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="EffectsEverywhere.rc">
+      <Filter>Icon</Filter>
+    </ResourceCompile>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="icon1.ico">
+      <Filter>Icon</Filter>
+    </None>
   </ItemGroup>
 </Project>
