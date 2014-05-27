@@ -109,6 +109,8 @@ void Enemy::addCollision (scene::ISceneNode* collisionNode, scene::IMesh* mesh)
 
 bool Enemy::hit (int damage)
 {
+	this->scene->getSoundEngine()->setSoundVolume(0.5);
+	this->scene->getSoundEngine()->play2D("../../Media/sounds/impact.wav",false);
 	health -= damage;
 	if (health <= 0) {
 		die ();

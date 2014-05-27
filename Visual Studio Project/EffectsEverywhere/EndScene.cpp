@@ -20,6 +20,9 @@ bool EndScene::init(void)
 
 	// Show mouse in this scene
 	setMouseVisible(true);
+
+	this->getSoundEngine()->stopAllSounds();
+	this->getSoundEngine()->play2D("../../Media/sounds/ipgamesopenloop.wav",true);
 	
 	// Background
 	gui->addImage(this->getTexture("../../Media/menu/background.png"), core::position2d<int>(0, 0));
