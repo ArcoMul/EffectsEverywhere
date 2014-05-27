@@ -4,6 +4,10 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "BackgroundFader.h"
+#include <irrKlang.h>
+
+using namespace irrklang;
+#pragma comment(lib, "irrKlang.lib")
 
 EffEngine::EffEngine()
 {
@@ -34,6 +38,10 @@ bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, boo
 	// create the gui
 	gui = device->getGUIEnvironment();
 	if(!gui) return false;
+
+	// create the soundEngine
+	soundEngine = createIrrKlangDevice();
+	if(!soundEngine) return false;
 
 	// Get the start time of the engine
 	this->startTime = device->getTimer()->getTime();
@@ -150,6 +158,7 @@ void EffEngine::closeGame (void)
 	smgr->clear();
 	gui->clear();
 	device->closeDevice();
+	soundEngine->drop();
 }
 
 EffEngine::~EffEngine(void)

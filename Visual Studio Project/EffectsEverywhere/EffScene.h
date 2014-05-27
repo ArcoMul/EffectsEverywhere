@@ -4,6 +4,7 @@
 #include <irrlicht.h>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
+#include <irrKlang.h>
 
 using namespace irr;
 
@@ -94,6 +95,10 @@ public:
 	 */
 	void setGUI (gui::IGUIEnvironment* gui);
 
+	/**
+	 * Gets the irrklang soundEngine
+	 */
+	irrklang::ISoundEngine* getSoundEngine ();
 
 	float getDriverWidth();
 
