@@ -147,7 +147,9 @@ void MainScene::startPlaying(void)
 	waveSystem->start();
 
 	// this can be the background file
-	//this->getSoundEngine()->play2D("../../Media/sounds/losestate.mp3",true);
+	this->getSoundEngine()->stopAllSounds();
+	this->getSoundEngine()->setSoundVolume(0.5);
+	this->getSoundEngine()->play2D("../../Media/sounds/action-theme.wav",true);
 
 	// Give the robot gravity
 	collisionLevel->setGravity(core::vector3df(0, -100, 0));
