@@ -157,6 +157,7 @@ EffActor* EffScene::addParticleActor(EffActor* actor, ParticleModel* model, core
  */
 EffActor* EffScene::addXMLParticleActor(EffActor* actor, const char* filename, core::vector3df position)
 {
+	std::cout << "filename: " << filename << std::endl;
 	// Add the actor to the current scene
 	actor = addActor(actor, false);
 
@@ -313,14 +314,6 @@ scene::ISceneNode* EffScene::checkRayCastIntersection (core::vector3df start, co
 	}
 
 	return nullptr;
-}
-
-void EffScene::spawnDebugMesh (core::vector3df position) 
-{
-	scene::IMesh* debugMesh = engine->smgr->getMesh("../../Media/debug-sphere.obj");
-	scene::IMeshSceneNode* debugNode = engine->smgr->addMeshSceneNode(debugMesh);
-	debugNode->setMaterialFlag(video::EMF_LIGHTING, false);
-	debugNode->setPosition(position);
 }
 
 EffScene::~EffScene(void)

@@ -9,6 +9,8 @@
 using namespace irrklang;
 #pragma comment(lib, "irrKlang.lib")
 
+std::string EffEngine::basePath = "../../";
+
 EffEngine::EffEngine()
 {
 	this->device = nullptr;
@@ -16,6 +18,12 @@ EffEngine::EffEngine()
 	this->backgroundColor = video::SColor(1, 0, 0, 0);
 	this->startTime = 0;
 	this->mouseLock = true;
+}
+
+std::string EffEngine::getPath (std::string path)
+{
+	std::string p = EffEngine::basePath;
+	return p.append(path);
 }
 
 bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, bool stencilbuffer, bool vsyncenabled)

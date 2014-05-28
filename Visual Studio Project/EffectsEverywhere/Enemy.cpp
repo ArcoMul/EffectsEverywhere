@@ -2,6 +2,7 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "Robot.h"
+#include "EffEngine.h"
 #include <iostream>
 #include <cmath>
 
@@ -110,7 +111,7 @@ void Enemy::addCollision (scene::ISceneNode* collisionNode, scene::IMesh* mesh)
 bool Enemy::hit (int damage)
 {
 	this->scene->getSoundEngine()->setSoundVolume(0.5);
-	this->scene->getSoundEngine()->play2D("../../Media/sounds/bullet-impact.mp3",false);
+	this->scene->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/bullet-impact.mp3").c_str(), false);
 	health -= damage;
 	if (health <= 0) {
 		die ();
@@ -132,7 +133,7 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 void Enemy::die ()
 {
 	ParticleParser* p = new ParticleParser();
-	ParticleModel d = p->parse("../../Media/xpParticle.xml");
+	ParticleModel d = p->parse((char*) EffEngine::getPath("Media/xpParticle.xml").c_str());
 	d.setAttractionAffectorPoint(target->getPosition());
 	scene->addParticleActor(new EffActor(),&d, this->node->getPosition());
 

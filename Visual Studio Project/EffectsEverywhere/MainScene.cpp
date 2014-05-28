@@ -39,44 +39,44 @@ bool MainScene::init(void)
 	addNodeActor ((EffActor*) robot, core::vector3df(0, 127.5f, 0), core::vector3df(0, 0, 0));
 	if (!robot) return false;
 
-	this->addXMLParticleActor(new EffActor(), "../../Media/spawn-effect-blue-lines.xml", core::vector3df(0, 133,0));
+	this->addXMLParticleActor(new EffActor(), (char*) EffEngine::getPath("Media/spawn-effect-blue-lines.xml").c_str(), core::vector3df(0, 133,0));
 
 	EffActor* p2 = new EffActor();
-	this->addXMLParticleActor(p2, "../../Media/spawn-effect-bubbles.xml", core::vector3df(0, 0,0));
+	this->addXMLParticleActor(p2, (char*) EffEngine::getPath("Media/spawn-effect-bubbles.xml").c_str(), core::vector3df(0, 0,0));
 	robot->node->addChild(p2->node);
 
 	// add Gun & Bullet
-	robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
+	robot->setWeapon((char*) EffEngine::getPath("Media/rock-gun.obj").c_str(), // gun mesh
 			core::vector3df(-8.5, 7, 0), // gun position
-			"../../Media/rock-bullet.obj", // bullet mesh
+			(char*) EffEngine::getPath("Media/rock-bullet.obj").c_str(), // bullet mesh
 			core::vector3df(0, 0, 0), // bullet offset
 			5, // damage
 			0.6, // speed
 			600, // cooldown
-			"../../Media/shootParticle.xml", // shoot effect
-			"../../Media/HitEffectE.xml", // hit effect
-			"../../Media/RockTrailEffect.xml"); // bullet trail effect
+			(char*) EffEngine::getPath("Media/shootParticle.xml").c_str(), // shoot effect
+			(char*) EffEngine::getPath("Media/HitEffectE.xml").c_str(), // hit effect
+			(char*) EffEngine::getPath("Media/RockTrailEffect.xml").c_str()); // bullet trail effect
 			
 
 	// Add floor to scene
-	scene::IMesh* floorMesh = manager->getMesh("../../Media/level.obj");
+	scene::IMesh* floorMesh = manager->getMesh((char*) EffEngine::getPath("Media/level.obj").c_str());
 	scene::IMeshSceneNode* floor = manager->addMeshSceneNode(floorMesh);
 	if (!floor) return false;
 	floor->setMaterialFlag(EMF_LIGHTING, false);
 
 	ufo = new EffActor();
-	this->addMeshActor(ufo, "../../Media/ufo.obj", core::vector3df(0, 130, 0));
+	this->addMeshActor(ufo, (char*) EffEngine::getPath("Media/ufo.obj").c_str(), core::vector3df(0, 130, 0));
 	ufo->node->setMaterialFlag(video::EMF_LIGHTING, false);
 
 	// Random particles in the level
-	pManager->spawnXMLParticle("../../Media/levelParticles.xml", core::vector3df(4,2,2));
+	pManager->spawnXMLParticle((char*) EffEngine::getPath("Media/levelParticles.xml").c_str(), core::vector3df(4,2,2));
 
 	//lantern
-	pManager->spawnXMLParticle("../../Media/lanternParticle.xml", core::vector3df(98,35,91.5f));
+	pManager->spawnXMLParticle((char*) EffEngine::getPath("Media/lanternParticle.xml").c_str(), core::vector3df(98,35,91.5f));
 	//torch 1 barracks location
-	pManager->spawnXMLParticle("../../Media/torchParticle.xml", core::vector3df(122,20,-86.5f));
+	pManager->spawnXMLParticle((char*) EffEngine::getPath("Media/torchParticle.xml").c_str(), core::vector3df(122,20,-86.5f));
 	//torch 2 near spawn location
-	pManager->spawnXMLParticle("../../Media/torchParticle.xml", core::vector3df(-106,20,-87.5f));
+	pManager->spawnXMLParticle((char*) EffEngine::getPath("Media/torchParticle.xml").c_str(), core::vector3df(-106,20,-87.5f));
 
 	// Create a Triangle selector for the level
 	scene::ITriangleSelector* levelSelector = manager->createOctreeTriangleSelector(floor->getMesh(), floor, 12);
@@ -150,7 +150,7 @@ void MainScene::startPlaying(void)
 	// this can be the background file
 	this->getSoundEngine()->stopAllSounds();
 	this->getSoundEngine()->setSoundVolume(0.5);
-	this->getSoundEngine()->play2D("../../Media/sounds/action-theme.wav",true);
+	this->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/action-theme.wav").c_str(), true);
 
 	// Give the robot gravity
 	collisionLevel->setGravity(core::vector3df(0, -100, 0));
@@ -182,13 +182,13 @@ void MainScene::createHUD(void)
 {
 	// Create a custom font
 	IGUISkin* skin = gui->getSkin();
-	IGUIFont* font = gui->getFont("../../Media/fonts/asap.xml");
+	IGUIFont* font = gui->getFont((char*) EffEngine::getPath("Media/fonts/asap.xml").c_str());
 	if (font) {
 		skin->setFont(font);
 	}
 	
 	// Top white bar
-	gui::IGUIImage* hudBar = gui->addImage(this->getTexture("../../Media/hud-bar.png"), core::position2d<int>(0, -55));
+	gui::IGUIImage* hudBar = gui->addImage(this->getTexture((char*) EffEngine::getPath("Media/hud-bar.png").c_str()), core::position2d<int>(0, -55));
 	hudBar->setScaleImage(true);
 	hudBar->setMinSize(core::dimension2du(this->getDriverWidth(), 55));
 	hudBarAnim = new GuiAnimation(hudBar, 0, 0, .5, 100);
@@ -285,29 +285,29 @@ void MainScene::update(float deltaTime)
 	//Switch weapon
 	if (getInput()->IsKeyDown(irr::KEY_KEY_1))
 	{
-		robot->setWeapon("../../Media/rock-gun.obj", // gun mesh
+		robot->setWeapon((char*) EffEngine::getPath("Media/rock-gun.obj").c_str(), // gun mesh
 			core::vector3df(-8.5, 7, 0), // gun position
-			"../../Media/rock-bullet.obj", // bullet mesh
+			(char*) EffEngine::getPath("Media/rock-bullet.obj").c_str(), // bullet mesh
 			core::vector3df(0, 0, 0), // bullet offset
 			5, // damage
 			0.6, // speed
 			600, // cooldown
-			"../../Media/shootParticle.xml", // shoot effect
-			"../../Media/HitEffectE.xml", // hit effect
-			"../../Media/RockTrailEffect.xml"); // bullet trail effect
+			(char*) EffEngine::getPath("Media/shootParticle.xml").c_str(), // shoot effect
+			(char*) EffEngine::getPath("Media/HitEffectE.xml").c_str(), // hit effect
+			(char*) EffEngine::getPath("Media/RockTrailEffect.xml").c_str()); // bullet trail effect
 	}
 	if (robot->isWeapon2Unlocked && getInput()->IsKeyDown(irr::KEY_KEY_2))
 	{
-		robot->setWeapon("../../Media/toxic-gun.obj",
+		robot->setWeapon((char*) EffEngine::getPath("Media/toxic-gun.obj").c_str(),
 			core::vector3df(-1, 2, 0), // gun position
-			"../../Media/toxic-bullet.obj",
+			(char*) EffEngine::getPath("Media/toxic-bullet.obj").c_str(),
 			core::vector3df(-7, 5, 0), // bullet offset
 			10,
 			1,
 			800,
-			"../../Media/ToxicShootEffect.xml",
-			"../../Media/ToxicHitEffect.xml",
-			"../../Media/ToxicTrailEffect.xml");
+			(char*) EffEngine::getPath("Media/ToxicShootEffect.xml").c_str(),
+			(char*) EffEngine::getPath("Media/ToxicHitEffect.xml").c_str(),
+			(char*) EffEngine::getPath("Media/ToxicTrailEffect.xml").c_str());
 	}
 
 	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))

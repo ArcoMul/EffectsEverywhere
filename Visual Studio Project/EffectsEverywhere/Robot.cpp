@@ -6,6 +6,7 @@
 #include "Gun.h"
 #include "FadeOutActor.h"
 #include "EffTimer.h"
+#include "EffEngine.h"
 #include <iostream>
 #include <ParticleManager.h>
 #include <ParticleModel.h>
@@ -49,15 +50,15 @@ void Robot::start ()
 	
 	// Create the robot mesh
 	mesh = new EffActor();
-	scene->addMeshActor ((EffActor*) mesh, "../../Media/robot.obj", core::vector3df(0, 0, 0), core::vector3df(0, 0, 0));
+	scene->addMeshActor ((EffActor*) mesh, (char*) EffEngine::getPath("Media/robot.obj").c_str(), core::vector3df(0, 0, 0), core::vector3df(0, 0, 0));
 	mesh->node->setMaterialFlag(video::EMF_LIGHTING, false);
 	mesh->node->setParent(node);
 
 	// Effect of fire beneath robot
-	EffActor* a = scene->addXMLParticleActor(new EffActor(),"../../Media/floatEffect.xml", core::vector3df(0,-4,0));
+	EffActor* a = scene->addXMLParticleActor(new EffActor(), (char*) EffEngine::getPath("Media/floatEffect.xml").c_str(), core::vector3df(0,-4,0));
 	a->node->setParent(mesh->node);
 
-	weapon2Unlock = scene->gui->addImage(scene->getTexture("../../Media/new-gun-toxic.png"), core::position2d<int>((scene->getDriverWidth() / 2) - (528/2), (scene->getDriverHeight() / 2) - (319/2)));
+	weapon2Unlock = scene->gui->addImage(scene->getTexture(EffEngine::getPath("Media/new-gun-toxic.png").c_str()), core::position2d<int>((scene->getDriverWidth() / 2) - (528/2), (scene->getDriverHeight() / 2) - (319/2)));
 	weapon2Unlock->setColor(video::SColor(0, 255, 255, 255));
 }
 
@@ -173,7 +174,7 @@ void Robot::setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core:
 	if(this->bulletMesh != "null") {
 		core::matrix4 mat = gun->node->getAbsoluteTransformation();
 		core::vector3df right = core::vector3df(mat[0], 0, mat[2]);
-		scene->addXMLParticleActor(new EffActor(), "../../Media/switch-weapon.xml", gun->node->getAbsolutePosition() + (right * this->bulletOffset.X) + core::vector3df(0, this->bulletOffset.Y, 0));
+		scene->addXMLParticleActor(new EffActor(), EffEngine::getPath("Media/switch-weapon.xml").c_str(), gun->node->getAbsolutePosition() + (right * this->bulletOffset.X) + core::vector3df(0, this->bulletOffset.Y, 0));
 		scene->removeActor((EffActor*) gun);
 	}
 	addGun(gunMesh, gunPosition);
@@ -237,7 +238,7 @@ void Robot::hit (int damage, core::vector3df position)
 	onHit();
 	
 	EffActor* p = new EffActor();
-	scene->addXMLParticleActor((EffActor*) p, "../../Media/playerHitEffect.xml", position + core::vector3df(0,12,-5));
+	scene->addXMLParticleActor((EffActor*) p, (char*) EffEngine::getPath("Media/playerHitEffect.xml").c_str(), position + core::vector3df(0,12,-5));
 
 	IParticleSystemSceneNode* particleNode = (IParticleSystemSceneNode*) p->node;
 	scene::IParticleAffector* affector = particleNode->createFadeOutParticleAffector();
@@ -253,11 +254,11 @@ void Robot::addXp(int xp)
 		isWeapon2Unlocked = true;
 
 		EffActor* a = new EffActor();
-		scene->addXMLParticleActor(a, "../../Media/level-up.xml", core::vector3df(0,0,0));
+		scene->addXMLParticleActor(a, (char*) EffEngine::getPath("Media/level-up.xml").c_str(), core::vector3df(0,0,0));
 		a->node->setParent(mesh->node);
 
 		a = new EffActor();
-		scene->addXMLParticleActor(a, "../../Media/level-up-ring.xml", core::vector3df(0,0,0));
+		scene->addXMLParticleActor(a, (char*) EffEngine::getPath("Media/level-up-ring.xml").c_str(), core::vector3df(0,0,0));
 		a->node->setParent(mesh->node);
 
 		scene->timer->time(std::bind(&Robot::showWeapon2Unlock, this), 3);
