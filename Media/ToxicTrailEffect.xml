@@ -1,13 +1,13 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Particle>
-    <Emitter Type="1"/>
-    <Aabbox MaxX="5" MaxY="5" MaxZ="5" MinX="-5" MinY="-5" MinZ="-5"/>
+    <Emitter Type="6"/>
+    <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
     <Direction X="0" Y="0" Z="0"/>
     <Position X="0" Y="0" Z="0"/>
     <Center X="0" Y="0" Z="0"/>
     <Normal X="0" Y="0" Z="0"/>
     <AngleDegrees Max="0"/>
-    <LifeTime Max="1250" Min="750"/>
+    <LifeTime Max="1500" Min="1000"/>
     <PPS Max="3000" Min="2000"/>
     <MaxStartColor Alpha="255" Red="0" Green="100" Blue="0"/>
     <MinStartColor Alpha="255" Red="7" Green="21" Blue="0"/>
@@ -20,14 +20,14 @@
     <RemoveParticleAfter RemoveParticleAfter="0"/>
     <Affectors>
         <GRAVITY>
-            <GravityAffectorGravity X="0" Y="-0.03" Z="0"/>
-            <GRAVITY_Rest GravityAffectorTimeForceLost="8000"/>
+            <GravityAffectorGravity X="0" Y="0" Z="-0.1"/>
+            <GRAVITY_Rest GravityAffectorTimeForceLost="5000"/>
         </GRAVITY>
         <SCALE>
             <ScaleAffectorScaleTo Height="2" Width="2"/>
         </SCALE>
         <FADE_OUT>
-            <FadeOutAffectorTargetColor Alpha="0" Red="0" Green="0" Blue="0"/>
+            <FadeOutAffectorTargetColor Alpha="255" Red="0" Green="0" Blue="0"/>
             <FADE_OUT_Rest FadeOutAffectorTimeNeededToFadeOut="500"/>
         </FADE_OUT>
     </Affectors>
