@@ -110,8 +110,6 @@ void Enemy::addCollision (scene::ISceneNode* collisionNode, scene::IMesh* mesh)
 
 bool Enemy::hit (int damage)
 {
-	this->scene->getSoundEngine()->setSoundVolume(0.5);
-	this->scene->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/bullet-impact.mp3").c_str(), false);
 	health -= damage;
 	if (health <= 0) {
 		die ();
