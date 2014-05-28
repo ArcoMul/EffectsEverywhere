@@ -5,7 +5,7 @@
 #include "InputReceiver.h"
 #include "BackgroundFader.h"
 
-std::string EffEngine::basePath = "./";
+std::string EffEngine::basePath = "../../";
 
 EffEngine::EffEngine()
 {
