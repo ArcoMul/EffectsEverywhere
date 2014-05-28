@@ -18,15 +18,15 @@ bool InstructionsScene::init(void)
 	setMouseVisible(true);
 	
 	// Background
-	gui->addImage(this->getTexture("../../Media/menu/background.png"), core::position2d<int>(0, 0));
+	gui->addImage(this->getTexture(EffEngine::getPath("Media/menu/background.png").c_str()), core::position2d<int>(0, 0));
 
-	gui->addImage(this->getTexture("../../Media/menu/menu-help.png"), core::position2d<int>(340, 135));
+	gui->addImage(this->getTexture(EffEngine::getPath("Media/menu/menu-help.png").c_str()), core::position2d<int>(340, 135));
 
 	// Back button
 	IGUIButton *backButton = gui->addButton(rect<s32>(365,547,565,647), 0, GUI_ID_BACK_BUTTON);
 	backButton->setDrawBorder(false);
-	backButton->setImage(getTexture("../../media/menu/button-back-default.png"));
-	backButton->setPressedImage(getTexture("../../media/menu/button-back-active.png"));
+	backButton->setImage(getTexture(EffEngine::getPath("Media/menu/button-back-default.png").c_str()));
+	backButton->setPressedImage(getTexture(EffEngine::getPath("Media/menu/button-back-active.png").c_str()));
 	
 	// Add the camera node to the scene
 	camera = manager->addCameraSceneNode();

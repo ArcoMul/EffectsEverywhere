@@ -115,11 +115,6 @@ public:
 	 * intersection -vector3df which is filled with the intersection of the collision
 	 */
 	scene::ISceneNode* checkRayCastIntersection(core::vector3df start, core::vector3df end, core::vector3df &intersection);
-
-	/**
-	 * Spawn mesh a certain position, only for debug purposes
-	 */
-	void spawnDebugMesh (core::vector3df position);
 	
 	/**
 	 * Function to load a texture from the irrlicht driver object

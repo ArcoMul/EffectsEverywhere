@@ -2,6 +2,7 @@
 #include "EffScene.h"
 #include "InputReceiver.h"
 #include "Robot.h"
+#include "EffEngine.h"
 #include <iostream>
 #include <cmath>
 
@@ -130,7 +131,7 @@ void Enemy::hit (Robot* robot, core::vector3df position)
 void Enemy::die ()
 {
 	ParticleParser* p = new ParticleParser();
-	ParticleModel d = p->parse("../../Media/xpParticle.xml");
+	ParticleModel d = p->parse((char*) EffEngine::getPath("Media/xpParticle.xml").c_str());
 	d.setAttractionAffectorPoint(target->getPosition());
 	scene->addParticleActor(new EffActor(),&d, this->node->getPosition());
 

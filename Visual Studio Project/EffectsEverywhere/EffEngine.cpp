@@ -5,7 +5,7 @@
 #include "InputReceiver.h"
 #include "BackgroundFader.h"
 
-std::string EffEngine::basePath = "../../";
+std::string EffEngine::basePath = "./";
 
 EffEngine::EffEngine()
 {
@@ -18,7 +18,8 @@ EffEngine::EffEngine()
 
 std::string EffEngine::getPath (std::string path)
 {
-	return EffEngine::basePath.append(path);
+	std::string p = EffEngine::basePath;
+	return p.append(path);
 }
 
 bool EffEngine::init(int width, int height, int colordepth, bool fullscreen, bool stencilbuffer, bool vsyncenabled)
