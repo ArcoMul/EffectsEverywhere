@@ -174,7 +174,7 @@ void Robot::setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core:
 	if(this->bulletMesh != "null") {
 		core::matrix4 mat = gun->node->getAbsoluteTransformation();
 		core::vector3df right = core::vector3df(mat[0], 0, mat[2]);
-		scene->addXMLParticleActor(new EffActor(), "../../Media/switch-weapon.xml", gun->node->getAbsolutePosition() + (right * this->bulletOffset.X) + core::vector3df(0, this->bulletOffset.Y, 0));
+		scene->addXMLParticleActor(new EffActor(), EffEngine::getPath("Media/switch-weapon.xml").c_str(), gun->node->getAbsolutePosition() + (right * this->bulletOffset.X) + core::vector3df(0, this->bulletOffset.Y, 0));
 		scene->removeActor((EffActor*) gun);
 	}
 	addGun(gunMesh, gunPosition);

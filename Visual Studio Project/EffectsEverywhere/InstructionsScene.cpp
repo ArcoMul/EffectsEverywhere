@@ -37,6 +37,7 @@ bool InstructionsScene::init(void)
 
 void InstructionsScene::onButtonClick(s32 id)
 {
+	this->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/button.wav").c_str(), false);
 	switch(id)
     {
 	case BUTTONS::GUI_ID_BACK_BUTTON:

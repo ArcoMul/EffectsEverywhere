@@ -22,7 +22,7 @@ bool EndScene::init(void)
 	setMouseVisible(true);
 
 	this->getSoundEngine()->stopAllSounds();
-	this->getSoundEngine()->play2D("../../Media/sounds/ipgamesopenloop.wav",true);
+	this->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/ipgamesopenloop.wav").c_str(), true);
 	
 	// Background
 	gui->addImage(this->getTexture(EffEngine::getPath("Media/menu/background.png").c_str()), core::position2d<int>(0, 0));

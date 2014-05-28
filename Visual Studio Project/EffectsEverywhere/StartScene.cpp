@@ -20,11 +20,11 @@ bool StartScene::init(void)
 	setMouseVisible(true);
 
 	this->getSoundEngine()->stopAllSounds();
-	this->getSoundEngine()->play2D("../../Media/sounds/ipgamesopenloop.wav",true);
+	this->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/ipgamesopenloop.wav").c_str(), true);
 	
 	// Background
-	gui->addImage(getTexture(EffEngine::getPath("media/menu/background.png").c_str()), core::position2d<int>(0,0));
-	gui->addImage(getTexture(EffEngine::getPath("media/menu/logo.png").c_str()), core::position2d<int>(55,45));
+	gui->addImage(getTexture(EffEngine::getPath("Media/menu/background.png").c_str()), core::position2d<int>(0,0));
+	gui->addImage(getTexture(EffEngine::getPath("Media/menu/logo.png").c_str()), core::position2d<int>(55,45));
 
 	// Add the camera node to the scene
 	camera = manager->addCameraSceneNode();
@@ -68,7 +68,7 @@ void StartScene::update(float deltaTime)
 
 void StartScene::onButtonClick(s32 id)
 {
-	this->getSoundEngine()->play2D("../../Media/sounds/button.wav",false);
+	this->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/button.wav").c_str(), false);
 	switch(id)
     {
 	case BUTTONS::GUI_ID_START_BUTTON:
