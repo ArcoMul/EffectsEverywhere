@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Particle>
-    <Emitter Type="7"/>
+    <Emitter Type="5"/>
     <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="-1" MinZ="-3"/>
     <Direction X="0.001" Y="0.001" Z="0.001"/>
     <Position X="0" Y="0" Z="0"/>
@@ -16,8 +16,8 @@
     <Texture PathName="particlered.bmp"/>
     <Material Type="0"/>
     <Rest MbNumber="22373" NormalDirectionModifier="0" Radius="15" LengthCylinder="0" RingThickness="1" UseNormalDirection="1" EveryMeshVertex="1" OutLineOnly="1"/>
-    <StopEmitting StopEmittingAfter="0"/>
-    <RemoveParticleAfter RemoveParticleAfter="400"/>
+    <StopEmitting StopEmittingAfter="300"/>
+    <RemoveParticleAfter RemoveParticleAfter="800"/>
     <Affectors>
         <SCALE>
             <ScaleAffectorScaleTo Height="4" Width="4"/>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <Particle>
-    <Emitter Type="6"/>
+    <Emitter Type="4"/>
     <Aabbox MaxX="3" MaxY="1" MaxZ="3" MinX="-3" MinY="0" MinZ="-3"/>
     <Direction X="0" Y="0" Z="0"/>
     <Position X="0" Y="0" Z="0"/>

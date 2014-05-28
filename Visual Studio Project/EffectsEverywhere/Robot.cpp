@@ -230,6 +230,9 @@ void Robot::shoot (core::list<Enemy*>* enemies)
 	EffActor* shootEffect = new EffActor();
 	scene->addXMLParticleActor((EffActor*) shootEffect,shootEffectXML.c_str(), gun->node->getPosition() + core::vector3df(0,0,-7) + bulletOffset);
 	shootEffect->node->setParent(mesh->node);
+
+	this->scene->getSoundEngine()->setSoundVolume(0.3);
+	scene->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/gun.wav").c_str());
 }
 
 void Robot::hit (int damage, core::vector3df position)
