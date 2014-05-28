@@ -3,6 +3,7 @@
 
 #include <irrlicht.h>
 #include <ParticleManager.h>
+#include <irrKlang.h> 
 
 using namespace irr;
 using namespace core;
@@ -10,6 +11,7 @@ using namespace scene;
 using namespace video;
 using namespace io;
 using namespace gui;
+using namespace irrklang;
 
 class EffScene;
 class InputReceiver;
@@ -43,6 +45,7 @@ public:
 	IVideoDriver* driver;
 	IrrlichtDevice* device;
 	IGUIEnvironment* gui;
+	ISoundEngine* soundEngine;
 
 	static std::string basePath;
 	static std::string getPath (std::string path);

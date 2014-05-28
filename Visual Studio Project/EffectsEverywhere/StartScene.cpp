@@ -18,6 +18,9 @@ bool StartScene::init(void)
 
 	// Show the mouse in this scene
 	setMouseVisible(true);
+
+	this->getSoundEngine()->stopAllSounds();
+	this->getSoundEngine()->play2D("../../Media/sounds/ipgamesopenloop.wav",true);
 	
 	// Background
 	gui->addImage(getTexture(EffEngine::getPath("media/menu/background.png").c_str()), core::position2d<int>(0,0));
@@ -65,6 +68,7 @@ void StartScene::update(float deltaTime)
 
 void StartScene::onButtonClick(s32 id)
 {
+	this->getSoundEngine()->play2D("../../Media/sounds/button.wav",false);
 	switch(id)
     {
 	case BUTTONS::GUI_ID_START_BUTTON:
@@ -74,6 +78,7 @@ void StartScene::onButtonClick(s32 id)
 		switchScene (new InstructionsScene());
 		break;
     case BUTTONS::GUI_ID_QUIT_BUTTON:
+		this->getSoundEngine()->stopAllSounds();
 		closeGame();
 		break;
 	default:

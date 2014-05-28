@@ -18,6 +18,7 @@
 #include "SpawnPoint.h"
 #include "GuiAnimation.h"
 #include "EndScene.h"
+#include "Gun.h"
 #include "FadeOutActor.h"
 
 MainScene::MainScene()
@@ -145,6 +146,11 @@ void MainScene::startPlaying(void)
 
 	// Start the first wave
 	waveSystem->start();
+
+	// this can be the background file
+	this->getSoundEngine()->stopAllSounds();
+	this->getSoundEngine()->setSoundVolume(0.5);
+	this->getSoundEngine()->play2D(EffEngine::getPath("Media/sounds/action-theme.wav").c_str(), true);
 
 	// Give the robot gravity
 	collisionLevel->setGravity(core::vector3df(0, -100, 0));
@@ -295,7 +301,7 @@ void MainScene::update(float deltaTime)
 		robot->setWeapon((char*) EffEngine::getPath("Media/toxic-gun.obj").c_str(),
 			core::vector3df(-1, 2, 0), // gun position
 			(char*) EffEngine::getPath("Media/toxic-bullet.obj").c_str(),
-			core::vector3df(-7, 0, 0), // bullet offset
+			core::vector3df(-7, 5, 0), // bullet offset
 			10,
 			1,
 			800,
@@ -306,11 +312,13 @@ void MainScene::update(float deltaTime)
 
 	if (getInput()->IsKeyDown(irr::KEY_ESCAPE))
 	{
+		this->getSoundEngine()->stopAllSounds();
 		switchScene(new EndScene(levelWon,score));
 		return;
 	}
 	if (levelWon)
 	{
+		this->getSoundEngine()->stopAllSounds();
 		switchScene(new EndScene(levelWon,score));
 		return;
 	}
@@ -323,6 +331,7 @@ void MainScene::update(float deltaTime)
 			(*enemy)->hit (robot, collisionPosition);
 			// switch scene when the player dies
 			if (robot->health <= 0) {
+				this->getSoundEngine()->stopAllSounds();
 				switchScene(new EndScene(levelWon,score));
 				return;
 				}
