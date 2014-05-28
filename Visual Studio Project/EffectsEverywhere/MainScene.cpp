@@ -18,6 +18,7 @@
 #include "SpawnPoint.h"
 #include "GuiAnimation.h"
 #include "EndScene.h"
+#include "Gun.h"
 #include "FadeOutActor.h"
 
 MainScene::MainScene()
@@ -300,7 +301,7 @@ void MainScene::update(float deltaTime)
 		robot->setWeapon("../../Media/toxic-gun.obj",
 			core::vector3df(-1, 2, 0), // gun position
 			"../../Media/toxic-bullet.obj",
-			core::vector3df(-7, 0, 0), // bullet offset
+			core::vector3df(-7, 5, 0), // bullet offset
 			10,
 			1,
 			800,

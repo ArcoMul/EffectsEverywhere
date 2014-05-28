@@ -167,12 +167,17 @@ void Robot::setWeapon (core::stringc gunMesh, core::vector3df gunPosition, core:
 	int damage, float speed, float cooldown, 
 	core::stringc shootEffect, core::stringc enemyHitEffect, core::stringc flyEffect)
 {
+	if (this->bulletMesh == bulletMesh) return;
+
 	//Set gun/edit gun
 	if(this->bulletMesh != "null") {
+		core::matrix4 mat = gun->node->getAbsoluteTransformation();
+		core::vector3df right = core::vector3df(mat[0], 0, mat[2]);
+		scene->addXMLParticleActor(new EffActor(), "../../Media/switch-weapon.xml", gun->node->getAbsolutePosition() + (right * this->bulletOffset.X) + core::vector3df(0, this->bulletOffset.Y, 0));
 		scene->removeActor((EffActor*) gun);
 	}
 	addGun(gunMesh, gunPosition);
-	
+
 	this->bulletOffset = bulletOffset;
 
 	// Set default cooldown

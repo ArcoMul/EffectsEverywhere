@@ -80,6 +80,11 @@ private:
 	void showWeapon2Unlock();
 
 	/**
+	 * Gun actor
+	 */
+	Gun* gun;
+
+	/**
 	 * URL XMLs of the weapon effects
 	 */
 	core::stringc shootEffectXML;
@@ -112,11 +117,6 @@ private:
 	 * Counter to keep track of the shoot cooldown
 	 */
 	float countShootCooldown;
-
-	/**
-	 * Gun actor
-	 */
-	Gun* gun;
 
 	/**
 	 * Which direction is the robot floating, up or down, 1 or -1
